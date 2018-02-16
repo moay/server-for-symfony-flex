@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\Provider\UlidProvider;
+use App\Service\Provider\VersionsProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,19 +29,20 @@ class EndpointController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function versions()
+    public function versions(VersionsProvider $provider)
     {
-        return $this->json([]);
+        return $this->json($provider->provideVersions());
     }
 
     /**
      * @Route("/ulid", name="endpoint_ulid")
      *
+     * @param UlidProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function ulid()
+    public function ulid(UlidProvider $provider)
     {
-        return $this->json([]);
+        return $this->json(['ulid' => $provider->provideUlid()]);
     }
 
     /**

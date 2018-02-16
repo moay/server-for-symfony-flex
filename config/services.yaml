@@ -1,17 +1,15 @@
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    flex:
-        proxy:
-            official: true
-            contrib: true
-        mirror:
-            official: true
-            contrib: true
-        repos:
-            private: https://github.com/i22-digitalagentur/demo-recipes
-            official: https://github.com/symfony/recipes
-            contrib: https://github.com/symfony/recipes-contrib
+    official_endpoint: https://symfony.sh/
+    proxy_official_endpoint: true
+    cache_official_endpoint: true
+
+    mirror_official_recipes: true
+    mirror_contrib_recipes: true
+
+    recipe_repo_private: https://github.com/i22-digitalagentur/demo-recipes
+    recipe_repo_official: https://github.com/symfony/recipes
+    recipe_repo_contrib: https://github.com/symfony/recipes-contrib
+
 
 services:
     # default configuration for services in *this* file
@@ -21,6 +19,10 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $officialEndpoint: '%official_endpoint%'
+            $enableProxy: '%proxy_official_endpoint%'
+            $cacheEndpoint: '%cache_official_endpoint%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

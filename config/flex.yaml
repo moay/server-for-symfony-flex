@@ -1,0 +1,11 @@
+flex:
+    proxy:
+        official: true
+        contrib: true
+    mirror:
+        official: true
+        contrib: true
+    repos:
+        private: https://github.com/i22-digitalagentur/demo-recipes
+        official: https://github.com/symfony/recipes
+        contrib: https://github.com/symfony/recipes-contrib

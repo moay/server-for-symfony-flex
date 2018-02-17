@@ -2,9 +2,10 @@
 
 namespace App\Service\Generator;
 
-use App\Service\RecipeRepo\ContribRecipeRepo;
-use App\Service\RecipeRepo\OfficialRecipeRepo;
-use App\Service\RecipeRepo\PrivateRecipeRepo;
+use App\RecipeRepo\ContribRecipeRepo;
+use App\RecipeRepo\OfficialRecipeRepo;
+use App\RecipeRepo\PrivateRecipeRepo;
+
 
 /**
  * Class SystemStatusReportGenerator
@@ -87,5 +88,15 @@ class SystemStatusReportGenerator
         }
 
         file_put_contents($this->reportFilePath, json_encode($report));
+    }
+
+    /**
+     * Deletes the report file
+     */
+    public function removeReport()
+    {
+        if (file_exists($this->reportFilePath)) {
+            unlink($this->reportFilePath);
+        }
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Service\RecipeRepo;
+namespace App\RecipeRepo;
 
+use App\Event\RepoStatusChangedEvent;
 use App\Service\Cache;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class RecipeRepo
@@ -35,23 +37,29 @@ abstract class RecipeRepo
     /** @var LoggerInterface */
     private $logger;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /**
      * RecipeRepo constructor.
      * @param string $repoUrl
      * @param string $projectDir
      * @param Cache $cache
      * @param LoggerInterface $logger
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         string $repoUrl,
         string $projectDir,
         Cache $cache,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->repoUrl = $repoUrl;
         $this->fullRepoPath = $projectDir . self::REPO_PATH . $this->repoDirName;
         $this->cache = $cache;
         $this->logger = $logger;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -87,7 +95,7 @@ abstract class RecipeRepo
             throw $e;
         }
         $this->logger->info('Repo updated (' . $this->repoUrl . ')');
-        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
+        $this->handleRepoStatusChange();
     }
 
     /**
@@ -111,7 +119,7 @@ abstract class RecipeRepo
         } else {
             $this->repo = new GitRepository($this->fullRepoPath);
         }
-        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
+        $this->handleRepoStatusChange();
     }
 
     /**
@@ -133,5 +141,16 @@ abstract class RecipeRepo
             'local_repo_loaded' => $loaded,
             'updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];
+    }
+
+    /**
+     * Triggers the status changed event
+     */
+    private function handleRepoStatusChange()
+    {
+        $statusChangedEvent = new RepoStatusChangedEvent($this);
+        $this->eventDispatcher->dispatch(RepoStatusChangedEvent::NAME, $statusChangedEvent);
+
+        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
     }
 }

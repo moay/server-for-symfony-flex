@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\RecipeRepo;
+namespace App\RecipeRepo;
 
 use App\Service\Cache;
 use Psr\Log\LoggerInterface;

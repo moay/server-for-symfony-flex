@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Generator\SystemStatusReportGenerator;
 use App\Service\Provider\UlidProvider;
 use App\Service\Provider\VersionsProvider;
 use App\Service\RecipeRepo\PrivateRecipeRepo;
@@ -20,7 +21,7 @@ class EndpointController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function aliases(PrivateRecipeRepo $privateRecipeRepo)
+    public function aliases(SystemStatusReportGenerator $reportGenerator)
     {
         return $this->json([]);
     }

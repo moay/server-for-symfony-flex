@@ -6,29 +6,29 @@ use App\Service\Cache;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class PrivateRecipeRepo
+ * Class ContribRecipeRepo
  * @package App\Service\RecipeRepo
  * @author Manuel Voss <manuel.voss@i22.de>
  */
-class PrivateRecipeRepo extends RecipeRepo
+class ContribRecipeRepo extends RecipeRepo
 {
     /** @var string */
-    protected $repoDirName = 'private';
+    protected $repoDirName = 'contrib';
 
     /**
-     * PrivateRecipeRepo constructor.
-     * @param string $privateRepoUrl
+     * ContribRecipeRepo constructor.
+     * @param string $contribRepoUrl
      * @param string $projectDir
      * @param Cache $cache
      * @param LoggerInterface $logger
      */
     public function __construct(
-        string $privateRepoUrl,
+        string $contribRepoUrl,
         string $projectDir,
         Cache $cache,
         LoggerInterface $logger
     ) {
-        parent::__construct($privateRepoUrl, $projectDir, $cache, $logger);
+        parent::__construct($contribRepoUrl, $projectDir, $cache, $logger);
     }
 
 }

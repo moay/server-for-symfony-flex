@@ -24,6 +24,10 @@ services:
             $enableProxy: '%proxy_official_endpoint%'
             $cacheEndpoint: '%cache_official_endpoint%'
             $privateRepoUrl: '%recipe_repo_private%'
+            $officialRepoUrl: '%recipe_repo_official%'
+            $contribRepoUrl: '%recipe_repo_contrib%'
+            $mirrorOfficialRepo: '%mirror_official_recipes%'
+            $mirrorContribRepo: '%mirror_contrib_recipes%'
             $projectDir: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services

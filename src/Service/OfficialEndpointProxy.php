@@ -46,6 +46,8 @@ class OfficialEndpointProxy
     }
 
     /**
+     * Provides a proxy for the versions.json call, which provides version information for Symfony.
+     *
      * @return array
      */
     public function getVersions()

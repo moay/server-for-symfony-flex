@@ -59,7 +59,7 @@ abstract class RecipeRepo
      *
      * @throws GitException
      */
-    public function resetRepo()
+    public function reset()
     {
         if (is_dir($this->fullRepoPath)) {
             array_map('unlink', glob($this->fullRepoPath . '/*.*'));
@@ -67,7 +67,7 @@ abstract class RecipeRepo
 
             $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
         }
-        $this->initializeRepo();
+        $this->initialize();
     }
 
     /**
@@ -75,10 +75,10 @@ abstract class RecipeRepo
      *
      * @throws GitException
      */
-    public function updateRepo()
+    public function update()
     {
         if (!($this->repo instanceof GitRepository)) {
-            $this->initializeRepo();
+            $this->initialize();
         }
         try {
             $this->repo->pull();
@@ -95,7 +95,7 @@ abstract class RecipeRepo
      *
      * @throws GitException
      */
-    public function initializeRepo()
+    public function initialize()
     {
         if (!GitRepository::isRemoteUrlReadable($this->repoUrl)) {
             throw new GitException('The repo url ' . $this->repoUrl . ' is not readable');
@@ -123,14 +123,14 @@ abstract class RecipeRepo
     {
         try {
             $repo = new GitRepository($this->fullRepoPath);
-            $works = true;
+            $loaded = true;
         } catch (GitException $e) {
-            $works = false;
+            $loaded = false;
         }
 
         return [
             'remote_readable' => GitRepository::isRemoteUrlReadable($this->repoUrl),
-            'works' => $works,
+            'local_repo_loaded' => $loaded,
             'updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];
     }

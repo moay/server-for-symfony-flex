@@ -2,6 +2,7 @@
 .env
 /public/bundles/
 /var/
+!/var/repo
 /vendor/
 ###< symfony/framework-bundle ###
 

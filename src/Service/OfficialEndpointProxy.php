@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use GuzzleHttp\Psr7\Request;
-use Http\Client\Curl\Client;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Symfony\Component\Cache\Simple\FilesystemCache;
@@ -31,14 +30,19 @@ class OfficialEndpointProxy
      * OfficialEndpointProxy constructor.
      * @param string $officialEndpoint
      * @param bool $cacheEndpoint
-     * @param Client $client
+     * @param HttpClient $client
+     * @param Cache $cache
      */
-    public function __construct(string $officialEndpoint, bool $cacheEndpoint, HttpClient $client)
-    {
+    public function __construct(
+        string $officialEndpoint,
+        bool $cacheEndpoint,
+        HttpClient $client,
+        Cache $cache
+    ) {
         $this->cacheEndpoint = $cacheEndpoint;
         $this->client = $client;
         $this->endpoint = $officialEndpoint;
-        $this->cache = new FilesystemCache();
+        $this->cache = $cache;
     }
 
     /**

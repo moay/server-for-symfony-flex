@@ -2,6 +2,8 @@
 
 namespace App\Service\RecipeRepo;
 
+use App\Service\Cache;
+
 /**
  * Class PrivateRecipeRepo
  * @package App\Service\RecipeRepo
@@ -13,9 +15,9 @@ class PrivateRecipeRepo extends RecipeRepo
     protected $repoDirName = 'private';
 
     /** */
-    public function __construct(string $privateRepoUrl, string $projectDir)
+    public function __construct(string $privateRepoUrl, string $projectDir, Cache $cache)
     {
-        parent::__construct($privateRepoUrl, $projectDir);
+        parent::__construct($privateRepoUrl, $projectDir, $cache);
     }
 
 }

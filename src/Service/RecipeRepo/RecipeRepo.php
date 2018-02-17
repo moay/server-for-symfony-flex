@@ -2,8 +2,11 @@
 
 namespace App\Service\RecipeRepo;
 
+use App\Service\Cache;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 /**
  * Class RecipeRepo
@@ -26,17 +29,29 @@ abstract class RecipeRepo
     /** @var string */
     private $fullRepoPath;
 
+    /** @var FilesystemCache */
+    private $cache;
+
+    /** @var LoggerInterface */
+    private $logger;
+
     /**
      * RecipeRepo constructor.
      * @param string $repoUrl
      * @param string $projectDir
-     * @throws GitException
+     * @param Cache $cache
+     * @param LoggerInterface $logger
      */
-    public function __construct(string $repoUrl, string $projectDir)
-    {
+    public function __construct(
+        string $repoUrl,
+        string $projectDir,
+        Cache $cache,
+        LoggerInterface $logger
+    ) {
         $this->repoUrl = $repoUrl;
         $this->fullRepoPath = $projectDir . self::REPO_PATH . $this->repoDirName;
-        $this->initializeRepo();
+        $this->cache = $cache;
+        $this->logger = $logger;
     }
 
     /**
@@ -49,8 +64,30 @@ abstract class RecipeRepo
         if (is_dir($this->fullRepoPath)) {
             array_map('unlink', glob($this->fullRepoPath . '/*.*'));
             unlink($this->fullRepoPath);
+
+            $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
         }
         $this->initializeRepo();
+    }
+
+    /**
+     * Tries to pull the repo, initalizes it if it has not been setup yet.
+     *
+     * @throws GitException
+     */
+    public function updateRepo()
+    {
+        if (!($this->repo instanceof GitRepository)) {
+            $this->initializeRepo();
+        }
+        try {
+            $this->repo->pull();
+        } catch (GitException $e) {
+            $this->logger->error('Repo pull failed (' . $this->repoUrl . ')');
+            throw $e;
+        }
+        $this->logger->info('Repo updated (' . $this->repoUrl . ')');
+        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
     }
 
     /**
@@ -58,15 +95,43 @@ abstract class RecipeRepo
      *
      * @throws GitException
      */
-    private function initializeRepo()
+    public function initializeRepo()
     {
         if (!GitRepository::isRemoteUrlReadable($this->repoUrl)) {
             throw new GitException('The repo url ' . $this->repoUrl . ' is not readable');
         }
         if (!is_dir($this->fullRepoPath)) {
-            $this->repo = GitRepository::cloneRepository($this->repoUrl, $this->fullRepoPath);
+            try {
+                $this->repo = GitRepository::cloneRepository($this->repoUrl, $this->fullRepoPath);
+                $this->logger->info('Repo cloned (' . $this->repoUrl . ')');
+            } catch (GitException $e) {
+                $this->logger->error('Repo clone failed (' . $this->repoUrl . ')');
+                throw $e;
+            }
         } else {
             $this->repo = new GitRepository($this->fullRepoPath);
         }
+        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
+    }
+
+    /**
+     * Diagnose method for the system health report
+     *
+     * @return array
+     */
+    public function getStatus()
+    {
+        try {
+            $repo = new GitRepository($this->fullRepoPath);
+            $works = true;
+        } catch (GitException $e) {
+            $works = false;
+        }
+
+        return [
+            'remote_readable' => GitRepository::isRemoteUrlReadable($this->repoUrl),
+            'works' => $works,
+            'updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
+        ];
     }
 }

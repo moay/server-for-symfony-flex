@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class RepoStatusChangedEvent extends Event
 {
-    const NAME="repo.statuschange";
+    const NAME = "repo.statuschange";
 
     /** @var RecipeRepo */
     private $recipeRepo;
@@ -25,7 +25,6 @@ class RepoStatusChangedEvent extends Event
     {
         $this->recipeRepo = $recipeRepo;
     }
-
 
     /**
      * @return RecipeRepo

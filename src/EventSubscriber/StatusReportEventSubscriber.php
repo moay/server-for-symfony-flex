@@ -7,17 +7,17 @@ use App\Service\Generator\SystemStatusReportGenerator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class RepoEventSubscriber
+ * Class StatusReportEventSubscriber
  * @package App\EventSubscriber
  * @author Manuel Voss <manuel.voss@i22.de>
  */
-class RepoEventSubscriber implements EventSubscriberInterface
+class StatusReportEventSubscriber implements EventSubscriberInterface
 {
     /** @var SystemStatusReportGenerator */
     private $reportGenerator;
 
     /**
-     * RepoEventSubscriber constructor.
+     * StatusReportEventSubscriber constructor.
      * @param SystemStatusReportGenerator $reportGenerator
      */
     public function __construct(SystemStatusReportGenerator $reportGenerator)
@@ -25,7 +25,9 @@ class RepoEventSubscriber implements EventSubscriberInterface
         $this->reportGenerator = $reportGenerator;
     }
 
-
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -38,7 +40,7 @@ class RepoEventSubscriber implements EventSubscriberInterface
      */
     public function onRepoStatusChange(RepoStatusChangedEvent $event)
     {
-        $this->reportGenerator->removeRemove();
+        $this->reportGenerator->removeReport();
     }
 
 }

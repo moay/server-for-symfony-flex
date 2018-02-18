@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Generator\SystemStatusReportGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,12 +14,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontendController extends Controller
 {
     /**
-     * @Route("/", name="frontend_recipes_overview")
+     * @Route("/", name="frontend_dashboard")
      *
      * @return mixed|\Symfony\Component\HttpFoundation\Response
      */
-    public function recipes()
+    public function dashboard()
     {
         return $this->render('recipes.html.twig');
+    }
+
+    /**
+     * @Route("/ui/data", name="frontend_dashboard_data")
+     *
+     * @param SystemStatusReportGenerator $reportGenerator
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function dashboardData(SystemStatusReportGenerator $reportGenerator)
+    {
+        return $this->json([
+            'status' => $reportGenerator->getReport()
+        ]);
     }
 }

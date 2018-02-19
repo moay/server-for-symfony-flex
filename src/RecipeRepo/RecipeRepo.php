@@ -9,6 +9,7 @@ use Cz\Git\GitRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class RecipeRepo
@@ -69,12 +70,7 @@ abstract class RecipeRepo
      */
     public function reset()
     {
-        if (is_dir($this->fullRepoPath)) {
-            array_map('unlink', glob($this->fullRepoPath . '/*.*'));
-            unlink($this->fullRepoPath);
-
-            $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
-        }
+        $this->remove();
         $this->initialize();
     }
 
@@ -123,6 +119,19 @@ abstract class RecipeRepo
     }
 
     /**
+     * Removes the repo directory
+     */
+    public function remove()
+    {
+        if (is_dir($this->repoDirName)) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->repoDirName);
+            $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
+            $this->handleRepoStatusChange();
+        }
+    }
+
+    /**
      * Diagnose method for the system health report
      *
      * @return array
@@ -139,7 +148,7 @@ abstract class RecipeRepo
         return [
             'remote_readable' => GitRepository::isRemoteUrlReadable($this->repoUrl),
             'local_repo_loaded' => $loaded,
-            'updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
+            'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];
     }
 

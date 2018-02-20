@@ -10,10 +10,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    // .addEntry('js/app', './assets/js/app.js')
-    // .addStyleEntry('css/app', './assets/css/app.scss')
+    .addEntry('js/dashboard', './assets/js/dashboard.js')
 
-    .enableSassLoader()
     .enableVueLoader()
 ;
 

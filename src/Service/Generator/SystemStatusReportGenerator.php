@@ -48,9 +48,9 @@ class SystemStatusReportGenerator
     ) {
         $this->reportFilePath = $projectDir . self::HEALTH_REPORT_FILE;
         $this->repos = [
-            'privateRecipeRepo' => $privateRecipeRepo,
-            'officialRecipeRepo' => $officialRecipeRepo,
-            'contribRecipeRepo' => $contribRecipeRepo
+            'private' => $privateRecipeRepo,
+            'official' => $officialRecipeRepo,
+            'contrib' => $contribRecipeRepo
         ];
         $this->config = [
             'enableProxy' => $enableProxy,
@@ -71,7 +71,7 @@ class SystemStatusReportGenerator
         if (!file_exists($this->reportFilePath)) {
             $this->generateReport();
         }
-        return json_decode(file_get_contents($this->reportFilePath));
+        return json_decode(file_get_contents($this->reportFilePath), true);
     }
 
     /**

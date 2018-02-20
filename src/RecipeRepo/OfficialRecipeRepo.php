@@ -4,6 +4,7 @@ namespace App\RecipeRepo;
 
 use App\Service\Cache;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class OfficialRecipeRepo
@@ -26,9 +27,10 @@ class OfficialRecipeRepo extends RecipeRepo
         string $officialRepoUrl,
         string $projectDir,
         Cache $cache,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        EventDispatcherInterface $eventDispatcher
     ) {
-        parent::__construct($officialRepoUrl, $projectDir, $cache, $logger);
+        parent::__construct($officialRepoUrl, $projectDir, $cache, $logger, $eventDispatcher);
     }
 
 }

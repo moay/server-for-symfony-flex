@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Service\Provider\UlidProvider;
 use App\Service\Provider\VersionsProvider;
+use App\Traits\ProvidesUnescapedJsonResponsesTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -14,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EndpointController extends Controller
 {
+    use ProvidesUnescapedJsonResponsesTrait;
+
     /**
      * @Route("/aliases.json", name="endpoint_aliases")
      *

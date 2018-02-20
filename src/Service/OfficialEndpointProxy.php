@@ -64,7 +64,7 @@ class OfficialEndpointProxy
     {
         try {
             $response = $this->client->sendRequest($request);
-            $decodedResponse = json_decode($response->getBody());
+            $decodedResponse = json_decode($response->getBody(), true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $decodedResponse = $response->getBody();

@@ -35,9 +35,10 @@ class Cache
     /**
      * @param $method
      * @param $arguments
+     * @return mixed
      */
     public function __call($method, $arguments)
     {
-        call_user_func_array([$this->cache, $method], $arguments);
+        return call_user_func_array([$this->cache, $method], $arguments);
     }
 }

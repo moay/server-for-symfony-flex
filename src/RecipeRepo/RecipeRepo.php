@@ -3,6 +3,7 @@
 namespace App\RecipeRepo;
 
 use App\Event\RepoStatusChangedEvent;
+use App\Exception\RecipeRepoBackupException;
 use App\Service\Cache;
 use Cz\Git\GitException;
 use Cz\Git\GitRepository;
@@ -76,6 +77,7 @@ abstract class RecipeRepo
 
     /**
      * Tries to pull the repo, initalizes it if it has not been setup yet.
+     * Tries to backup before and restore in case of failure.
      *
      * @throws GitException
      */
@@ -85,11 +87,14 @@ abstract class RecipeRepo
             $this->initialize();
         }
         try {
+            $this->backup();
             $this->repo->pull();
+                $this->wipeBackup();
         } catch (GitException $e) {
             $this->logger->error('Repo pull failed (' . $this->repoUrl . ')');
-            throw $e;
+            $this->restore();
         }
+
         $this->logger->info('Repo updated (' . $this->repoUrl . ')');
         $this->handleRepoStatusChange();
     }
@@ -123,9 +128,9 @@ abstract class RecipeRepo
      */
     public function remove()
     {
-        if (is_dir($this->repoDirName)) {
+        if (is_dir($this->fullRepoPath)) {
             $filesystem = new Filesystem();
-            $filesystem->remove($this->repoDirName);
+            $filesystem->remove($this->fullRepoPath);
             $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
             $this->handleRepoStatusChange();
         }
@@ -146,10 +151,52 @@ abstract class RecipeRepo
         }
 
         return [
+            'url' => $this->repoUrl,
+            'local_path' => $this->fullRepoPath,
             'remote_readable' => GitRepository::isRemoteUrlReadable($this->repoUrl),
-            'local_repo_loaded' => $loaded,
+            'downloaded' => $loaded,
             'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];
+    }
+
+    /**
+     * Restores a backup if there was one.
+     *
+     * If there is no backup, existing files won't be touched.
+     */
+    private function restore()
+    {
+        if (is_dir($this->fullRepoPath . '_backup')) {
+            $filesystem = new Filesystem();
+            $filesystem->rename($this->fullRepoPath . '_backup', $this->fullRepoPath, true);
+            $this->logger->info('Repo backup restored (' . $this->repoUrl . ').');
+        } else {
+            $this->logger->warning('Could not restore repo backup (' . $this->repoUrl . '). There was no backup.');
+        };
+    }
+
+    /**
+     * Creates a backup of the current repo state
+     */
+    private function backup()
+    {
+        if (is_dir($this->fullRepoPath)) {
+            $this->wipeBackup();
+            $filesystem = new Filesystem();
+            $filesystem->mirror($this->fullRepoPath, $this->fullRepoPath . '_backup');
+            $this->logger->info('Repo backup created (' . $this->repoUrl . ').');
+        }
+    }
+
+    /**
+     * Wipes an existing backup folder if it exists
+     */
+    private function wipeBackup()
+    {
+        if (is_dir($this->fullRepoPath . '_backup')) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->fullRepoPath . '_backup');
+        }
     }
 
     /**
@@ -157,9 +204,33 @@ abstract class RecipeRepo
      */
     private function handleRepoStatusChange()
     {
+        $this->cache->set('repo-updated-' . $this->repoDirName, date('Y-m-d H:i:s'));
+
         $statusChangedEvent = new RepoStatusChangedEvent($this);
         $this->eventDispatcher->dispatch(RepoStatusChangedEvent::NAME, $statusChangedEvent);
+    }
 
-        $this->cache->set('repo-updated-' . $this->repoDirName, new \DateTime);
+    /**
+     * @return string
+     */
+    public function getRepoUrl()
+    {
+        return $this->repoUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepoDirName()
+    {
+        return $this->repoDirName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullRepoPath()
+    {
+        return $this->fullRepoPath;
     }
 }

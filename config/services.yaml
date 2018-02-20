@@ -3,7 +3,7 @@ parameters:
     proxy_official_endpoint: true
     cache_official_endpoint: true
 
-    mirror_official_recipes: true
+    mirror_official_recipes: false
     mirror_contrib_recipes: true
 
     recipe_repo_private: https://github.com/i22-digitalagentur/demo-recipes

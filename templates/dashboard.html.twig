@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Flex Server</title>
+    <link href='{{ asset('build/js/dashboard.css') }}' rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title>Flex Server</title>
 </head>
 <body>
 <div id="dashboard">
-    <v-app>
-        <v-toolbar app></v-toolbar>
+    <v-app >
+        <v-toolbar app>
+            <v-toolbar-title>Flex Server</v-toolbar-title>
+        </v-toolbar>
         <v-content>
             <v-container fluid>
             </v-container>
         </v-content>
-        <v-footer app></v-footer>
+        <v-footer app>
+            <v-flex xs12 py-3 text-xs-center>
+                Powered by the <a href="https://github.com/i22-digitalagentur/symfony-flex-server">i22 Symfony Flex Server</a>. Published under the <a href="https://github.com/i22-digitalagentur/symfony-flex-server/blob/master/LICENSE">MIT License</a>.
+            </v-flex>
+        </v-footer>
     </v-app>
 </div>
 

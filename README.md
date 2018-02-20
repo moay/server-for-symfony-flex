@@ -12,7 +12,7 @@ In order to simplify configuration and handling of the server, there are several
 
     php bin/console system:status
 
-The `system:status` command will print out an overview of the current configuration and the recipe repos.
+This command will print out an overview of the current configuration and the recipe repos.
 
 #### Recipe repo handling
 
@@ -24,21 +24,17 @@ This command will initialize the repos according to the configuration parameters
 
 ##### Updating
 
-In order to update initialized repos, run
-
     php bin/console recipes:update
 
-which will run a `git pull` on the repos. Repos that haven't been initialized will be initialized before the pull.
+Will run a `git pull` on the repos. Repos that haven't been initialized will be initialized before the pull.
 
 During the update, a backup of the current local repo will be made. It will be restored if the update fails.
 
 ##### Resetting
 
-If you ever need to completely reset a repo, use
-
     php bin/console recipes:reset
 
-which will basically delete the current repo folder an reinitialize the repo.
+This will basically delete the current repo folder an reinitialize the repo. There is **no** automatic rollback in case the cloning fails.
 
 ##### Deleting
 
@@ -46,14 +42,12 @@ which will basically delete the current repo folder an reinitialize the repo.
 
 This will delete the local repo folder.
 
-##### Selecting repos
+##### Select affected repos
 
 All of the above repo handling commands can be limited to certain repos by providing a selector. Like so:
-
+    
+    # Private repo only
     php bin/console recipes:initialize private
-
-for the private repo only. Or
-
+    
+    # Private and contrib repo
     php bin/console recipes:initialize private contrib
-
-for the private and the contrib repo.

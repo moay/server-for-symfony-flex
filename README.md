@@ -6,7 +6,7 @@ Please come back later.
 
 ### Available commands
 
-In order to simplify configuration and handling of the server, there are several commands that will allow you to manage the server.
+In order to simplify configuration and handling, there is a range of commands that will allow you to manage the server.
 
 #### Status
 

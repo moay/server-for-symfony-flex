@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Service\Provider\AliasesProvider;
 use App\Service\Provider\UlidProvider;
 use App\Service\Provider\VersionsProvider;
 use App\Traits\ProvidesUnescapedJsonResponsesTrait;
@@ -31,11 +32,12 @@ class EndpointController extends Controller
     /**
      * @Route("/aliases.json", name="endpoint_aliases")
      *
+     * @param AliasesProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function aliases()
+    public function aliases(AliasesProvider $provider)
     {
-        return $this->json([]);
+        return $this->json($provider->provideAliases());
     }
 
     /**

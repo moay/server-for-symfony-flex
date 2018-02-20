@@ -12,7 +12,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\RepoStatusChangedEvent;
-use App\Service\Generator\SystemStatusReportGenerator;
+use App\Service\Compiler\SystemStatusReportCompiler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -22,16 +22,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class StatusReportEventSubscriber implements EventSubscriberInterface
 {
-    /** @var SystemStatusReportGenerator */
-    private $reportGenerator;
+    /** @var SystemStatusReportCompiler */
+    private $reportCompiler;
 
     /**
      * StatusReportEventSubscriber constructor.
-     * @param SystemStatusReportGenerator $reportGenerator
+     * @param SystemStatusReportCompiler $reportCompiler
      */
-    public function __construct(SystemStatusReportGenerator $reportGenerator)
+    public function __construct(SystemStatusReportCompiler $reportCompiler)
     {
-        $this->reportGenerator = $reportGenerator;
+        $this->reportCompiler = $reportCompiler;
     }
 
     /**
@@ -49,7 +49,7 @@ class StatusReportEventSubscriber implements EventSubscriberInterface
      */
     public function onRepoStatusChange(RepoStatusChangedEvent $event)
     {
-        $this->reportGenerator->removeReport();
+        $this->reportCompiler->removeReport();
     }
 
 }

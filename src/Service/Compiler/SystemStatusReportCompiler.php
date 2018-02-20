@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Service\Generator;
+namespace App\Service\Compiler;
 
 use App\RecipeRepo\ContribRecipeRepo;
 use App\RecipeRepo\OfficialRecipeRepo;
@@ -17,11 +17,11 @@ use App\RecipeRepo\PrivateRecipeRepo;
 
 
 /**
- * Class SystemStatusReportGenerator
+ * Class SystemStatusReportCompiler
  * @package App\Service\Generator
  * @author Manuel Voss <manuel.voss@i22.de>
  */
-class SystemStatusReportGenerator
+class SystemStatusReportCompiler
 {
     const HEALTH_REPORT_FILE = '/var/status.json';
 
@@ -35,7 +35,7 @@ class SystemStatusReportGenerator
     private $config;
 
     /**
-     * SystemStatusReportGenerator constructor.
+     * SystemStatusReportCompiler constructor.
      * @param string $projectDir
      * @param PrivateRecipeRepo $privateRecipeRepo
      * @param OfficialRecipeRepo $officialRecipeRepo
@@ -78,15 +78,15 @@ class SystemStatusReportGenerator
     public function getReport()
     {
         if (!file_exists($this->reportFilePath)) {
-            $this->generateReport();
+            $this->compileReport();
         }
         return json_decode(file_get_contents($this->reportFilePath), true);
     }
 
     /**
-     * Generates system status report file
+     * Compiles system status report file
      */
-    public function generateReport()
+    public function compileReport()
     {
         $report = [
             'config' => $this->config

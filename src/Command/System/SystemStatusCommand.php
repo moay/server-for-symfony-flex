@@ -11,7 +11,7 @@
 
 namespace App\Command\System;
 
-use App\Service\Generator\SystemStatusReportGenerator;
+use App\Service\Compiler\SystemStatusReportCompiler;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,17 +24,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class SystemStatusCommand extends Command
 {
-    /** @var SystemStatusReportGenerator */
-    private $reportGenerator;
+    /** @var SystemStatusReportCompiler */
+    private $reportCompiler;
 
     /**
      * SystemStatusCommand constructor.
-     * @param SystemStatusReportGenerator $reportGenerator
+     * @param SystemStatusReportCompiler $reportCompiler
      */
-    public function __construct(SystemStatusReportGenerator $reportGenerator)
+    public function __construct(SystemStatusReportCompiler $reportCompiler)
     {
         parent::__construct();
-        $this->reportGenerator = $reportGenerator;
+        $this->reportCompiler = $reportCompiler;
     }
 
     /**  */
@@ -48,7 +48,7 @@ class SystemStatusCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $report = $this->reportGenerator->getReport();
+        $report = $this->reportCompiler->getReport();
 
         $io->section('Configuration');
         $io->table([], [

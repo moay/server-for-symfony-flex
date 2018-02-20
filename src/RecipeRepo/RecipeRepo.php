@@ -20,6 +20,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class RecipeRepo
@@ -166,6 +168,18 @@ abstract class RecipeRepo
             'downloaded' => $loaded,
             'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];
+    }
+
+    /**
+     * @return iterable|SplFileInfo[]
+     */
+    public function getRecipeDirectories()
+    {
+        $finder = new Finder();
+        return $finder->ignoreUnreadableDirs()
+            ->in($this->fullRepoPath . '/*/*')
+            ->exclude('.git')
+            ->directories();
     }
 
     /**

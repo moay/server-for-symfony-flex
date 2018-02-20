@@ -61,6 +61,14 @@ class RecipeRepoManager
     }
 
     /**
+     * @return RecipeRepo[]
+     */
+    public function getConfiguredRepos()
+    {
+        return $this->repos;
+    }
+
+    /**
      * @param RecipeRepo $repo
      * @return bool
      */

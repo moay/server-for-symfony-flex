@@ -13,32 +13,42 @@ namespace App\Service\Provider;
 
 
 use App\Entity\Recipe;
+use App\Service\Cache;
 use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\OfficialEndpointProxy;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 class AliasesProvider
 {
+    const LOCAL_ALIASES_CACHE_KEY = 'aliases-local';
+
     /** @var LocalRecipeCompiler */
     private $recipeCompiler;
 
     /** @var OfficialEndpointProxy */
     private $officialEndpointProxy;
 
+    /** @var FilesystemCache */
+    private $cache;
+
     /**
      * AliasesProvider constructor.
      * @param LocalRecipeCompiler $recipeCompiler
      * @param bool $enableProxy
      * @param OfficialEndpointProxy $officialEndpointProxy
+     * @param Cache $cache
      */
     public function __construct(
         LocalRecipeCompiler $recipeCompiler,
         bool $enableProxy,
-        OfficialEndpointProxy $officialEndpointProxy
+        OfficialEndpointProxy $officialEndpointProxy,
+        Cache $cache
     ) {
         $this->recipeCompiler = $recipeCompiler;
         if ($enableProxy) {
             $this->officialEndpointProxy = $officialEndpointProxy;
         }
+        $this->cache = $cache;
     }
 
     /**
@@ -67,6 +77,11 @@ class AliasesProvider
     public function getLocalAliases()
     {
         $aliases = [];
+
+        if ($this->cache->has(self::LOCAL_ALIASES_CACHE_KEY)) {
+            return $this->cache->get(self::LOCAL_ALIASES_CACHE_KEY);
+        }
+
         $recipes = $this->recipeCompiler->getLocalRecipes();
 
         foreach ($recipes as $recipe) {
@@ -81,9 +96,13 @@ class AliasesProvider
             }
         }
 
-        return array_map(function (Recipe $recipe) {
+        $aliases =  array_map(function (Recipe $recipe) {
             return $recipe->getOfficialPackageName();
         }, $aliases);
+
+        $this->cache->set(self::LOCAL_ALIASES_CACHE_KEY, $aliases);
+        return $aliases;
+
     }
 
     /**

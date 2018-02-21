@@ -175,6 +175,10 @@ abstract class RecipeRepo
      */
     public function getRecipeDirectories()
     {
+        if (!is_dir($this->fullRepoPath)) {
+            return [];
+        }
+
         $finder = new Finder();
         return $finder->ignoreUnreadableDirs()
             ->in($this->fullRepoPath . '/*/*')

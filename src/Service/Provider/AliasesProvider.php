@@ -11,13 +11,17 @@
 
 namespace App\Service\Provider;
 
-
 use App\Entity\Recipe;
 use App\Service\Cache;
 use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\OfficialEndpointProxy;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
+/**
+ * Class AliasesProvider
+ * @package App\Service\Provider
+ * @author Manuel Voss <manuel.voss@i22.de>
+ */
 class AliasesProvider
 {
     const LOCAL_ALIASES_CACHE_KEY = 'aliases-local';

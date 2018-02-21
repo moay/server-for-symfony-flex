@@ -14,6 +14,11 @@ namespace App\Service\Compiler;
 use App\Entity\Recipe;
 use App\Service\RecipeRepoManager;
 
+/**
+ * Class LocalRecipeCompiler
+ * @package App\Service\Compiler
+ * @author Manuel Voss <manuel.voss@i22.de>
+ */
 class LocalRecipeCompiler
 {
     /**

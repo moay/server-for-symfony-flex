@@ -15,7 +15,6 @@ use App\RecipeRepo\ContribRecipeRepo;
 use App\RecipeRepo\OfficialRecipeRepo;
 use App\RecipeRepo\PrivateRecipeRepo;
 
-
 /**
  * Class SystemStatusReportCompiler
  * @package App\Service\Generator

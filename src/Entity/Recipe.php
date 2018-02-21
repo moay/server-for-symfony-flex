@@ -13,7 +13,7 @@ namespace App\Entity;
 
 use App\RecipeRepo\RecipeRepo;
 
-class Recipe
+class Recipe implements \JsonSerializable
 {
     /**
      * @var string
@@ -190,4 +190,20 @@ class Recipe
     {
         $this->manifestValid = $manifestValid;
     }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'author' => $this->getAuthor(),
+            'package' => $this->getPackage(),
+            'version' => $this->getVersion(),
+            'manifest' => $this->getManifest(),
+            'manifestValid' => $this->isManifestValid()
+        ];
+    }
+
+
 }

@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Service\Provider\AliasesProvider;
+use App\Service\Provider\PackagesProvider;
 use App\Service\Provider\UlidProvider;
 use App\Service\Provider\VersionsProvider;
 use App\Traits\ProvidesUnescapedJsonResponsesTrait;
@@ -64,10 +65,11 @@ class EndpointController extends Controller
     /**
      * @Route("/p/{packages}", name="endpoint_packages")
      *
+     * @param PackagesProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function packages()
+    public function packages($packages, PackagesProvider $provider)
     {
-        return $this->json([]);
+        return $this->json($provider->providePackages($packages));
     }
 }

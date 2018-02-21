@@ -77,6 +77,18 @@ class OfficialEndpointProxy
     }
 
     /**
+     * Provides the official response for the packages call
+     *
+     * @param string $packagesRequestString
+     * @return array|string
+     */
+    public function getPackages(string $packagesRequestString)
+    {
+        $request = new Request('GET', $this->endpoint . 'p/' . $packagesRequestString);
+        return $this->getDecodedResponse($request);
+    }
+
+    /**
      * @param Request $request
      * @return array|string
      */
@@ -107,12 +119,12 @@ class OfficialEndpointProxy
 
     /**
      * @param Request $request
-     * @return null|string|string[]
+     * @return string
      */
     private function getCacheId(Request $request)
     {
         $id = $request->getMethod() . $request->getUri();
-        return preg_replace('/[^A-Za-z0-9\.\- ]/', '', $id);
+        return sha1(preg_replace('/[^A-Za-z0-9\.\- ]/', '', $id));
     }
 
 }

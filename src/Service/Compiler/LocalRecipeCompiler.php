@@ -52,6 +52,30 @@ class LocalRecipeCompiler
     }
 
     /**
+     * @param string $author
+     * @param string $package
+     * @param string $version
+     * @return Recipe[]
+     */
+    public function getLocalRecipesForPackageRequest(string $author, string $package, string $version)
+    {
+        if (count($this->recipes) == 0) {
+            $this->loadLocalRecipes();
+        }
+
+        $possibleRecipes = array_filter($this->recipes, function (Recipe $recipe) use ($author, $package, $version) {
+            if ($recipe->getAuthor() != $author ||
+                $recipe->getPackage() != $package ||
+                version_compare($recipe->getVersion(), $version) == 1) {
+                return false;
+            }
+            return true;
+        });
+
+        return $possibleRecipes;
+    }
+
+    /**
      * Loads local recipes
      */
     private function loadLocalRecipes()

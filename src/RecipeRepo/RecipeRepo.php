@@ -12,10 +12,8 @@
 namespace App\RecipeRepo;
 
 use App\Event\RepoStatusChangedEvent;
-use App\Exception\RecipeRepoBackupException;
 use App\Service\Cache;
 use Cz\Git\GitException;
-use Cz\Git\GitRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,7 +30,7 @@ abstract class RecipeRepo
 {
     const REPO_PATH = '/var/repo/';
 
-    /** @var GitRepository */
+    /** @var GitRepo */
     private $repo;
 
     /** @var string */
@@ -94,13 +92,14 @@ abstract class RecipeRepo
      */
     public function update()
     {
-        if (!($this->repo instanceof GitRepository)) {
+        if (!($this->repo instanceof GitRepo)) {
             $this->initialize();
         }
         try {
             $this->backup();
             $this->repo->pull();
-                $this->wipeBackup();
+            $this->repo->forceClean();
+            $this->wipeBackup();
         } catch (GitException $e) {
             $this->logger->error('Repo pull failed (' . $this->repoUrl . ')');
             $this->restore();
@@ -117,19 +116,19 @@ abstract class RecipeRepo
      */
     public function initialize()
     {
-        if (!GitRepository::isRemoteUrlReadable($this->repoUrl)) {
+        if (!GitRepo::isRemoteUrlReadable($this->repoUrl)) {
             throw new GitException('The repo url ' . $this->repoUrl . ' is not readable');
         }
         if (!is_dir($this->fullRepoPath)) {
             try {
-                $this->repo = GitRepository::cloneRepository($this->repoUrl, $this->fullRepoPath);
+                $this->repo = GitRepo::cloneRepository($this->repoUrl, $this->fullRepoPath);
                 $this->logger->info('Repo cloned (' . $this->repoUrl . ')');
             } catch (GitException $e) {
                 $this->logger->error('Repo clone failed (' . $this->repoUrl . ')');
                 throw $e;
             }
         } else {
-            $this->repo = new GitRepository($this->fullRepoPath);
+            $this->repo = new GitRepo($this->fullRepoPath);
         }
         $this->handleRepoStatusChange();
     }
@@ -155,7 +154,7 @@ abstract class RecipeRepo
     public function getStatus()
     {
         try {
-            $repo = new GitRepository($this->fullRepoPath);
+            $repo = new GitRepo($this->fullRepoPath);
             $loaded = true;
         } catch (GitException $e) {
             $loaded = false;
@@ -164,7 +163,7 @@ abstract class RecipeRepo
         return [
             'url' => $this->repoUrl,
             'local_path' => $this->fullRepoPath,
-            'remote_readable' => GitRepository::isRemoteUrlReadable($this->repoUrl),
+            'remote_readable' => GitRepo::isRemoteUrlReadable($this->repoUrl),
             'downloaded' => $loaded,
             'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
         ];

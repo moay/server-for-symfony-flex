@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\Compiler\SystemStatusReportCompiler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,12 +37,14 @@ class FrontendController extends Controller
      * @Route("/ui/data", name="frontend_dashboard_data")
      *
      * @param SystemStatusReportCompiler $reportGenerator
+     * @param LocalRecipeCompiler $recipeCompiler
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function dashboardData(SystemStatusReportCompiler $reportGenerator)
+    public function dashboardData(SystemStatusReportCompiler $reportGenerator, LocalRecipeCompiler $recipeCompiler)
     {
         return $this->json([
-            'status' => $reportGenerator->getReport()
+            'status' => $reportGenerator->getReport(),
+            'recipes' => $recipeCompiler->getLocalRecipes()
         ]);
     }
 }

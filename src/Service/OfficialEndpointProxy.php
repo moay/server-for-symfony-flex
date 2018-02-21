@@ -55,6 +55,17 @@ class OfficialEndpointProxy
     }
 
     /**
+     * Provides a proxy for the aliases.json call, which provides official Symfony aliases.
+     *
+     * @return array
+     */
+    public function getAliases()
+    {
+        $request = new Request('GET', $this->endpoint . 'aliases.json');
+        return $this->getDecodedResponse($request);
+    }
+
+    /**
      * Provides a proxy for the versions.json call, which provides version information for Symfony.
      *
      * @return array

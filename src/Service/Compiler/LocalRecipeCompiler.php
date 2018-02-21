@@ -36,20 +36,20 @@ class LocalRecipeCompiler
     }
 
     /**
-     * @return array
+     * @return Recipe[]
      */
     public function getLocalRecipes() {
         if (count($this->recipes) == 0) {
-           $this->compileRepos();
+           $this->loadLocalRecipes();
         }
 
-        return [];
+        return $this->recipes;
     }
 
     /**
      * Loads local recipes
      */
-    private function compileRepos()
+    private function loadLocalRecipes()
     {
         foreach ($this->repoManager->getConfiguredRepos() as $repo) {
             $recipeFolders = $repo->getRecipeDirectories();

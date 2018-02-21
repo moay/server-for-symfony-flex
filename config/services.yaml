@@ -1,12 +1,11 @@
 parameters:
+    recipe_repo_private: https://github.com/i22-digitalagentur/demo-recipes
+
     official_endpoint: https://symfony.sh/
     proxy_official_endpoint: true
     cache_official_endpoint: true
-
     mirror_official_recipes: false
-    mirror_contrib_recipes: true
-
-    recipe_repo_private: https://github.com/i22-digitalagentur/demo-recipes
+    mirror_contrib_recipes: false
     recipe_repo_official: https://github.com/symfony/recipes
     recipe_repo_contrib: https://github.com/symfony/recipes-contrib
 

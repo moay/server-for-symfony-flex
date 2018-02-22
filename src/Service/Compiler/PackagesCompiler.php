@@ -114,7 +114,10 @@ class PackagesCompiler
             if (in_array($file->getRelativePathName(), ['manifest.json', 'post-install.txt'])) {
                 continue;
             }
-            $files[$file->getRelativePathName()] = utf8_decode($file->getContents());
+            $files[$file->getRelativePathName()] = [
+                'contents' => utf8_decode($file->getContents()),
+                'executable' => is_executable($recipe->getLocalPath() . $file->getRelativePathName())
+            ];
         }
 
         return $files;

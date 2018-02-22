@@ -147,7 +147,7 @@ class PackagesProvider
             $packages[] = [
                 'author' => $author,
                 'package' => $package,
-                'version' => preg_replace('/[iurv]+/', '', $version)
+                'version' => preg_replace('/^[iurv]+/', '', $version)
             ];
         }
         return $packages;

@@ -28,3 +28,6 @@ framework:
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
+
+    assets:
+        json_manifest_path: '%kernel.root_dir%/../public/build/manifest.json'

@@ -9,8 +9,6 @@
         "vue-template-compiler": "^2.5.13",
         "vuetify": "^1.0.1"
     },
-    "license": "MIT",
-    "private": true,
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",

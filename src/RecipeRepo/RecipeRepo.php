@@ -181,6 +181,7 @@ abstract class RecipeRepo
         $finder = new Finder();
         return $finder->ignoreUnreadableDirs()
             ->in($this->fullRepoPath . '/*/*')
+            ->depth(0)
             ->exclude('.git')
             ->directories();
     }

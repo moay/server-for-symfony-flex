@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the i22 symfony-flex-server package.
+ * This file is part of the moay symfony-flex-server package.
  *
- * (c) i22 Digitalagentur GmbH <info@i22.de>
+ * (c) moay
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Class SystemStatusCommand
  * @package App\Command\System
- * @author Manuel Voss <manuel.voss@i22.de>
+ * @author moay <mv@moay.de>
  */
 class SystemStatusCommand extends Command
 {

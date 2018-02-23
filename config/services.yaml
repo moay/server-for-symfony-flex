@@ -1,5 +1,5 @@
 parameters:
-    recipe_repo_private: https://github.com/i22-digitalagentur/demo-recipes
+    recipe_repo_private: https://github.com/moay/demo-recipes
 
     official_endpoint: https://symfony.sh/
     proxy_official_endpoint: true

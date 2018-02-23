@@ -1,0 +1,32 @@
+<v-card color="grey">
+    <v-list subheader class="repostatus" v-for="repo in activeRepos" :key="repo.slug">
+        <v-toolbar light flat mini>
+            <v-toolbar-title>${ repo.slug | capitalize } recipes repo</v-toolbar-title>
+        </v-toolbar>
+        <v-list-tile pb-1>
+            <v-list-tile-content>
+                <v-list-tile-title>Repo reachable</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+                <v-icon :color="status.repos.private.remote_readable ? 'success' : 'grey'" v-html="status.repos.private.remote_readable ? 'check' : 'close'"></v-icon>
+            </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile >
+            <v-list-tile-content>
+                <v-list-tile-title>Downloaded</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+                <v-icon :color="status.repos.private.downloaded ? 'success' : 'grey'" v-html="status.repos.private.downloaded ? 'check' : 'close'"></v-icon>
+            </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile >
+            <v-list-tile-content>
+                <v-list-tile-title>Updated</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+                ${ status.repos.private.last_updated|fromNow }
+            </v-list-tile-action>
+        </v-list-tile>
+    </v-list>
+    <v-divider></v-divider>
+</v-card>

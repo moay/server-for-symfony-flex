@@ -6,12 +6,20 @@
     margin-bottom:0;
 }
 
+.recipe-holder__recipe .list{
+    padding-bottom: 0;
+}
+
 .sidebar > .card {
     margin-bottom: 10px;
 }
 
 .sidebar > .card:last-child {
     margin-bottom:0;
+}
+
+.repostatus {
+    font-size: .8em;
 }
 
 body .application a {

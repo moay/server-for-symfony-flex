@@ -26,7 +26,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @package App\Service\RecipeRepo
  * @author moay <mv@moay.de>
  */
-abstract class RecipeRepo
+abstract class RecipeRepo implements \JsonSerializable
 {
     const REPO_PATH = '/var/repo/';
 
@@ -165,7 +165,8 @@ abstract class RecipeRepo
             'local_path' => $this->fullRepoPath,
             'remote_readable' => GitRepo::isRemoteUrlReadable($this->repoUrl),
             'downloaded' => $loaded,
-            'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName)
+            'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName),
+            'slug' => $this->repoDirName
         ];
     }
 
@@ -260,4 +261,17 @@ abstract class RecipeRepo
     {
         return $this->fullRepoPath;
     }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'slug' => $this->repoDirName,
+            'url' => $this->repoUrl
+        ];
+    }
+
+
 }

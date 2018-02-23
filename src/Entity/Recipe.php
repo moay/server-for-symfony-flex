@@ -203,7 +203,7 @@ class Recipe implements \JsonSerializable
             'version' => $this->getVersion(),
             'manifest' => $this->getManifest(),
             'manifestValid' => $this->isManifestValid(),
-            'repo' => $this->getRepoSlug()
+            'repo' => $this->getRepo()
         ];
     }
 

@@ -2,19 +2,52 @@
 <html>
 <head>
     <title>Flex Server</title>
-    <link href='{{ asset('build/js/dashboard.css') }}' rel="stylesheet">
+    <link href='{{ asset('build/dashboard.css') }}' rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
 <div id="dashboard">
-    <v-app >
+    <v-app light>
         <v-toolbar app>
             <v-toolbar-title>Flex Server</v-toolbar-title>
         </v-toolbar>
-        <v-content>
-            <v-container fluid>
-            </v-container>
+        <v-content grid-list-xl text-xs-center align-content-center>
+            <v-layout row wrap pt-5>
+                <v-flex xs12 sm6 md7 lg5 offset-sm1 offset-lg2 mr-1>
+                    <v-card mb-5>
+                        <v-toolbar dark color="secondary">
+                            <v-toolbar-title>Local Recipes</v-toolbar-title>
+                        </v-toolbar>
+                    </v-card>
+
+                    <v-card light color="grey">
+                        <v-card-text class="recipe-holder">
+                            <v-card
+                                    light elevation-0
+                                    class="recipe-holder__recipe"
+                                    v-for="recipe in recipes" :key="recipe.officialPackageName">
+                                <v-card-text>
+                                    <h3>${ recipe.author }/${ recipe.package }</h3>
+                                    <v-chip outline :color="repoColors[recipe.repo]">${ recipe.repo.toUpperCase() }</v-chip>
+                                </v-card-text>
+                            </v-card>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex hidden-xs-only sm4 md3 lg2 offset-lg1>
+                    <v-card dark color="grey">
+                        <v-toolbar light>
+                            <v-toolbar-title>System status</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-card dark tile>
+                                <v-card-text color>Test</v-card-text>
+                            </v-card>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
         </v-content>
         <v-footer app>
             <v-flex xs12 py-3 text-xs-center>
@@ -24,6 +57,6 @@
     </v-app>
 </div>
 
-<script src="{{ asset('build/js/dashboard.js') }}"></script>
+<script src="{{ asset('build/dashboard.js') }}"></script>
 </body>
 </html>

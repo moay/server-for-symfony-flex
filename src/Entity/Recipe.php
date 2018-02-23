@@ -199,9 +199,11 @@ class Recipe implements \JsonSerializable
         return [
             'author' => $this->getAuthor(),
             'package' => $this->getPackage(),
+            'officialPackageName' => $this->getOfficialPackageName(),
             'version' => $this->getVersion(),
             'manifest' => $this->getManifest(),
-            'manifestValid' => $this->isManifestValid()
+            'manifestValid' => $this->isManifestValid(),
+            'repo' => $this->getRepoSlug()
         ];
     }
 

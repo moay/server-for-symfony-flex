@@ -10,7 +10,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('js/dashboard', './assets/js/dashboard.js')
+    .addEntry('dashboard', './assets/js/dashboard.js')
 
     .enableVueLoader()
 ;

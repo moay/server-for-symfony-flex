@@ -19,7 +19,9 @@ let vm = new Vue({
             private: 'cyan',
             official: 'green',
             contrib: 'orange'
-        }
+        },
+        enableFilter: false,
+        filterString: ''
     },
 
     computed: {
@@ -35,6 +37,38 @@ let vm = new Vue({
                 repos.push(this.status.repos.contrib);
             }
             return repos;
+        },
+        recipesToShow () {
+            let recipes = {};
+            for (let i in this.recipes) {
+                let recipe = this.recipes[i];
+                if (recipes[recipe.officialPackageName] === undefined) {
+                    recipes[recipe.officialPackageName] = recipe;
+                    recipes[recipe.officialPackageName].versions = [];
+                }
+
+                recipes[recipe.officialPackageName].versions.push(recipes[recipe.officialPackageName].version);
+            }
+
+            recipes = Object.keys(recipes).map(function (i) { return recipes[i]; });
+
+            recipes.sort((a, b) => {
+                return (a.officialPackageName < b.officialPackageName ? -1 :
+                    (a.officialPackageName > b.officialPackageName ? 1 : 0));
+            });
+
+            if (this.enableFilter && this.filterString.length > 0) {
+                let filterString = this.filterString.toLowerCase();
+                recipes = recipes.filter((recipe) => {
+                    let searchable = recipe.author + recipe.package;
+                    if (recipe.manifestValid === true && recipe.manifest.aliases !== undefined) {
+                        searchable = searchable + recipe.manifest.aliases.join();
+                    }
+                    return searchable.toLowerCase().search(filterString) !== -1;
+                });
+            }
+
+            return recipes;
         }
     },
 
@@ -47,6 +81,16 @@ let vm = new Vue({
         },
         recipeUrl (recipe) {
             return recipe.repo.url + '/tree/master/' + recipe.officialPackageName + '/' + recipe.version
+        },
+        showSearch () {
+            this.enableFilter = true;
+            this.$nextTick(() => {
+                this.$refs.searchField.focus();
+            });
+        },
+        hideSearch () {
+            this.enableFilter = false;
+            this.filterString = '';
         }
     },
 

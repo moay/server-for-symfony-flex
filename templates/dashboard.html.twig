@@ -22,6 +22,16 @@
                     <v-card mb-5>
                         <v-toolbar dark color="secondary">
                             <v-toolbar-title>Local Recipes</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <v-btn flat icon @click="showSearch" v-if="!enableFilter"><v-icon>search</v-icon></v-btn>
+                            <v-text-field
+                                    ref="searchField"
+                                    placeholder="Search"
+                                    v-model="filterString"
+                                    @keyup.esc="hideSearch"
+                                    v-if="enableFilter"
+                                    transition="slide-y-transition"
+                            ></v-text-field>
                         </v-toolbar>
                     </v-card>
 
@@ -30,12 +40,12 @@
                             <v-card
                                     light elevation-0
                                     class="recipe-holder__recipe"
-                                    v-for="recipe in recipes" :key="recipe.officialPackageName">
+                                    v-for="recipe in recipesToShow" :key="recipe.officialPackageName">
                                     <v-list>
                                         <v-list-tile>
                                             <h3>${ recipe.author }/${ recipe.package }</h3>
                                         </v-list-tile>
-                                        <v-list-tile v-if="recipe.manifest.aliases != undefined && recipe.manifest.aliases.length > 0">
+                                        <v-list-tile v-if="recipe.manifest != null && recipe.manifest.aliases != undefined && recipe.manifest.aliases.length > 0">
                                             <small>Aliases: <v-chip very small label v-for="alias in recipe.manifest.aliases">${alias}</v-chip></small>
                                         </v-list-tile>
 

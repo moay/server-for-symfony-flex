@@ -5,3 +5,16 @@
 .recipe-holder__recipe:last-child {
     margin-bottom:0;
 }
+
+.sidebar > .card {
+    margin-bottom: 10px;
+}
+
+.sidebar > .card:last-child {
+    margin-bottom:0;
+}
+
+body .application a {
+    color: #0d5aa7;
+    text-decoration: none;
+}

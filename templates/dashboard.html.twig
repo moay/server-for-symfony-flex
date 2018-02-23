@@ -31,24 +31,70 @@
                                     light elevation-0
                                     class="recipe-holder__recipe"
                                     v-for="recipe in recipes" :key="recipe.officialPackageName">
-                                <v-card-text>
-                                    <h3>${ recipe.author }/${ recipe.package }</h3>
-                                    <v-chip outline :color="repoColors[recipe.repo]">${ recipe.repo.toUpperCase() }</v-chip>
-                                </v-card-text>
+                                    <v-list>
+                                        <v-list-tile>
+                                            <h3>${ recipe.author }/${ recipe.package }</h3>
+                                        </v-list-tile>
+                                        <v-list-tile v-if="recipe.manifest.aliases != undefined && recipe.manifest.aliases.length > 0">
+                                            <small>Aliases: <v-chip very small label v-for="alias in recipe.manifest.aliases">${alias}</v-chip></small>
+                                        </v-list-tile>
+                                        <v-list-tile>
+                                            <v-chip small outline :color="repoColors[recipe.repo]">${ recipe.repo.toUpperCase() }</v-chip>
+                                        </v-list-tile>
+                                    </v-list>
                             </v-card>
                         </v-card-text>
                     </v-card>
                 </v-flex>
-                <v-flex hidden-xs-only sm4 md3 lg2 offset-lg1>
-                    <v-card dark color="grey">
+                <v-flex hidden-xs-only sm4 md3 lg2 offset-lg1 class="sidebar">
+                    <v-card color="grey">
                         <v-toolbar light>
                             <v-toolbar-title>System status</v-toolbar-title>
                         </v-toolbar>
-                        <v-card-text>
-                            <v-card dark tile>
-                                <v-card-text color>Test</v-card-text>
-                            </v-card>
-                        </v-card-text>
+                        <v-list subheader>
+                            <v-subheader>Private recipes repo</v-subheader>
+                            <v-list-tile >
+                                <v-list-tile-content>
+                                    <v-list-tile-title>Repo reachable</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                    <v-icon :color="status.repos.private.remote_readable ? 'success' : 'grey'" v-html="status.repos.private.remote_readable ? 'check' : 'close'"></v-icon>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                            <v-list-tile >
+                                <v-list-tile-content>
+                                    <v-list-tile-title>Downloaded</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                    <v-icon :color="status.repos.private.downloaded ? 'success' : 'grey'" v-html="status.repos.private.downloaded ? 'check' : 'close'"></v-icon>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                            <v-list-tile >
+                                <v-list-tile-content>
+                                    <v-list-tile-title>Updated</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                    ${status.repos.private.last_updated}
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
+                        <v-divider></v-divider>
+                    </v-card>
+                    <v-card tile light>
+                        <v-card-title>Resources</v-card-title>
+                        <v-list>
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>Want to learn about this flex server? Visit the <a href="https://github.com/moay/symfony-flex-server">project on github</a>.</v-list-tile-action-text>
+                                </v-list-tile-action>
+                            </v-list-tile>
+
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-list-tile-action-text>Want to learn about creating recipes? Visit the <a href="https://github.com/symfony/recipes">official recipe repo</a>.</v-list-tile-action-text>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
                     </v-card>
                 </v-flex>
             </v-layout>

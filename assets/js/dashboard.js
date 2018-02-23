@@ -4,6 +4,8 @@ import VueResource from 'vue-resource'
 import 'vuetify/dist/vuetify.min.css'
 import './../css/dashboard.css'
 
+var moment = require('moment');
+
 Vue.use(Vuetify)
 Vue.use(VueResource)
 

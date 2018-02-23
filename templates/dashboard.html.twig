@@ -58,14 +58,32 @@
                                     <v-chip
                                             small outline
                                             :color="repoColors[recipe.repo.slug]"
-                                            v-if="activeRepos.length > 1">${ recipe.repo.slug.toUpperCase() }</v-chip>
+                                            v-if="activeRepos.length > 1"
+                                    >${ recipe.repo.slug.toUpperCase() }</v-chip>
                                     <v-spacer></v-spacer>
                                     <v-btn
                                             color="secondary" flat small
                                             :href="'https://packagist.org/packages/' + recipe.officialPackageName"
                                             target="_blank"
-                                            v-if="recipe.repo.slug !== 'private'"><v-icon>code</v-icon>&nbsp;&nbsp;Package</v-btn>
-                                    <v-btn color="info" flat small :href="recipeUrl(recipe)" target="_blank"><v-icon>receipt</v-icon>&nbsp;&nbsp;Recipe</v-btn>
+                                            v-if="recipe.repo.slug !== 'private'"
+                                    ><v-icon>code</v-icon>&nbsp;&nbsp;Package</v-btn>
+                                    <v-btn
+                                            color="info" flat small
+                                            :href="recipeUrl(recipe)"
+                                            target="_blank"
+                                            v-if="recipe.versions.length === 1"
+                                    ><v-icon>receipt</v-icon>&nbsp;&nbsp;Recipe</v-btn>
+                                    <v-menu offset-y v-if="recipe.versions.length > 1">
+                                        <v-btn color="info" flat small slot="activator"><v-icon>receipt</v-icon>&nbsp;&nbsp;Recipe</v-btn>
+                                        <v-list>
+                                            <v-list-tile v-for="version in versionSort(recipe.versions)" :key="recipe.officialPackageName + version"
+                                                         :href="recipeVersionUrl(recipe, version)"
+                                                         target="_blank"
+                                            >
+                                                <v-list-tile-title>v${ version }</v-list-tile-title>
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-menu>
                                 </v-card-actions>
                             </v-card>
                         </v-card-text>

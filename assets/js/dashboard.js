@@ -47,7 +47,7 @@ let vm = new Vue({
                     recipes[recipe.officialPackageName].versions = [];
                 }
 
-                recipes[recipe.officialPackageName].versions.push(recipes[recipe.officialPackageName].version);
+                recipes[recipe.officialPackageName].versions.push(recipe.version);
             }
 
             recipes = Object.keys(recipes).map(function (i) { return recipes[i]; });
@@ -82,6 +82,9 @@ let vm = new Vue({
         recipeUrl (recipe) {
             return recipe.repo.url + '/tree/master/' + recipe.officialPackageName + '/' + recipe.version
         },
+        recipeVersionUrl (recipe, version) {
+            return recipe.repo.url + '/tree/master/' + recipe.officialPackageName + '/' + version
+        },
         showSearch () {
             this.enableFilter = true;
             this.$nextTick(() => {
@@ -91,6 +94,14 @@ let vm = new Vue({
         hideSearch () {
             this.enableFilter = false;
             this.filterString = '';
+        },
+        versionSort (versionArray) {
+            versionArray.sort((a,b) => {
+                return (a < b ? 1 : (
+                    a > b ? -1 : 0
+                ));
+            });
+            return versionArray;
         }
     },
 

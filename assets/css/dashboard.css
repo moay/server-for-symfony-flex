@@ -10,6 +10,14 @@
     padding-bottom: 0;
 }
 
+.recipe-holder__recipe .list__tile{
+     height:auto;
+}
+
+.recipe-holder  .card__actions{
+    padding-left:8px;
+}
+
 .sidebar > .card {
     margin-bottom: 10px;
 }

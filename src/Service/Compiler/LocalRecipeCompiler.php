@@ -96,8 +96,13 @@ class LocalRecipeCompiler
 
                 $manifestFile = $recipeFolder->getPathname() . '/manifest.json';
                 if (file_exists($manifestFile)) {
-                    $recipe->setManifest(json_decode(file_get_contents($manifestFile), true));
-                    $recipe->setManifestValid(json_last_error() === JSON_ERROR_NONE);
+                    $manifest = json_decode(file_get_contents($manifestFile), true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        $recipe->setManifest($manifest);
+                        $recipe->setManifestValid(true);
+                    } else {
+                        $recipe->setManifestValid(false);
+                    }
                 }
 
                 $this->recipes[] = $recipe;

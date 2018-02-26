@@ -1,0 +1,7 @@
+pages:
+    - 'Introduction': 'index.md'
+    - 'Requirements': 'topics/prerequisites.md'
+    - 'Setup': 'topics/setup.md'
+    - 'Configuration': 'topics/configuration.md'
+    - 'Updating recipes': 'topics/recipe_updating.md'
+    - 'Commands': 'topics/commands.md'

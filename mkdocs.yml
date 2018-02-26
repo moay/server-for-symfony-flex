@@ -1,3 +1,4 @@
+site_name: 'Symfony Flex Server'
 pages:
     - 'Introduction': 'index.md'
     - 'Requirements': 'topics/prerequisites.md'

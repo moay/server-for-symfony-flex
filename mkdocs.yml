@@ -1,4 +1,5 @@
 site_name: 'Symfony Flex Server'
+repo_url: 'https://github.com/moay/symfony-flex-server'
 pages:
     - 'Introduction': 'index.md'
     - 'Requirements': 'topics/prerequisites.md'

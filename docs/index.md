@@ -11,7 +11,10 @@ A self hosted server for Symfony Flex allowing private recipes, customized recip
 
 ### Get started
 
-// Todo
+In order to get up and running quickly
+
+* check out the [system requirements](prerequisites.md) and
+* read about [setting the server up](topics/setup.md).
 
 ### License
 

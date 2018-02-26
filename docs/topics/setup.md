@@ -10,10 +10,9 @@ Setting up the server should be quick and easy. These are the necessary steps:
 
 *Of course, you should deploy the project to where it will be hosted (probably before step 2).*
 
-That's it, you should be up and running. You might want to tweak the configuration or to setup automatic recipe updates.
+That's it, you should be up and running. You might want to [tweak the configuration](configuration.md) or to setup automatic recipe updates.
 
 Installing a monitoring tool (like [Sentry](https://sentry.io)) is recommended.
-
 
 ### Using the server
 

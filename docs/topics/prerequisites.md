@@ -9,4 +9,4 @@ In order to run the server, you'll need a server which
 
 It is recommended to setup some sort of monitoring. We use [Sentry](https://sentry.io).
 
-SSH access is useful to run commands on the server. 
+SSH access is useful to run [commands](commands.md) on the server. 

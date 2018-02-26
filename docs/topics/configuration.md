@@ -1,14 +1,18 @@
 # Configuration
 
-The server comes well configured but the configuration can be tweaked. You should set your private recipes repo, all other options are otional.
+The server comes well configured but the configuration can be tweaked. You should set your private recipes repo, all other options are optional.
 
 In order to change the configuration, alter the file `/config/services.yaml`.
 
 ### Private recipes repo
 
-Your private recipes repo must be a git repo. It must be available for git. In order to set it up, set this parameter:
+Your private recipes repo must be a git repo. It must be available via git, so it should be either a public repo or you should ensure that your server has access to it, probably by setting up some sort of SSH keys. In order to make the server use your repo, set this parameter:
 
     recipe_repo_private: The url to your private recipe repo
+    
+After changing the configuration, you'll need to update the repos. Whenever you change the repo entirely, it is recommended to completely reset the private repo by executing the command `php bin/console recipes:reset private`.
+
+Read more about these commands [here](commands.md).
 
 ### Official endpoint configuration options
 

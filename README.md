@@ -17,7 +17,7 @@ ___
 
 ### Documentation
 
-Full documentation is available here: [Documentation](symfony-flex-server.readthedocs.io)
+Full documentation is available here: [Documentation](https://symfony-flex-server.readthedocs.io)
 
 ### License
 

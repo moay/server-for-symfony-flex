@@ -13,7 +13,9 @@ Recipes are basically a set of files and instructions. The most important file o
 Once you have setup the server, it will follow some basic rules when resolving the packages:
 
 1) **Provide the newest version.** If you request a package at version 1.3 and you have a local recipe for version 1.0 and up, but the official endpoint provides version 1.2 and up, the latter will be used.
+
 2) **Local recipes first.** If both a local recipe repo and the official endpoint have the same version, use the local recipe.
+
 3) **Private over official.** If there are more than one local recipe repos, same version recipes will be selected in the order `private` > `official` > `contrib`.
 
 There currently is now way to mix up recipes. If you want to have a customized or extended version of an official recipe, you'll have to provide a complete copy. We are planning on setting up a way to create recipe extension which will allow to extend official recipes and live until the next major version.

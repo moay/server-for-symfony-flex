@@ -1,9 +1,15 @@
 site_name: 'Symfony Flex Server'
 repo_url: 'https://github.com/moay/symfony-flex-server'
+repo_name: 'moay/symfony-flex-server'
 pages:
     - 'Introduction': 'index.md'
     - 'Requirements': 'topics/prerequisites.md'
     - 'Setup': 'topics/setup.md'
     - 'Configuration': 'topics/configuration.md'
     - 'Updating recipes': 'topics/recipe_updating.md'
+    - 'About recipes': 'topics/recipes.md'
     - 'Commands': 'topics/commands.md'
+theme:
+    name: 'material'
+    palette:
+        primary: 'grey'

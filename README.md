@@ -1,4 +1,7 @@
 # symfony-flex-server
+
+[![Build Status](https://travis-ci.org/moay/symfony-flex-server.svg?branch=master)](https://travis-ci.org/moay/symfony-flex-server)
+
 A self hosted server for Symfony Flex allowing private recipes, customized recipes and caching functionality for the official endpoints.
 
 ![ui](https://user-images.githubusercontent.com/3605512/36627099-eb239f48-193d-11e8-919a-d98003696d7b.png)

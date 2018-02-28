@@ -43,9 +43,10 @@ class LocalRecipeCompiler
     /**
      * @return Recipe[]
      */
-    public function getLocalRecipes() {
+    public function getLocalRecipes()
+    {
         if (count($this->recipes) == 0) {
-           $this->loadLocalRecipes();
+            $this->loadLocalRecipes();
         }
 
         return $this->recipes;

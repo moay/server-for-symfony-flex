@@ -45,6 +45,11 @@ class SystemStatusCommand extends Command
             ->setDescription('Provides an overview over the system status');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);

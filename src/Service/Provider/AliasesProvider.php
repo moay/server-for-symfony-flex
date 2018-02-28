@@ -80,12 +80,11 @@ class AliasesProvider
      */
     public function getLocalAliases()
     {
-        $aliases = [];
-
         if ($this->cache->has(self::LOCAL_ALIASES_CACHE_KEY)) {
             return $this->cache->get(self::LOCAL_ALIASES_CACHE_KEY);
         }
 
+        $aliases = [];
         $recipes = $this->recipeCompiler->getLocalRecipes();
 
         foreach ($recipes as $recipe) {
@@ -121,13 +120,13 @@ class AliasesProvider
     private function resolveAliasConflict(Recipe $recipe1, Recipe $recipe2)
     {
         if ($recipe1->getRepoSlug() != $recipe2->getRepoSlug()) {
-            if ($recipe1->getRepoSlug() == 'private') {
+            if ($recipe1->getRepoSlug() === 'private') {
                 return $recipe1;
             }
-            if ($recipe2->getRepoSlug() == 'private') {
+            if ($recipe2->getRepoSlug() === 'private') {
                 return $recipe2;
             }
-            if ($recipe1->getRepoSlug() == 'official') {
+            if ($recipe1->getRepoSlug() === 'official') {
                 return $recipe1;
             }
             return $recipe2;

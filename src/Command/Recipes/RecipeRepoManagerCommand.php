@@ -25,12 +25,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @package App\Command\Recipes
  * @author moay <mv@moay.de>
  */
-abstract class RecipeRepoManagerCommand extends Command implements RecipeRepoManagerCommandInterface
+abstract class RecipeRepoManagerCommand extends Command
 {
     const ACTION_NAMESPACE = 'recipes:';
 
     /** @var RecipeRepoManager */
     private $repoManager;
+
+    /** @var string */
+    protected $action;
+
+    /** @var string */
+    protected $description;
 
     /**
      * RecipesInitializeCommand constructor.
@@ -46,13 +52,13 @@ abstract class RecipeRepoManagerCommand extends Command implements RecipeRepoMan
     protected function configure()
     {
         $this
-            ->setName(self::ACTION_NAMESPACE . $this->getAction())
-            ->setDescription($this->getDescription());
+            ->setName(self::ACTION_NAMESPACE . $this->action)
+            ->setDescription($this->description);
 
         $description = sprintf(
             '%s a single repo by selecting \'private\', \'official\' or \'contrib\'. Don\'t select any in order to %s all configured repos.',
-            ucfirst($this->getAction()),
-            $this->getAction()
+            ucfirst($this->action),
+            $this->action
         );
 
         $this->addArgument('repo', InputArgument::IS_ARRAY, $description, []);
@@ -83,8 +89,8 @@ abstract class RecipeRepoManagerCommand extends Command implements RecipeRepoMan
             } else {
                 if ($this->repoManager->isConfiguredByDirName($repo)) {
                     try {
-                        $this->repoManager->executeOnRepo($this->getAction(), $repo);
-                        $actionPast = $this->getAction() == 'reset' ? 'resetted' : $this->getAction() . 'd';
+                        $this->repoManager->executeOnRepo($this->action, $repo);
+                        $actionPast = $this->action === 'reset' ? 'resetted' : $this->action . 'd';
                         $io->success(sprintf('%s recipes repo %s.', ucfirst($repo), $actionPast));
                     } catch (RecipeRepoManagerException $e) {
                         $io->error($e->getMessage());
@@ -94,6 +100,5 @@ abstract class RecipeRepoManagerCommand extends Command implements RecipeRepoMan
                 }
             }
         }
-
     }
 }

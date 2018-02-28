@@ -19,24 +19,8 @@ namespace App\Command\Recipes;
 class RecipesResetCommand extends RecipeRepoManagerCommand
 {
     /** @var string */
-    private $action = 'reset';
+    protected $action = 'reset';
 
     /** @var string */
-    private $description = 'Resets local recipe repos by deleting and reinitalizing from remote repo';
-
-    /**
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+    protected $description = 'Resets local recipe repos by deleting and reinitalizing from remote repo';
 }

@@ -16,6 +16,7 @@ use App\RecipeRepo\ContribRecipeRepo;
 use App\RecipeRepo\OfficialRecipeRepo;
 use App\RecipeRepo\PrivateRecipeRepo;
 use App\RecipeRepo\RecipeRepo;
+use Cz\Git\GitException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -90,6 +91,7 @@ class RecipeRepoManager
      * @param string $action
      * @param string $repoDirName
      * @throws RecipeRepoManagerException
+     * @throws GitException
      */
     public function executeOnRepo(string $action, string $repoDirName)
     {

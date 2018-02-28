@@ -19,24 +19,9 @@ namespace App\Command\Recipes;
 class RecipesInitializeCommand extends RecipeRepoManagerCommand
 {
     /** @var string */
-    private $action = 'initialize';
+    protected $action = 'initialize';
 
     /** @var string */
-    private $description = 'Initializes local recipe repos from remote repo';
+    protected $description = 'Initializes local recipe repos from remote repo';
 
-    /**
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 }

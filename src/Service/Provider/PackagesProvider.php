@@ -57,6 +57,8 @@ class PackagesProvider
      *
      * @param string $packagesRequestString
      * @return array
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     public function providePackages(string $packagesRequestString)
     {
@@ -91,6 +93,8 @@ class PackagesProvider
     /**
      * @param string $packagesRequestString
      * @return array|string
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     private function getOfficialProxyResponse(string $packagesRequestString)
     {
@@ -111,13 +115,13 @@ class PackagesProvider
             usort($localRecipes, function (Recipe $recipe1, Recipe $recipe2) {
                 if ($recipe1->getVersion() == $recipe2->getVersion()) {
                     if ($recipe1->getRepoSlug() != $recipe2->getRepoSlug()) {
-                        if ($recipe1->getRepoSlug() == 'private') {
+                        if ($recipe1->getRepoSlug() === 'private') {
                             return -1;
                         }
-                        if ($recipe2->getRepoSlug() == 'private') {
+                        if ($recipe2->getRepoSlug() === 'private') {
                             return 1;
                         }
-                        if ($recipe1->getRepoSlug() == 'official') {
+                        if ($recipe1->getRepoSlug() === 'official') {
                             return -1;
                         }
                         return 1;

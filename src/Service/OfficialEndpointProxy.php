@@ -58,6 +58,8 @@ class OfficialEndpointProxy
      * Provides a proxy for the aliases.json call, which provides official Symfony aliases.
      *
      * @return array
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     public function getAliases()
     {
@@ -69,6 +71,8 @@ class OfficialEndpointProxy
      * Provides a proxy for the versions.json call, which provides version information for Symfony.
      *
      * @return array
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     public function getVersions()
     {
@@ -81,6 +85,8 @@ class OfficialEndpointProxy
      *
      * @param string $packagesRequestString
      * @return array|string
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     public function getPackages(string $packagesRequestString)
     {
@@ -91,6 +97,8 @@ class OfficialEndpointProxy
     /**
      * @param Request $request
      * @return array|string
+     * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     private function getDecodedResponse(Request $request)
     {

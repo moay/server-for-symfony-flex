@@ -43,7 +43,7 @@ class PackagesCompiler
     {
         $locks = [];
         foreach ($requestedPackages as $package) {
-            $locks[join('/', [$package['author'], $package['package']])] = ['version' => $package['version']];
+            $locks[implode('/', [$package['author'], $package['package']])] = ['version' => $package['version']];
         }
         return $locks;
     }
@@ -65,7 +65,7 @@ class PackagesCompiler
                 'files' => $this->getRecipeFiles($recipe),
                 'origin' => $recipe->getOfficialPackageName() . ':'  . $recipe->getVersion() . '@private:master',
                 'not_installable' => $recipe->isManifestValid() === false,
-                'is_contrib' => $recipe->getRepoSlug() == 'contrib'
+                'is_contrib' => $recipe->getRepoSlug() === 'contrib'
             ];
 
             if (empty($manifest['files'])) {

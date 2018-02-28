@@ -6,3 +6,6 @@ php:
 install:
   - composer install
 script: bin/phpunit
+matrix:
+  allow_failures
+    - php: 'nightly'

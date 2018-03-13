@@ -15,7 +15,7 @@ ___
 ### Features
 
 * private recipes: The server enables you to use your own recipes for your own packages, even with Satis or Private Packagist.
-* seamless integration: The server integrates with the official symfony.sh-endpoint and will serve the official recipes as well as your own ones.
+* seamless integration: The server integrates with the official symfony.sh endpoint and will serve the official recipes as well as your own ones.
 * caching and mirroring: The server can easily be configured to mirror the official repos so that you are completely independent.
 
 ### Documentation

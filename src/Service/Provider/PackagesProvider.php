@@ -132,7 +132,7 @@ class PackagesProvider
             });
         }
         if (count($localRecipes) > 0) {
-            return $localRecipes[0];
+            return reset($localRecipes);
         }
         return null;
     }

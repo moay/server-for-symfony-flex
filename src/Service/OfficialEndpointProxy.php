@@ -11,10 +11,12 @@
 
 namespace App\Service;
 
+use App\Exception\OfficialEndpointNotAvailableExtension;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OfficialEndpointProxy
@@ -106,6 +108,13 @@ class OfficialEndpointProxy
             $response = $this->client->sendRequest($request);
             $decodedResponse = json_decode($response->getBody(), true);
 
+            if(!in_array($response->getStatusCode(), range(200, 299))) {
+                if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {
+                    return $this->cache->get($this->getCacheId($request));
+                }
+                return [];
+            }
+
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $decodedResponse = $response->getBody();
             }
@@ -116,10 +125,8 @@ class OfficialEndpointProxy
 
             return $decodedResponse;
         } catch (NetworkException $e) {
-            if ($this->cacheEndpoint) {
-                if ($this->cache->has($this->getCacheId($request))) {
-                    return $this->cache->get($this->getCacheId($request));
-                }
+            if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {
+                return $this->cache->get($this->getCacheId($request));
             }
             throw $e;
         }

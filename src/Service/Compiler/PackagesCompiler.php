@@ -115,7 +115,7 @@ class PackagesCompiler
                 continue;
             }
             $files[$file->getRelativePathName()] = [
-                'contents' => utf8_decode($file->getContents()),
+                'contents' => $file->getContents(),
                 'executable' => is_executable($recipe->getLocalPath() . $file->getRelativePathName())
             ];
         }

@@ -142,16 +142,22 @@ class PackagesProvider
      *
      * @param string $packagesRequestString
      * @return array
+     * @throws \HttpRequestException
      */
     private function parseRequestedPackages(string $packagesRequestString)
     {
         $packages = [];
         foreach (explode(';', rtrim($packagesRequestString, ';')) as $requestedPackage) {
-            [$author, $package, $version, $timestamp] = explode(',', $requestedPackage);
+            $packageDetails = explode(',', $requestedPackage);
+
+            if (count($packageDetails) < 3) {
+                throw new \HttpRequestException('Invalid package string provided', 500);
+            }
+
             $packages[] = [
-                'author' => $author,
-                'package' => $package,
-                'version' => preg_replace('/^[iurv]+/', '', $version)
+                'author' => $packageDetails[0],
+                'package' => $packageDetails[1],
+                'version' => preg_replace('/^[iurv]+/', '', $packageDetails[2])
             ];
         }
         return $packages;

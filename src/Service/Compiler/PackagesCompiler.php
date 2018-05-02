@@ -108,7 +108,7 @@ class PackagesCompiler
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()
             ->in($recipe->getLocalPath())
-            ->ignoreDotFiles(true);
+            ->ignoreDotFiles(false);
 
         foreach ($finder->files() as $file) {
             if (in_array($file->getRelativePathName(), ['manifest.json', 'post-install.txt'])) {

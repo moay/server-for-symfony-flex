@@ -1,5 +1,5 @@
 parameters:
-    recipe_repo_private: '%env(RECIPE_REPO_PRIVATE)%'
+    recipe_repo_private: https://gitlab.nvision.lu/nvision/recipes
 
     official_endpoint: https://symfony.sh/
     proxy_official_endpoint: true

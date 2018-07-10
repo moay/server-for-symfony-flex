@@ -12,7 +12,12 @@ Your private recipes repo must be a git repo. It must be available via git, so i
     
 After changing the configuration, you'll need to update the repos. Whenever you change the repo entirely, it is recommended to completely reset the private repo by executing the command `php bin/console recipes:reset private`.
 
-The url provided should be a *git* url. Using the repo's *https* url may work if the git server resolves the git request properly. Make sure you use the git url in case you encounter problems when pulling or if your repo is not displayed as available.
+The url provided must be a *https* url. Make sure to provide the right url structure, here are two examples:
+
+*  `https://github.com/moay/demo-recipes`
+*  `https://bitbucket.org/mvmoay/demo-recipes`
+
+Using git urls will not work properly.
 
 Read more about these commands [here](commands.md).
 

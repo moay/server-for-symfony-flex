@@ -8,9 +8,11 @@ In order to change the configuration, alter the file `/config/services.yaml`.
 
 Your private recipes repo must be a git repo. It must be available via git, so it should be either a public repo or you should ensure that your server has access to it, probably by setting up some sort of SSH keys. In order to make the server use your repo, set this parameter:
 
-    recipe_repo_private: The url to your private recipe repo
+    recipe_repo_private: The git url to your private recipe repo, f.i. git@github.com:moay/demo-recipes.git
     
 After changing the configuration, you'll need to update the repos. Whenever you change the repo entirely, it is recommended to completely reset the private repo by executing the command `php bin/console recipes:reset private`.
+
+The url provided should be a *git* url. Using the repo's *https* url may work if the git server resolves the git request properly. Make sure you use the git url in case you encounter problems when pulling or if your repo is not displayed as available.
 
 Read more about these commands [here](commands.md).
 

@@ -6,10 +6,9 @@ A self hosted server for Symfony Flex allowing private recipes, customized recip
 
 ![ui](https://user-images.githubusercontent.com/3605512/36627099-eb239f48-193d-11e8-919a-d98003696d7b.png)
 
+## Early stage
 
-## Currently testing
-The server is basically ready to be used but needs some testing. Feel free to give it a try and report any issue you encounter. Thanks!
-
+The server is basically ready to be used and is used in production, but there might still be some quirks. Any report on new issues is welcome. Thanks!
 ___
 
 ### Features

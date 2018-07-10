@@ -15,7 +15,7 @@ The url provided must be a *https* url. Make sure to provide the right url struc
 *  `https://github.com/moay/demo-recipes`
 *  `https://bitbucket.org/mvmoay/demo-recipes`
 
-Using git urls will not work properly.
+There have been reports regarding private bitbucket repos, where people needed to use the git url (`git@bitbucket.org:<user>/<repo>.git`), feel free to try that out in case you run into problems.
 
 After changing the configuration, you'll need to update the repos. Whenever you change the repo entirely, it is recommended to completely reset the private repo by executing the command `php bin/console recipes:reset private`.
 

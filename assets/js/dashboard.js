@@ -80,10 +80,13 @@ let vm = new Vue({
             })
         },
         recipeUrl (recipe) {
-            return recipe.repo.url + '/tree/master/' + recipe.officialPackageName + '/' + recipe.version
+            return this.buildRecipeRepoUrl(recipe) + '/' + recipe.version
         },
         recipeVersionUrl (recipe, version) {
-            return recipe.repo.url + '/tree/master/' + recipe.officialPackageName + '/' + version
+            return this.buildRecipeRepoUrl(recipe) + '/' + version
+        },
+        buildRecipeRepoUrl (recipe) {
+          return recipe.repo.url + '/tree/master/' + recipe.officialPackageName
         },
         showSearch () {
             this.enableFilter = true;

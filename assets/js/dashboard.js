@@ -86,14 +86,17 @@ let vm = new Vue({
             return this.buildRecipeRepoUrl(recipe) + '/' + version
         },
         buildRecipeRepoUrl (recipe) {
-            let repoUrl, pattern, gitServerHostName
+            let repoUrl, pattern, gitServerHostName, gitServerProtocol
 
             repoUrl = recipe.repo.url.replace('.git', '')
 
             pattern = /^git\@[a-z.]*\:/
             if (pattern.test(repoUrl)) {
                 gitServerHostName = pattern.exec(repoUrl)[0].replace('git@', '').replace(':', '')
-                repoUrl = repoUrl.replace(pattern, 'https://' + gitServerHostName + '/')
+
+                gitServerProtocol = recipe.repo.slug != "private" || this.status.config.enableHttpsPrivateRecipe == true ? 'https' : 'http'
+
+                repoUrl = repoUrl.replace(pattern, gitServerProtocol + '://' + gitServerHostName + '/')
             }
 
             pattern = /^https?\:\/\/[a-z.]*/

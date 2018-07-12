@@ -1,5 +1,6 @@
 parameters:
     recipe_repo_private: https://github.com/moay/demo-recipes
+    enable_https_private_recipe: true
 
     official_endpoint: https://symfony.sh/
     proxy_official_endpoint: true
@@ -28,6 +29,7 @@ services:
             $mirrorOfficialRepo: '%mirror_official_recipes%'
             $mirrorContribRepo: '%mirror_contrib_recipes%'
             $projectDir: '%kernel.project_dir%'
+            $enableHttpsPrivateRecipe: '%enable_https_private_recipe%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

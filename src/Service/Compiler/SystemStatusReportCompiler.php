@@ -43,6 +43,7 @@ class SystemStatusReportCompiler
      * @param bool $cacheEndpoint
      * @param bool $mirrorOfficialRepo
      * @param bool $mirrorContribRepo
+     * @param bool $enableHttpsPrivateRecipe
      */
     public function __construct(
         string $projectDir,
@@ -52,7 +53,8 @@ class SystemStatusReportCompiler
         bool $enableProxy,
         bool $cacheEndpoint,
         bool $mirrorOfficialRepo,
-        bool $mirrorContribRepo
+        bool $mirrorContribRepo,
+        bool $enableHttpsPrivateRecipe
     ) {
         $this->reportFilePath = $projectDir . self::HEALTH_REPORT_FILE;
         $this->repos = [
@@ -64,7 +66,8 @@ class SystemStatusReportCompiler
             'enableProxy' => $enableProxy,
             'enableCache' => $cacheEndpoint,
             'mirrorOfficial' => $mirrorOfficialRepo,
-            'mirrorContrib' => $mirrorContribRepo
+            'mirrorContrib' => $mirrorContribRepo,
+            'enableHttpsPrivateRecipe' => $enableHttpsPrivateRecipe
         ];
 
     }

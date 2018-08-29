@@ -2,7 +2,8 @@
 
 The server comes well configured but the configuration can be tweaked. You should set your private recipes repo, all other options are optional.
 
-In order to change the configuration, alter the file `/config/services.yaml`.
+In order to change the configuration alter the file `/config/services.yaml` or
+set your env variables.
 
 ### Private recipes repo
 
@@ -10,6 +11,9 @@ Your private recipes repo must be a git repo. It must be available via git, so i
 
     recipe_repo_private: The url to your private recipe repo
     
+You can set the parameter directly in `/config/services.yaml` or in the `.env`
+file or via an environment variable.
+
 The url provided must be a *https* url. Make sure to provide the right url structure, here are two examples:
 
 *  `https://github.com/moay/demo-recipes`

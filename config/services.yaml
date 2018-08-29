@@ -1,5 +1,5 @@
 parameters:
-    recipe_repo_private: https://github.com/moay/demo-recipes
+    env(recipe_repo_private): https://github.com/moay/demo-recipes
 
     official_endpoint: https://symfony.sh/
     proxy_official_endpoint: true
@@ -22,7 +22,7 @@ services:
             $officialEndpoint: '%official_endpoint%'
             $enableProxy: '%proxy_official_endpoint%'
             $cacheEndpoint: '%cache_official_endpoint%'
-            $privateRepoUrl: '%recipe_repo_private%'
+            $privateRepoUrl: '%env(recipe_repo_private)%'
             $officialRepoUrl: '%recipe_repo_official%'
             $contribRepoUrl: '%recipe_repo_contrib%'
             $mirrorOfficialRepo: '%mirror_official_recipes%'

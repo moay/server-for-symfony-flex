@@ -52,7 +52,7 @@ class AliasesProvider
         if ($enableProxy) {
             $this->officialEndpointProxy = $officialEndpointProxy;
         }
-        $this->cache = $cache;
+        $this->cache = $cache();
     }
 
     /**

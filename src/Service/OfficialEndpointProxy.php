@@ -53,7 +53,7 @@ class OfficialEndpointProxy
         $this->cacheEndpoint = $cacheEndpoint;
         $this->client = $client;
         $this->endpoint = $officialEndpoint;
-        $this->cache = $cache;
+        $this->cache = $cache();
     }
 
     /**

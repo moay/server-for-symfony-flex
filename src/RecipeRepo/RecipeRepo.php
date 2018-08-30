@@ -68,7 +68,7 @@ abstract class RecipeRepo implements \JsonSerializable
     ) {
         $this->repoUrl = $repoUrl;
         $this->fullRepoPath = $projectDir . self::REPO_PATH . $this->repoDirName;
-        $this->cache = $cache;
+        $this->cache = $cache();
         $this->logger = $logger;
         $this->eventDispatcher = $eventDispatcher;
     }

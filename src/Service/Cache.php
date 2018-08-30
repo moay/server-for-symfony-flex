@@ -42,12 +42,10 @@ class Cache
     }
 
     /**
-     * @param $method
-     * @param $arguments
-     * @return mixed
+     * @return FilesystemCache
      */
-    public function __call($method, $arguments)
+    public function __invoke()
     {
-        return call_user_func_array([$this->cache, $method], $arguments);
+        return $this->cache;
     }
 }

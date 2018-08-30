@@ -16,7 +16,7 @@ use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 /**
- * Class Cache
+ * Class CacheClear.
  * @package App\Service
  * @author moay <mv@moay.de>
  */
@@ -35,7 +35,7 @@ class CacheClear implements CacheClearerInterface
      */
     public function __construct(Cache $cache, SystemStatusReportCompiler $systemStatusReportCompiler)
     {
-        $this->cache = $cache;
+        $this->cache = $cache();
         $this->systemStatusReportCompiler = $systemStatusReportCompiler;
     }
 

@@ -33,7 +33,7 @@ class LocalAliasEventSubscriber implements EventSubscriberInterface
      */
     public function __construct(Cache $cache)
     {
-        $this->cache = $cache;
+        $this->cache = $cache();
     }
 
     /**

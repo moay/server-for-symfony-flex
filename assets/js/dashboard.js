@@ -93,7 +93,7 @@ let vm = new Vue({
             pattern = /^git\@[a-z.]*\:/
             if (pattern.test(repoUrl)) {
                 gitServerHostName = pattern.exec(repoUrl)[0].replace('git@', '').replace(':', '')
-                repoUrl.replace(pattern, 'https://' + gitServerHostName + '/')
+                repoUrl = repoUrl.replace(pattern, 'https://' + gitServerHostName + '/')
             }
 
             pattern = /^https?\:\/\/[a-z.]*/

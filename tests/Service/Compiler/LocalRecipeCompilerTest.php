@@ -4,6 +4,7 @@ namespace App\Tests\Service\Compiler;
 
 use App\Entity\Recipe;
 use App\Service\Compiler\LocalRecipeCompiler;
+use App\Service\RecipePublicUrlResolver;
 use App\Service\RecipeRepoManager;
 use App\Tests\RepoAwareTestCase;
 
@@ -27,7 +28,12 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
             ->willReturn([$repoStub]);
         $repoManagerStub->expects($this->once())->method('getConfiguredRepos');
 
-        $this->compiler = new LocalRecipeCompiler($repoManagerStub);
+        $urlResolverStub = $this->createMock(RecipePublicUrlResolver::class);
+        $urlResolverStub->method('resolveUrl')
+            ->willReturn('testUrl');
+        $urlResolverStub->expects($this->exactly(5))->method('resolveUrl');
+
+        $this->compiler = new LocalRecipeCompiler($repoManagerStub, $urlResolverStub);
     }
 
     function testLocalRecipesAreLoadedProperly()

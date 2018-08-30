@@ -3,7 +3,7 @@ parameters:
   # FALLBACKS FOR ENV VARIABLES.
   # You may configure your stuff here, in case you don't have a .env or environment variables.
 
-  env(FLEX_RECIPE_REPO_PRIVATE): https://github.com/moay/demo-reci2pes
+  env(FLEX_RECIPE_REPO_PRIVATE): https://github.com/moay/demo-recipes
 
   env(FLEX_OFFICIAL_ENDPOINT): https://symfony.sh/
   env(FLEX_RECIPE_REPO_OFFICIAL): https://github.com/symfony/recipes

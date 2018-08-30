@@ -4,7 +4,7 @@ Setting up the server should be quick and easy. These are the necessary steps:
 
 1. [Download](https://github.com/moay/symfony-flex-server/releases) the project from Github (or `git clone https://github.com/moay/symfony-flex-server`)
 2. Navigate to the project folder and run `composer install`.
-3. Open the file `config/services.yaml` and enter the url to your private recipes repo.
+3. Open the file `config/parameters.yaml` and enter the url to your private recipes repo (or provide appropriate environment variables).
 4. Setup the `APP_ENV` properly. This can be done in the `.env` file (create if needed) or on the hosting. Setting it to `prod` is recommended.
 5. Run `php bin/console recipes:initialize` in order to download your recipes.
 

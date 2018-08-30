@@ -16,7 +16,7 @@
         "symfony/filesystem": "^4.0",
         "symfony/finder": "^4.0",
         "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^4.0",
+        "symfony/framework-bundle": "^4.1",
         "symfony/lts": "^4@dev",
         "symfony/phpunit-bridge": "^4.0",
         "symfony/twig-bundle": "^4.0",

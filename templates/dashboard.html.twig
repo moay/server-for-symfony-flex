@@ -37,6 +37,9 @@
 
                     <v-card light color="grey">
                         <v-card-text class="recipe-holder">
+                            <div class="text-xs-center" v-if="!dataLoaded">
+                                <v-progress-circular center :indeterminate="true" color="white" height="4"></v-progress-circular>
+                            </div>
                             <v-card
                                     light elevation-0
                                     class="recipe-holder__recipe"

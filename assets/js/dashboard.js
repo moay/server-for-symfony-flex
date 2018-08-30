@@ -13,6 +13,7 @@ let vm = new Vue({
     delimiters: ['${', '}'],
 
     data: {
+        dataLoaded: false,
         status: {},
         recipes: {},
         repoColors: {
@@ -77,6 +78,7 @@ let vm = new Vue({
             this.$http.get('ui/data').then((response) => {
                 this.status = response.body.status;
                 this.recipes = response.body.recipes;
+                this.dataLoaded = true;
             })
         },
         recipeUrl (recipe) {

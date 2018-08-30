@@ -1,4 +1,4 @@
-<v-card color="grey">
+<v-card color="grey" v-if="dataLoaded">
     <v-list subheader class="repostatus" v-for="repo in activeRepos" :key="repo.slug">
         <v-toolbar light flat mini>
             <v-toolbar-title>${ repo.slug | capitalize } recipes repo</v-toolbar-title>

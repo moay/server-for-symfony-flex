@@ -2,7 +2,7 @@
 
 The server comes well configured but the configuration can be tweaked. You should set your private recipes repo, all other options are optional.
 
-In order to change the configuration, alter the file `/config/services.yaml`.
+In order to change the configuration, alter the file `/config/parameters.yaml`. Some of the values can be provided in a .env-file, take a look at the contained `.env.dist` for helpful hints.
 
 ### Private recipes repo
 

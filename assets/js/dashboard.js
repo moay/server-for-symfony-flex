@@ -80,31 +80,10 @@ let vm = new Vue({
             })
         },
         recipeUrl (recipe) {
-            return this.buildRecipeRepoUrl(recipe) + '/' + recipe.version
+            return recipe.publicUrl + '/' + recipe.version
         },
         recipeVersionUrl (recipe, version) {
-            return this.buildRecipeRepoUrl(recipe) + '/' + version
-        },
-        buildRecipeRepoUrl (recipe) {
-            let repoUrl, pattern, gitServerHostName
-
-            repoUrl = recipe.repo.url.replace('.git', '')
-
-            pattern = /^git\@[a-z.]*\:/
-            if (pattern.test(repoUrl)) {
-                gitServerHostName = pattern.exec(repoUrl)[0].replace('git@', '').replace(':', '')
-                repoUrl = repoUrl.replace(pattern, 'https://' + gitServerHostName + '/')
-            }
-
-            pattern = /^https?\:\/\/[a-z.]*/
-            gitServerHostName = pattern.exec(repoUrl)[0].replace(/https?\:\/\//, '')
-
-            switch (gitServerHostName) {
-                case 'bitbucket.org':
-                    return repoUrl + '/src/master/' + recipe.officialPackageName
-                default:
-                    return repoUrl + '/tree/master/' + recipe.officialPackageName
-            }
+            return recipe.publicUrl + '/' + version
         },
         showSearch () {
             this.enableFilter = true;

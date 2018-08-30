@@ -40,6 +40,9 @@ class Recipe implements \JsonSerializable
      */
     private $repo;
 
+    /** @var string */
+    private $publicUrl;
+
     /**
      * @var string
      */
@@ -92,7 +95,7 @@ class Recipe implements \JsonSerializable
      */
     public function getOfficialPackageName()
     {
-        return join('/', [$this->author, $this->package]);
+        return implode('/', [$this->author, $this->package]);
     }
 
     /**
@@ -192,6 +195,22 @@ class Recipe implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getPublicUrl(): string
+    {
+        return $this->publicUrl;
+    }
+
+    /**
+     * @param string $publicUrl
+     */
+    public function setPublicUrl(string $publicUrl): void
+    {
+        $this->publicUrl = $publicUrl;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -203,7 +222,8 @@ class Recipe implements \JsonSerializable
             'version' => $this->getVersion(),
             'manifest' => $this->getManifest(),
             'manifestValid' => $this->isManifestValid(),
-            'repo' => $this->getRepo()
+            'repo' => $this->getRepo(),
+            'publicUrl' => $this->getPublicUrl()
         ];
     }
 

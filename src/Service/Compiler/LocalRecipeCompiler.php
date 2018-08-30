@@ -12,6 +12,7 @@
 namespace App\Service\Compiler;
 
 use App\Entity\Recipe;
+use App\Service\RecipePublicUrlResolver;
 use App\Service\RecipeRepoManager;
 
 /**
@@ -27,6 +28,11 @@ class LocalRecipeCompiler
     private $repoManager;
 
     /**
+     * @var RecipePublicUrlResolver
+     */
+    private $urlResolver;
+
+    /**
      * @var Recipe[]
      */
     private $recipes = [];
@@ -35,9 +41,10 @@ class LocalRecipeCompiler
      * LocalRecipeCompiler constructor.
      * @param RecipeRepoManager $repoManager
      */
-    public function __construct(RecipeRepoManager $repoManager)
+    public function __construct(RecipeRepoManager $repoManager, RecipePublicUrlResolver $urlResolver)
     {
         $this->repoManager = $repoManager;
+        $this->urlResolver = $urlResolver;
     }
 
     /**
@@ -94,6 +101,8 @@ class LocalRecipeCompiler
                 $recipe->setRepo($repo);
                 $recipe->setRepoSlug($repo->getRepoDirName());
                 $recipe->setLocalPath($recipeFolder->getPathname());
+
+                $recipe->setPublicUrl($this->urlResolver->resolveUrl($recipe));
 
                 $manifestFile = $recipeFolder->getPathname() . '/manifest.json';
                 if (file_exists($manifestFile)) {

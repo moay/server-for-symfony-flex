@@ -7,12 +7,12 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
-            $officialEndpoint: '%official_endpoint%'
+            $officialEndpoint: '%env(FLEX_OFFICIAL_ENDPOINT)%'
             $enableProxy: '%proxy_official_endpoint%'
             $cacheEndpoint: '%cache_official_endpoint%'
-            $privateRepoUrl: '%recipe_repo_private%'
-            $officialRepoUrl: '%recipe_repo_official%'
-            $contribRepoUrl: '%recipe_repo_contrib%'
+            $privateRepoUrl: '%env(FLEX_RECIPE_REPO_PRIVATE)%'
+            $officialRepoUrl: '%env(FLEX_RECIPE_REPO_OFFICIAL)%'
+            $contribRepoUrl: '%env(FLEX_RECIPE_REPO_CONTRIB)%'
             $mirrorOfficialRepo: '%mirror_official_recipes%'
             $mirrorContribRepo: '%mirror_contrib_recipes%'
             $projectDir: '%kernel.project_dir%'

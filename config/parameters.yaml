@@ -1,10 +1,16 @@
 parameters:
-  recipe_repo_private: https://github.com/moay/demo-recipes
 
-  official_endpoint: https://symfony.sh/
+  # FALLBACKS FOR ENV VARIABLES.
+  # You may configure your stuff here, in case you don't have a .env or environment variables.
+
+  env(FLEX_RECIPE_REPO_PRIVATE): https://github.com/moay/demo-reci2pes
+
+  env(FLEX_OFFICIAL_ENDPOINT): https://symfony.sh/
+  env(FLEX_RECIPE_REPO_OFFICIAL): https://github.com/symfony/recipes
+  env(FLEX_RECIPE_REPO_CONTRIB): https://github.com/symfony/recipes-contrib
+
   proxy_official_endpoint: true
   cache_official_endpoint: true
   mirror_official_recipes: true
   mirror_contrib_recipes: true
-  recipe_repo_official: https://github.com/symfony/recipes
-  recipe_repo_contrib: https://github.com/symfony/recipes-contrib
+

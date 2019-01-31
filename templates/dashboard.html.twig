@@ -71,6 +71,12 @@
                                             v-if="recipe.repo.slug !== 'private'"
                                     ><v-icon>code</v-icon>&nbsp;&nbsp;Package</v-btn>
                                     <v-btn
+                                            color="secondary" flat small
+                                            :href="'{{ private_packagist_url }}/packages/' + recipe.officialPackageName"
+                                            target="_blank"
+                                            v-if="recipe.repo.slug === 'private' && '{{ private_packagist_url }}' !== ''"
+                                    ><v-icon>code</v-icon>&nbsp;&nbsp;Package</v-btn>
+                                    <v-btn
                                             color="info" flat small
                                             :href="recipeUrl(recipe)"
                                             target="_blank"

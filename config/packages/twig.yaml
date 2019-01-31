@@ -2,3 +2,5 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        private_packagist_url: '%env(PRIVATE_PACKAGIST_URL)%'

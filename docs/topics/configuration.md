@@ -45,3 +45,11 @@ Also, you might want to use your own forks of the official repos, you could use 
 If you use both the proxy functionality **and** custom official repos, the official endpoint responses will be used only for recipes that are not available in your repos.
 
 **Attention:** If a newer version of a recipe is published on the official endpoint, it will be considered the correct recipe for the request even if you have an older recipe in your local repos. 
+
+### Using of private Packagist 
+
+There is no package link for private recipes by default. If you use private packagist, you can set its address with this parameter:  
+
+    env(PRIVATE_PACKAGIST_URL): The url to your private packagist (without trailing slash)
+    
+This address will be used to generate package link for every private recipe.

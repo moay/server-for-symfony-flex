@@ -22,7 +22,9 @@ let vm = new Vue({
             contrib: 'orange'
         },
         enableFilter: false,
-        filterString: ''
+        filterString: '',
+        privateSlug: 'private',
+        defaultPackagistUrl: 'https://packagist.org'
     },
 
     computed: {
@@ -86,6 +88,14 @@ let vm = new Vue({
         },
         recipeVersionUrl (recipe, version) {
             return recipe.publicUrl + '/' + version
+        },
+        getRepoPackagistUrl (recipe, privatePackagistUrl) {
+            this.packagistUrl = recipe.repo.slug === this.privateSlug && privatePackagistUrl !== '' ? privatePackagistUrl : this.defaultPackagistUrl;
+
+            return this.packagistUrl + '/packages/' + recipe.officialPackageName;
+        },
+        showRepoPackagistButton(recipe, privatePackagistUrl) {
+            return recipe.repo.slug !== this.privateSlug || (recipe.repo.slug === this.privateSlug && privatePackagistUrl !== '');
         },
         showSearch () {
             this.enableFilter = true;

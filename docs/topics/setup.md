@@ -20,8 +20,10 @@ Using the server in your Symfony project is as easy as adding the proper endpoin
 
     {
         ...
-        "symfony": {
-            "endpoint": "https://your.domain.com"
+        "extra": {
+            "symfony": {
+                "endpoint": "https://your.domain.com"
+            }
         }
     }
 

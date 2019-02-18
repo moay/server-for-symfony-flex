@@ -19,13 +19,13 @@
         "symfony/framework-bundle": "^4.1",
         "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "^3.3",
-        "symfony/phpunit-bridge": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
         "symfony/debug-pack": "^1.0",
+        "symfony/phpunit-bridge": "^4.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {

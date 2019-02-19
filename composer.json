@@ -3,7 +3,9 @@
     "license": "proprietary",
     "require": {
         "php": "^7.1",
+        "ext-http": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "czproject/git-php": "^3.12",
         "php-http/httplug-pack": "^1.1",
         "robinvdvleuten/ulid": "^1.1",

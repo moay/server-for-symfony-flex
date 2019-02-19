@@ -37,7 +37,7 @@ class EndpointController extends AbstractController
      */
     public function aliases(AliasesProvider $provider): JsonResponse
     {
-        return $this->json($provider->provideAliases());
+        return $this->unescapedSlashesJson($provider->provideAliases());
     }
 
     /**
@@ -47,7 +47,7 @@ class EndpointController extends AbstractController
      */
     public function versions(VersionsProvider $provider): JsonResponse
     {
-        return $this->json($provider->provideVersions());
+        return $this->unescapedSlashesJson($provider->provideVersions());
     }
 
     /**
@@ -58,7 +58,7 @@ class EndpointController extends AbstractController
      */
     public function ulid(UlidProvider $provider): JsonResponse
     {
-        return $this->json(['ulid' => $provider->provideUlid()]);
+        return $this->unescapedSlashesJson(['ulid' => $provider->provideUlid()]);
     }
 
     /**
@@ -71,6 +71,6 @@ class EndpointController extends AbstractController
      */
     public function packages(string $packages, PackagesProvider $provider): JsonResponse
     {
-        return $this->json($provider->providePackages($packages));
+        return $this->unescapedSlashesJson($provider->providePackages($packages));
     }
 }

@@ -27,7 +27,7 @@ trait ProvidesUnescapedJsonResponsesTrait
      * @param array $context
      * @return static
      */
-    protected function json($data, int $status = 200, array $headers = array(), array $context = array()): JsonResponse
+    protected function unescapedSlashesJson($data, int $status = 200, array $headers = array(), array $context = array()): JsonResponse
     {
         $json = json_encode($data, JSON_UNESCAPED_SLASHES);
         return JsonResponse::fromJsonString($json, $status, $headers);

@@ -3,7 +3,9 @@
     "license": "proprietary",
     "require": {
         "php": "^7.1",
+        "ext-http": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "czproject/git-php": "^3.12",
         "php-http/httplug-pack": "^1.1",
         "robinvdvleuten/ulid": "^1.1",
@@ -12,20 +14,21 @@
         "symfony/asset": "^4.0",
         "symfony/cache": "^4.0",
         "symfony/console": "^4.0",
-        "symfony/debug-pack": "^1.0",
+        "symfony/dotenv": "^4.0",
         "symfony/filesystem": "^4.0",
         "symfony/finder": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.1",
         "symfony/lts": "^4@dev",
-        "symfony/phpunit-bridge": "^4.0",
+        "symfony/monolog-bundle": "^3.3",
         "symfony/twig-bundle": "^4.0",
-        "symfony/web-server-bundle": "^4.0",
         "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
-        "symfony/dotenv": "^4.0"
+        "symfony/debug-pack": "^1.0",
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/web-server-bundle": "^4.0"
     },
     "config": {
         "preferred-install": {

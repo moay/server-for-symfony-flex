@@ -13,7 +13,9 @@ namespace App\Controller;
 
 use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\Compiler\SystemStatusReportCompiler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,14 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @author moay <mv@moay.de>
  */
-class FrontendController extends Controller
+class FrontendController extends AbstractController
 {
     /**
      * @Route("/", name="frontend_dashboard")
      *
      * @return mixed|\Symfony\Component\HttpFoundation\Response
      */
-    public function dashboard()
+    public function dashboard(): Response
     {
         return $this->render('dashboard.html.twig');
     }
@@ -40,7 +42,7 @@ class FrontendController extends Controller
      * @param LocalRecipeCompiler $recipeCompiler
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function dashboardData(SystemStatusReportCompiler $reportGenerator, LocalRecipeCompiler $recipeCompiler)
+    public function dashboardData(SystemStatusReportCompiler $reportGenerator, LocalRecipeCompiler $recipeCompiler): JsonResponse
     {
         return $this->json([
             'status' => $reportGenerator->getReport(),

@@ -16,9 +16,8 @@ use App\Service\Provider\PackagesProvider;
 use App\Service\Provider\UlidProvider;
 use App\Service\Provider\VersionsProvider;
 use App\Traits\ProvidesUnescapedJsonResponsesTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @author moay <mv@moay.de>
  */
-class EndpointController extends Controller
+class EndpointController extends AbstractController
 {
     use ProvidesUnescapedJsonResponsesTrait;
 
@@ -36,9 +35,9 @@ class EndpointController extends Controller
      * @param AliasesProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function aliases(AliasesProvider $provider)
+    public function aliases(AliasesProvider $provider): JsonResponse
     {
-        return $this->json($provider->provideAliases());
+        return $this->unescapedSlashesJson($provider->provideAliases());
     }
 
     /**
@@ -46,9 +45,9 @@ class EndpointController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function versions(VersionsProvider $provider)
+    public function versions(VersionsProvider $provider): JsonResponse
     {
-        return $this->json($provider->provideVersions());
+        return $this->unescapedSlashesJson($provider->provideVersions());
     }
 
     /**
@@ -57,19 +56,21 @@ class EndpointController extends Controller
      * @param UlidProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function ulid(UlidProvider $provider)
+    public function ulid(UlidProvider $provider): JsonResponse
     {
-        return $this->json(['ulid' => $provider->provideUlid()]);
+        return $this->unescapedSlashesJson(['ulid' => $provider->provideUlid()]);
     }
 
     /**
      * @Route("/p/{packages}", name="endpoint_packages")
      *
+     * @param string $packages
      * @param PackagesProvider $provider
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Http\Client\Exception
      */
-    public function packages($packages, PackagesProvider $provider)
+    public function packages(string $packages, PackagesProvider $provider): JsonResponse
     {
-        return $this->json($provider->providePackages($packages));
+        return $this->unescapedSlashesJson($provider->providePackages($packages));
     }
 }

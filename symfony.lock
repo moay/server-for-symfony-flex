@@ -230,9 +230,6 @@
     "symfony/http-kernel": {
         "version": "v4.0.4"
     },
-    "symfony/lts": {
-        "version": "4-dev"
-    },
     "symfony/monolog-bridge": {
         "version": "v4.0.4"
     },

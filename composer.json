@@ -2,8 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1",
-        "ext-http": "*",
+        "php": "^7.2",
         "ext-iconv": "*",
         "ext-json": "*",
         "czproject/git-php": "^3.12",
@@ -19,7 +18,6 @@
         "symfony/finder": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.1",
-        "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "^3.3",
         "symfony/twig-bundle": "^4.0",
         "symfony/webpack-encore-pack": "^1.0",

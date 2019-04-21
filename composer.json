@@ -6,6 +6,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "czproject/git-php": "^3.12",
+        "guzzlehttp/guzzle": "^6.3",
         "php-http/httplug-pack": "^1.1",
         "robinvdvleuten/ulid": "^1.1",
         "sensio/framework-extra-bundle": "^5.1",

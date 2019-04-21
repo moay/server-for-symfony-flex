@@ -11,12 +11,10 @@
 
 namespace App\Service;
 
-use App\Exception\OfficialEndpointNotAvailableExtension;
 use GuzzleHttp\Psr7\Request;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Symfony\Component\Cache\Simple\FilesystemCache;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OfficialEndpointProxy

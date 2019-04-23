@@ -145,7 +145,7 @@ class PackagesProvider
      *
      * @return array
      *
-     * @throws
+     * @throws \InvalidArgumentException
      */
     private function parseRequestedPackages(string $packagesRequestString)
     {
@@ -154,7 +154,7 @@ class PackagesProvider
             $packageDetails = explode(',', $requestedPackage);
 
             if (count($packageDetails) < 3) {
-                throw new BadRequestHttpException('Invalid package string provided');
+                throw new \InvalidArgumentException('Invalid package string provided');
             }
 
             $packages[] = [

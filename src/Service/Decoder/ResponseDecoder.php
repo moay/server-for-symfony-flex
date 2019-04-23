@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 namespace App\Service\Decoder;
 
 use App\Service\Cache;
@@ -53,7 +51,7 @@ class ResponseDecoder
             }
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                $decodedResponse = $response->getBody();
+                $decodedResponse = $response->getBody()->getContents();
             }
 
             if ($this->cacheEndpoint) {

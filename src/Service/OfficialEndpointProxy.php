@@ -11,12 +11,8 @@
 
 namespace App\Service;
 
-use App\Exception\OfficialEndpointNotAvailableExtension;
-use GuzzleHttp\Psr7\Request;
-use Http\Client\Exception\NetworkException;
-use Http\Client\HttpClient;
-use Symfony\Component\Cache\Simple\FilesystemCache;
-use Symfony\Component\HttpFoundation\Response;
+use App\Service\Decoder\ResponseDecoder;
+use Nyholm\Psr7\Request;
 
 /**
  * Class OfficialEndpointProxy
@@ -28,32 +24,22 @@ class OfficialEndpointProxy
     /** @var string */
     private $endpoint;
 
-    /** @var bool */
-    private $cacheEndpoint;
-
-    /** @var HttpClient */
-    private $client;
-
-    /** @var FilesystemCache */
-    private $cache;
+    /**
+     * @var ResponseDecoder
+     */
+    private $decoder;
 
     /**
      * OfficialEndpointProxy constructor.
      * @param string $officialEndpoint
-     * @param bool $cacheEndpoint
-     * @param HttpClient $client
-     * @param Cache $cache
+     * @param ResponseDecoder $decoder
      */
     public function __construct(
         string $officialEndpoint,
-        bool $cacheEndpoint,
-        HttpClient $client,
-        Cache $cache
+        ResponseDecoder $decoder
     ) {
-        $this->cacheEndpoint = $cacheEndpoint;
-        $this->client = $client;
         $this->endpoint = $officialEndpoint;
-        $this->cache = $cache();
+        $this->decoder = $decoder;
     }
 
     /**
@@ -62,11 +48,12 @@ class OfficialEndpointProxy
      * @return array
      * @throws \Exception
      * @throws \Http\Client\Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getAliases()
     {
         $request = new Request('GET', $this->endpoint . 'aliases.json');
-        return $this->getDecodedResponse($request);
+        return $this->decoder->getDecodedResponse($request);
     }
 
     /**
@@ -75,11 +62,12 @@ class OfficialEndpointProxy
      * @return array
      * @throws \Exception
      * @throws \Http\Client\Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getVersions()
     {
         $request = new Request('GET', $this->endpoint . 'versions.json');
-        return $this->getDecodedResponse($request);
+        return $this->decoder->getDecodedResponse($request);
     }
 
     /**
@@ -89,57 +77,11 @@ class OfficialEndpointProxy
      * @return array|string
      * @throws \Exception
      * @throws \Http\Client\Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getPackages(string $packagesRequestString)
     {
         $request = new Request('GET', $this->endpoint . 'p/' . $packagesRequestString);
-        return $this->getDecodedResponse($request);
+        return $this->decoder->getDecodedResponse($request);
     }
-
-    /**
-     * @param Request $request
-     * @return array|string
-     * @throws \Exception
-     * @throws \Http\Client\Exception
-     */
-    private function getDecodedResponse(Request $request)
-    {
-        try {
-            $response = $this->client->sendRequest($request);
-            $decodedResponse = json_decode($response->getBody(), true);
-
-            if(!in_array($response->getStatusCode(), range(200, 299))) {
-                if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {
-                    return $this->cache->get($this->getCacheId($request));
-                }
-                return [];
-            }
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                $decodedResponse = $response->getBody();
-            }
-
-            if ($this->cacheEndpoint) {
-                $this->cache->set($this->getCacheId($request), $decodedResponse);
-            }
-
-            return $decodedResponse;
-        } catch (NetworkException $e) {
-            if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {
-                return $this->cache->get($this->getCacheId($request));
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     */
-    private function getCacheId(Request $request)
-    {
-        $id = $request->getMethod() . $request->getUri();
-        return sha1(preg_replace('/[^A-Za-z0-9\.\- ]/', '', $id));
-    }
-
 }

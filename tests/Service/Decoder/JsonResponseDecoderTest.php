@@ -145,7 +145,6 @@ class JsonResponseDecoderTest extends TestCase
     }
 
     /**
-     * @todo this seems like a bug, we should not store in the cache invalid json? should we throw an error?
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -159,7 +158,7 @@ class JsonResponseDecoderTest extends TestCase
         $response->getBody()->willReturn($this->getResponseBodyStub('{invalid_json'));
 
         $this->client->sendRequest($request)->willReturn($response->reveal());
-        $this->simpleCache->set('4429b090fd82239e188859ae626162e5e790b4db', '{invalid_json')->shouldBeCalledOnce();
+        $this->simpleCache->set('4429b090fd82239e188859ae626162e5e790b4db', '{invalid_json')->shouldNotBeCalled();
 
         $this->assertSame(
             '{invalid_json',

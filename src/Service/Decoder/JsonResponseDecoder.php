@@ -52,7 +52,7 @@ class JsonResponseDecoder
             }
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                $decodedResponse = $response->getBody()->getContents();
+                return $response->getBody()->getContents();
             }
 
             if ($this->cacheEndpoint) {

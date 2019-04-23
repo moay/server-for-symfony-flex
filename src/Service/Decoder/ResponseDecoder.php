@@ -43,7 +43,7 @@ class ResponseDecoder
     {
         try {
             $response = $this->client->sendRequest($request);
-            $decodedResponse = json_decode($response->getBody(), true);
+            $decodedResponse = json_decode($response->getBody()->getContents(), true);
 
             if(!in_array($response->getStatusCode(), range(200, 299))) {
                 if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {

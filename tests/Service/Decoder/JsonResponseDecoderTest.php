@@ -6,8 +6,10 @@ use App\Service\Decoder\JsonResponseDecoder;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Nyholm\Psr7\Request;
+use Nyholm\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
 class JsonResponseDecoderTest extends TestCase
@@ -42,7 +44,7 @@ class JsonResponseDecoderTest extends TestCase
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn(json_encode(['json' => 'data']));
+        $response->getBody()->willReturn($this->getResponseBodyStub(json_encode(['json' => 'data'])));
 
         $this->client->sendRequest($request)->willReturn($response->reveal());
 
@@ -59,7 +61,7 @@ class JsonResponseDecoderTest extends TestCase
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(500);
-        $response->getBody()->willReturn('');
+        $response->getBody()->willReturn($this->getResponseBodyStub(''));
 
         $this->client->sendRequest($request)->willReturn($response->reveal());
 
@@ -76,7 +78,7 @@ class JsonResponseDecoderTest extends TestCase
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(500);
-        $response->getBody()->willReturn('');
+        $response->getBody()->willReturn($this->getResponseBodyStub(''));
 
         $this->simpleCache->has('4429b090fd82239e188859ae626162e5e790b4db')->willReturn(true);
         $this->simpleCache->get('4429b090fd82239e188859ae626162e5e790b4db')->willReturn(['json' => 'cache']);
@@ -96,7 +98,7 @@ class JsonResponseDecoderTest extends TestCase
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn(json_encode(['json' => 'cache']));
+        $response->getBody()->willReturn($this->getResponseBodyStub(json_encode(['json' => 'cache'])));
 
         $this->simpleCache->has('4429b090fd82239e188859ae626162e5e790b4db')->willReturn(false);
         $this->simpleCache->set('4429b090fd82239e188859ae626162e5e790b4db', ['json' => 'cache'])->shouldBeCalledOnce();
@@ -154,7 +156,7 @@ class JsonResponseDecoderTest extends TestCase
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(200);
-        $response->getBody()->willReturn('{invalid_json');
+        $response->getBody()->willReturn($this->getResponseBodyStub('{invalid_json'));
 
         $this->client->sendRequest($request)->willReturn($response->reveal());
         $this->simpleCache->set('4429b090fd82239e188859ae626162e5e790b4db', '{invalid_json')->shouldBeCalledOnce();
@@ -165,5 +167,17 @@ class JsonResponseDecoderTest extends TestCase
         );
 
         $this->markAsRisky();
+    }
+
+    /**
+     * @param $responseString
+     * @return Stream|object
+     */
+    private function getResponseBodyStub($responseString)
+    {
+        $responseBody = $this->prophesize(StreamInterface::class);
+        $responseBody->getContents()->willReturn($responseString);
+
+        return $responseBody->reveal();
     }
 }

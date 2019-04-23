@@ -7,23 +7,22 @@ use Http\Client\HttpClient;
 use Nyholm\Psr7\Request;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
-class ResponseDecoder
+class JsonResponseDecoder
 {
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $cacheEndpoint;
 
-    /**
-     * @var HttpClient
-     */
+    /** @var HttpClient */
     private $client;
 
-    /**
-     * @var FilesystemCache
-     */
+    /** @var FilesystemCache */
     private $cache;
 
+    /**
+     * @param bool $cacheEndpoint
+     * @param HttpClient $client
+     * @param Cache $cache
+     */
     public function __construct(bool $cacheEndpoint, HttpClient $client, Cache $cache)
     {
         $this->cacheEndpoint = $cacheEndpoint;
@@ -33,7 +32,9 @@ class ResponseDecoder
 
     /**
      * @param Request $request
+     *
      * @return array|mixed|\Psr\Http\Message\StreamInterface
+     *
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -69,6 +70,7 @@ class ResponseDecoder
 
     /**
      * @param Request $request
+     *
      * @return string
      */
     private function getCacheId(Request $request)

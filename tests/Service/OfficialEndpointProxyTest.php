@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Service\Decoder\ResponseDecoder;
+use App\Service\Decoder\JsonResponseDecoder;
 use App\Service\OfficialEndpointProxy;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -17,13 +17,13 @@ class OfficialEndpointProxyTest extends TestCase
     private $proxy;
 
     /**
-     * @var ResponseDecoder|ObjectProphecy
+     * @var JsonResponseDecoder|ObjectProphecy
      */
     private $decoder;
 
     protected function setUp()
     {
-        $this->decoder = $this->prophesize(ResponseDecoder::class);
+        $this->decoder = $this->prophesize(JsonResponseDecoder::class);
 
         $this->proxy = new OfficialEndpointProxy(
             'official_endpoint/',

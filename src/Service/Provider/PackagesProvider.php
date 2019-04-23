@@ -15,6 +15,7 @@ use App\Entity\Recipe;
 use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\Compiler\PackagesCompiler;
 use App\Service\OfficialEndpointProxy;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class AliasesProvider
@@ -141,8 +142,10 @@ class PackagesProvider
      * Parses the request string and provides an array of requested packages
      *
      * @param string $packagesRequestString
+     *
      * @return array
-     * @throws \HttpRequestException
+     *
+     * @throws
      */
     private function parseRequestedPackages(string $packagesRequestString)
     {
@@ -151,7 +154,7 @@ class PackagesProvider
             $packageDetails = explode(',', $requestedPackage);
 
             if (count($packageDetails) < 3) {
-                throw new \HttpRequestException('Invalid package string provided', 500);
+                throw new BadRequestHttpException('Invalid package string provided');
             }
 
             $packages[] = [

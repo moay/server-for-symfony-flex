@@ -11,7 +11,7 @@
 
 namespace App\Service;
 
-use App\Service\Decoder\ResponseDecoder;
+use App\Service\Decoder\JsonResponseDecoder;
 use Nyholm\Psr7\Request;
 
 /**
@@ -24,19 +24,17 @@ class OfficialEndpointProxy
     /** @var string */
     private $endpoint;
 
-    /**
-     * @var ResponseDecoder
-     */
+    /** @var JsonResponseDecoder */
     private $decoder;
 
     /**
      * OfficialEndpointProxy constructor.
      * @param string $officialEndpoint
-     * @param ResponseDecoder $decoder
+     * @param JsonResponseDecoder $decoder
      */
     public function __construct(
         string $officialEndpoint,
-        ResponseDecoder $decoder
+        JsonResponseDecoder $decoder
     ) {
         $this->endpoint = $officialEndpoint;
         $this->decoder = $decoder;

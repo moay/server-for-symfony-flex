@@ -1,10 +1,8 @@
 <?php
-declare(strict_types=1);
-
 namespace App\Tests\Service\Decoder;
 
 use App\Service\Cache;
-use App\Service\Decoder\ResponseDecoder;
+use App\Service\Decoder\JsonResponseDecoder;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Nyholm\Psr7\Request;
@@ -12,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
-class ResponseDecoderTest extends TestCase
+class JsonResponseDecoderTest extends TestCase
 {
     /**
      * @var HttpClient|\Prophecy\Prophecy\ObjectProphecy
@@ -39,7 +37,7 @@ class ResponseDecoderTest extends TestCase
 
     public function testGetDecodedResponse()
     {
-        $decoder = new ResponseDecoder(false, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(false, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
@@ -56,7 +54,7 @@ class ResponseDecoderTest extends TestCase
 
     public function testGetDecodedResponseEmptyOnRequestError()
     {
-        $decoder = new ResponseDecoder(false, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(false, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
@@ -73,7 +71,7 @@ class ResponseDecoderTest extends TestCase
 
     public function testGetDecodedResponseFromCacheOnRequestError()
     {
-        $decoder = new ResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
@@ -93,7 +91,7 @@ class ResponseDecoderTest extends TestCase
 
     public function testGetDecodedResponseCachesDataIfEnabled()
     {
-        $decoder = new ResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);
@@ -113,7 +111,7 @@ class ResponseDecoderTest extends TestCase
 
     public function testGetDecodedResponseFromCacheWhenNetworkFails()
     {
-        $decoder = new ResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
 
@@ -135,7 +133,7 @@ class ResponseDecoderTest extends TestCase
      */
     public function testGetDecodedResponseThrowsNetworkExceptionWhenClientFailsAndNoCachedVersion()
     {
-        $decoder = new ResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
         $request = new Request('GET', 'endpoint/data.json');
 
         $this->simpleCache->has('4429b090fd82239e188859ae626162e5e790b4db')->willReturn(false);
@@ -151,7 +149,7 @@ class ResponseDecoderTest extends TestCase
      */
     public function testGetDecodedResponseReturnsBodyWhenJsonDecodingFails()
     {
-        $decoder = new ResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
+        $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
 
         $request = new Request('GET', 'endpoint/data.json');
         $response = $this->prophesize(ResponseInterface::class);

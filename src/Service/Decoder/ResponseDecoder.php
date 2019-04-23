@@ -75,7 +75,12 @@ class ResponseDecoder
      */
     private function getCacheId(Request $request)
     {
-        $id = $request->getMethod() . $request->getUri();
-        return sha1(preg_replace('/[^A-Za-z0-9\.\- ]/', '', $id));
+        return sha1(
+            preg_replace(
+                '/[^A-Za-z0-9\.\- ]/',
+                '',
+                $request->getMethod().$request->getUri()
+            )
+        );
     }
 }

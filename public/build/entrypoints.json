@@ -1,0 +1,13 @@
+{
+  "entrypoints": {
+    "dashboard": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/dashboard.9739b4fd.js"
+      ],
+      "css": [
+        "/build/dashboard.9b0a8f23.css"
+      ]
+    }
+  }
+}

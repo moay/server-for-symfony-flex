@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Flex Server</title>
-    <link href='{{ asset('build/dashboard.css') }}' rel="stylesheet">
+    {{ encore_entry_link_tags('dashboard') }}
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <style>
@@ -106,6 +106,6 @@
     </v-app>
 </div>
 
-<script src="{{ asset('build/dashboard.js') }}"></script>
+{{ encore_entry_script_tags('dashboard') }}
 </body>
 </html>

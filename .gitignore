@@ -15,9 +15,9 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 
-###> symfony/webpack-encore-pack ###
+###> symfony/webpack-encore-bundle ###
 /node_modules/
 !/public/build/
-###< symfony/webpack-encore-pack ###
-
-/yarn-error.log
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

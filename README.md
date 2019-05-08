@@ -1,15 +1,12 @@
-# symfony-flex-server
+# Server for Symfony Flex
 
-[![Build Status](https://travis-ci.org/moay/symfony-flex-server.svg?branch=master)](https://travis-ci.org/moay/symfony-flex-server)
+[![Build Status](https://travis-ci.org/moay/server-for-symfony-flex.svg?branch=master)](https://travis-ci.org/moay/server-for-symfony-flex)
 
 A self hosted server for Symfony Flex allowing private recipes, customized recipes and caching functionality for the official endpoints.
 
+#### This is not an official project by SensioLabs or the Symfony core team.
+
 ![ui](https://user-images.githubusercontent.com/3605512/36627099-eb239f48-193d-11e8-919a-d98003696d7b.png)
-
-## Early stage
-
-The server is basically ready to be used and is used in production, but there might still be some quirks. Any report on new issues is welcome. Thanks!
-___
 
 ### Features
 
@@ -19,8 +16,8 @@ ___
 
 ### Documentation
 
-Full documentation is available here: [Documentation](https://symfony-flex-server.readthedocs.io)
+Full documentation is available here: [Documentation](https://server-for-symfony-flex.readthedocs.io)
 
 ### License
 
-Published under the [MIT License](https://github.com/moay/symfony-flex-server/blob/master/LICENSE).
+Published under the [MIT License](https://github.com/moay/server-for-symfony-flex/blob/master/LICENSE).

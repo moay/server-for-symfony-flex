@@ -1,6 +1,6 @@
-site_name: 'Symfony Flex Server'
-repo_url: 'https://github.com/moay/symfony-flex-server'
-repo_name: 'moay/symfony-flex-server'
+site_name: 'Server for Symfony Flex'
+repo_url: 'https://github.com/moay/server-for-symfony-flex'
+repo_name: 'moay/server-for-symfony-flex'
 pages:
     - 'Introduction': 'index.md'
     - 'Requirements': 'topics/prerequisites.md'
@@ -10,6 +10,6 @@ pages:
     - 'About recipes': 'topics/recipes.md'
     - 'Commands': 'topics/commands.md'
 theme:
-    name: 'material'
+    name: 'readthedocs'
     palette:
         primary: 'grey'

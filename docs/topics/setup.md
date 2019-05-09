@@ -33,7 +33,7 @@ Make sure to allow connections over http to composer (if using localhost) by add
     {
         ...
         "config": {
-            "secure-http": "false"
+            "secure-http": false
         }
     }
     

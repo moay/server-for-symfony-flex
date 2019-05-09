@@ -14,6 +14,7 @@ namespace App\RecipeRepo;
 use App\Event\RepoStatusChangedEvent;
 use App\Service\Cache;
 use Cz\Git\GitException;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -179,12 +180,16 @@ abstract class RecipeRepo implements \JsonSerializable
             return [];
         }
 
-        $finder = new Finder();
-        return $finder->ignoreUnreadableDirs()
-            ->in($this->fullRepoPath . '/*/*')
-            ->depth(0)
-            ->exclude('.git')
-            ->directories();
+        try {
+            return (new Finder())
+                ->ignoreUnreadableDirs()
+                ->in($this->fullRepoPath . '/*/*')
+                ->depth(0)
+                ->exclude('.git')
+                ->directories();
+        } catch (InvalidArgumentException $e) {
+            return [];
+        }
     }
 
     /**
@@ -272,6 +277,4 @@ abstract class RecipeRepo implements \JsonSerializable
             'url' => $this->repoUrl
         ];
     }
-
-
 }

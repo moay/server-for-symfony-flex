@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the moay symfony-flex-server package.
+ * This file is part of the moay server-for-symfony-flex package.
  *
  * (c) moay
  *

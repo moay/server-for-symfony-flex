@@ -1,4 +1,4 @@
-# symfony-flex-server
+# Server for Symfony Flex
 
 A self hosted server for Symfony Flex allowing private recipes, customized recipes and caching functionality for the official endpoints.
 

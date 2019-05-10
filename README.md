@@ -1,4 +1,4 @@
-# symfony-flex-server
+# Server for Symfony Flex
 
 [![Build Status](https://travis-ci.org/moay/symfony-flex-server.svg?branch=master)](https://travis-ci.org/moay/symfony-flex-server)
 

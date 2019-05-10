@@ -10,6 +10,6 @@ pages:
     - 'About recipes': 'topics/recipes.md'
     - 'Commands': 'topics/commands.md'
 theme:
-    name: 'material'
+    name: 'readthedocs'
     palette:
         primary: 'grey'

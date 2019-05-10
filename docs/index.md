@@ -4,7 +4,7 @@ A self hosted server for Symfony Flex allowing private recipes, customized recip
 
 [github.com/moay/server-for-symfony-flex](https://github.com/moay/server-for-symfony-flex)
 
-#### This is not an official project by SensioLabs or the Symfony core team.
+**This is not an official project by SensioLabs or the Symfony core team.**
 
 ![ui](https://user-images.githubusercontent.com/3605512/36627099-eb239f48-193d-11e8-919a-d98003696d7b.png)
 

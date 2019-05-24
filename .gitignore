@@ -21,3 +21,8 @@
 ###< symfony/webpack-encore-pack ###
 
 /yarn-error.log
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###

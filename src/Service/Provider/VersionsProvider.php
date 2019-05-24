@@ -14,8 +14,8 @@ namespace App\Service\Provider;
 use App\Service\OfficialEndpointProxy;
 
 /**
- * Class VersionsProvider
- * @package App\Service\Provider
+ * Class VersionsProvider.
+ *
  * @author moay <mv@moay.de>
  */
 class VersionsProvider
@@ -28,7 +28,8 @@ class VersionsProvider
 
     /**
      * VersionsProvider constructor.
-     * @param bool $enableProxy
+     *
+     * @param bool                  $enableProxy
      * @param OfficialEndpointProxy $proxy
      */
     public function __construct(bool $enableProxy, OfficialEndpointProxy $proxy)
@@ -45,6 +46,7 @@ class VersionsProvider
         if ($this->enableProxy) {
             return $this->proxy->getVersions();
         }
+
         return [];
     }
 }

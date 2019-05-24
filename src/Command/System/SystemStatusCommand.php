@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Class SystemStatusCommand
- * @package App\Command\System
+ * Class SystemStatusCommand.
+ *
  * @author moay <mv@moay.de>
  */
 class SystemStatusCommand extends Command
@@ -29,6 +29,7 @@ class SystemStatusCommand extends Command
 
     /**
      * SystemStatusCommand constructor.
+     *
      * @param SystemStatusReportCompiler $reportCompiler
      */
     public function __construct(SystemStatusReportCompiler $reportCompiler)
@@ -37,7 +38,6 @@ class SystemStatusCommand extends Command
         $this->reportCompiler = $reportCompiler;
     }
 
-    /**  */
     public function configure()
     {
         $this
@@ -46,9 +46,8 @@ class SystemStatusCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return void
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -63,7 +62,6 @@ class SystemStatusCommand extends Command
             ['Local mirror for contrib recipes', $report['config']['mirrorContrib'] ? '<fg=green>enabled</>' : '<fg=red>disabled</>'],
         ]);
 
-
         $io->section('Repo status');
         $io->table(['Repo', 'Url', 'Remote readable', 'Downloaded', 'Last Update'], array_map(function ($repo, $key) {
             return [
@@ -71,7 +69,7 @@ class SystemStatusCommand extends Command
                 $repo['url'],
                 $repo['remote_readable'] ? '<fg=green>Yes</>' : '<fg=red>No</>',
                 $repo['downloaded'] ? '<fg=green>Yes</>' : '<fg=red>No</>',
-                $repo['last_updated'] != null ? $repo['last_updated'] : ''
+                null != $repo['last_updated'] ? $repo['last_updated'] : '',
             ];
         }, $report['repos'], array_keys($report['repos'])));
     }

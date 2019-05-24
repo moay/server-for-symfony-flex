@@ -12,8 +12,8 @@
 namespace App\Command\Recipes;
 
 /**
- * Class RecipesInitializeCommand
- * @package App\Command\Recipes
+ * Class RecipesInitializeCommand.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipesInitializeCommand extends RecipeRepoManagerCommand
@@ -23,5 +23,4 @@ class RecipesInitializeCommand extends RecipeRepoManagerCommand
 
     /** @var string */
     protected $description = 'Initializes local recipe repos from remote repo';
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Service\Decoder;
 
 use App\Service\Cache;
@@ -170,6 +171,7 @@ class JsonResponseDecoderTest extends TestCase
 
     /**
      * @param $responseString
+     *
      * @return Stream|object
      */
     private function getResponseBodyStub($responseString)

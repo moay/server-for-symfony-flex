@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service\Decoder;
 
 use App\Service\Cache;
@@ -19,9 +20,9 @@ class JsonResponseDecoder
     private $cache;
 
     /**
-     * @param bool $cacheEndpoint
+     * @param bool       $cacheEndpoint
      * @param HttpClient $client
-     * @param Cache $cache
+     * @param Cache      $cache
      */
     public function __construct(bool $cacheEndpoint, HttpClient $client, Cache $cache)
     {
@@ -44,14 +45,15 @@ class JsonResponseDecoder
             $response = $this->client->sendRequest($request);
             $decodedResponse = json_decode($response->getBody()->getContents(), true);
 
-            if(!in_array($response->getStatusCode(), range(200, 299))) {
+            if (!\in_array($response->getStatusCode(), range(200, 299))) {
                 if ($this->cacheEndpoint && $this->cache->has($this->getCacheId($request))) {
                     return $this->cache->get($this->getCacheId($request));
                 }
+
                 return [];
             }
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
+            if (JSON_ERROR_NONE !== json_last_error()) {
                 return $response->getBody()->getContents();
             }
 

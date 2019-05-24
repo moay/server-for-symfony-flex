@@ -18,8 +18,8 @@ use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class LocalAliasEventSubscriber
- * @package App\EventSubscriber
+ * Class LocalAliasEventSubscriber.
+ *
  * @author moay <mv@moay.de>
  */
 class LocalAliasEventSubscriber implements EventSubscriberInterface
@@ -29,6 +29,7 @@ class LocalAliasEventSubscriber implements EventSubscriberInterface
 
     /**
      * LocalAliasEventSubscriber constructor.
+     *
      * @param Cache $cache
      */
     public function __construct(Cache $cache)
@@ -42,7 +43,7 @@ class LocalAliasEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            RepoStatusChangedEvent::NAME => 'onRepoStatusChange'
+            RepoStatusChangedEvent::NAME => 'onRepoStatusChange',
         ];
     }
 
@@ -55,5 +56,4 @@ class LocalAliasEventSubscriber implements EventSubscriberInterface
             $this->cache->delete(AliasesProvider::LOCAL_ALIASES_CACHE_KEY);
         }
     }
-
 }

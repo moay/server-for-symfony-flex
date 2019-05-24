@@ -12,8 +12,8 @@
 namespace App\Command\Recipes;
 
 /**
- * Class RecipesUpdateCommand
- * @package App\Command\Recipes
+ * Class RecipesUpdateCommand.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipesUpdateCommand extends RecipeRepoManagerCommand

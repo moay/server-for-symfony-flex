@@ -14,8 +14,8 @@ namespace App\Service\Provider;
 use Ulid\Ulid;
 
 /**
- * Class UlidProvider
- * @package App\Service\Provider
+ * Class UlidProvider.
+ *
  * @author moay <mv@moay.de>
  */
 class UlidProvider

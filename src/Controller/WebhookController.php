@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class WebhookController
- * @package App\Controller
+ * Class WebhookController.
+ *
  * @author moay <mv@moay.de>
  */
 class WebhookController extends AbstractController
@@ -27,7 +27,9 @@ class WebhookController extends AbstractController
      * @Route("/webhook/update", name="webhook_update", methods={"POST"})
      *
      * @param RecipeRepoManager $repoManager
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
      * @throws \Cz\Git\GitException
      */
     public function update(RecipeRepoManager $repoManager): JsonResponse
@@ -35,7 +37,7 @@ class WebhookController extends AbstractController
         foreach ($repoManager->getConfiguredRepos() as $repo) {
             $repo->update();
         }
+
         return $this->json(['success' => true]);
     }
-
 }

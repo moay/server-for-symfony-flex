@@ -16,8 +16,8 @@ use App\Service\Compiler\SystemStatusReportCompiler;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class StatusReportEventSubscriber
- * @package App\EventSubscriber
+ * Class StatusReportEventSubscriber.
+ *
  * @author moay <mv@moay.de>
  */
 class StatusReportEventSubscriber implements EventSubscriberInterface
@@ -27,6 +27,7 @@ class StatusReportEventSubscriber implements EventSubscriberInterface
 
     /**
      * StatusReportEventSubscriber constructor.
+     *
      * @param SystemStatusReportCompiler $reportCompiler
      */
     public function __construct(SystemStatusReportCompiler $reportCompiler)
@@ -40,7 +41,7 @@ class StatusReportEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            RepoStatusChangedEvent::NAME => 'onRepoStatusChange'
+            RepoStatusChangedEvent::NAME => 'onRepoStatusChange',
         ];
     }
 
@@ -51,5 +52,4 @@ class StatusReportEventSubscriber implements EventSubscriberInterface
     {
         $this->reportCompiler->removeReport();
     }
-
 }

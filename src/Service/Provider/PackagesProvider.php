@@ -15,11 +15,10 @@ use App\Entity\Recipe;
 use App\Service\Compiler\LocalRecipeCompiler;
 use App\Service\Compiler\PackagesCompiler;
 use App\Service\OfficialEndpointProxy;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * Class AliasesProvider
- * @package App\Service\Provider
+ * Class AliasesProvider.
+ *
  * @author moay <mv@moay.de>
  */
 class PackagesProvider
@@ -35,10 +34,11 @@ class PackagesProvider
 
     /**
      * AliasesProvider constructor.
-     * @param LocalRecipeCompiler $recipeCompiler
-     * @param bool $enableProxy
+     *
+     * @param LocalRecipeCompiler   $recipeCompiler
+     * @param bool                  $enableProxy
      * @param OfficialEndpointProxy $officialEndpointProxy
-     * @param PackagesCompiler $packagesCompiler
+     * @param PackagesCompiler      $packagesCompiler
      */
     public function __construct(
         LocalRecipeCompiler $recipeCompiler,
@@ -54,10 +54,12 @@ class PackagesProvider
     }
 
     /**
-     * Provides data for requested packages
+     * Provides data for requested packages.
      *
      * @param string $packagesRequestString
+     *
      * @return array
+     *
      * @throws \Exception
      * @throws \Http\Client\Exception
      */
@@ -74,6 +76,7 @@ class PackagesProvider
 
     /**
      * @param array $requestedPackages
+     *
      * @return Recipe[]
      */
     private function getLocalRecipes(array $requestedPackages)
@@ -93,7 +96,9 @@ class PackagesProvider
 
     /**
      * @param string $packagesRequestString
+     *
      * @return array|string
+     *
      * @throws \Exception
      * @throws \Http\Client\Exception
      */
@@ -102,44 +107,50 @@ class PackagesProvider
         if ($this->officialEndpointProxy instanceof OfficialEndpointProxy) {
             return $this->officialEndpointProxy->getPackages($packagesRequestString);
         }
+
         return [];
     }
 
     /**
      * @param array $package
+     *
      * @return Recipe|null
      */
     private function getLocalRecipe(array $package)
     {
         $localRecipes = $this->recipeCompiler->getLocalRecipesForPackageRequest($package['author'], $package['package'], $package['version']);
-        if (count($localRecipes) > 1) {
+        if (\count($localRecipes) > 1) {
             usort($localRecipes, function (Recipe $recipe1, Recipe $recipe2) {
                 if ($recipe1->getVersion() == $recipe2->getVersion()) {
                     if ($recipe1->getRepoSlug() != $recipe2->getRepoSlug()) {
-                        if ($recipe1->getRepoSlug() === 'private') {
+                        if ('private' === $recipe1->getRepoSlug()) {
                             return -1;
                         }
-                        if ($recipe2->getRepoSlug() === 'private') {
+                        if ('private' === $recipe2->getRepoSlug()) {
                             return 1;
                         }
-                        if ($recipe1->getRepoSlug() === 'official') {
+                        if ('official' === $recipe1->getRepoSlug()) {
                             return -1;
                         }
+
                         return 1;
                     }
+
                     return -1;
                 }
+
                 return version_compare($recipe1->getVersion(), $recipe2->getVersion()) * -1;
             });
         }
-        if (count($localRecipes) > 0) {
+        if (\count($localRecipes) > 0) {
             return reset($localRecipes);
         }
+
         return null;
     }
 
     /**
-     * Parses the request string and provides an array of requested packages
+     * Parses the request string and provides an array of requested packages.
      *
      * @param string $packagesRequestString
      *
@@ -153,16 +164,17 @@ class PackagesProvider
         foreach (explode(';', rtrim($packagesRequestString, ';')) as $requestedPackage) {
             $packageDetails = explode(',', $requestedPackage);
 
-            if (count($packageDetails) < 3) {
+            if (\count($packageDetails) < 3) {
                 throw new \InvalidArgumentException('Invalid package string provided');
             }
 
             $packages[] = [
                 'author' => $packageDetails[0],
                 'package' => $packageDetails[1],
-                'version' => preg_replace('/^[iurv]+/', '', $packageDetails[2])
+                'version' => preg_replace('/^[iurv]+/', '', $packageDetails[2]),
             ];
         }
+
         return $packages;
     }
 }

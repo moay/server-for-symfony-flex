@@ -16,8 +16,8 @@ use App\Service\RecipePublicUrlResolver;
 use App\Service\RecipeRepoManager;
 
 /**
- * Class LocalRecipeCompiler
- * @package App\Service\Compiler
+ * Class LocalRecipeCompiler.
+ *
  * @author moay <mv@moay.de>
  */
 class LocalRecipeCompiler
@@ -39,6 +39,7 @@ class LocalRecipeCompiler
 
     /**
      * LocalRecipeCompiler constructor.
+     *
      * @param RecipeRepoManager $repoManager
      */
     public function __construct(RecipeRepoManager $repoManager, RecipePublicUrlResolver $urlResolver)
@@ -52,7 +53,7 @@ class LocalRecipeCompiler
      */
     public function getLocalRecipes()
     {
-        if (count($this->recipes) == 0) {
+        if (0 == \count($this->recipes)) {
             $this->loadLocalRecipes();
         }
 
@@ -63,20 +64,22 @@ class LocalRecipeCompiler
      * @param string $author
      * @param string $package
      * @param string $version
+     *
      * @return Recipe[]
      */
     public function getLocalRecipesForPackageRequest(string $author, string $package, string $version)
     {
-        if (count($this->recipes) == 0) {
+        if (0 == \count($this->recipes)) {
             $this->loadLocalRecipes();
         }
 
         $possibleRecipes = array_filter($this->recipes, function (Recipe $recipe) use ($author, $package, $version) {
             if ($recipe->getAuthor() != $author ||
                 $recipe->getPackage() != $package ||
-                version_compare($recipe->getVersion(), $version) == 1) {
+                1 == version_compare($recipe->getVersion(), $version)) {
                 return false;
             }
+
             return true;
         });
 
@@ -84,7 +87,7 @@ class LocalRecipeCompiler
     }
 
     /**
-     * Loads local recipes
+     * Loads local recipes.
      */
     private function loadLocalRecipes()
     {
@@ -92,7 +95,7 @@ class LocalRecipeCompiler
             $recipeFolders = $repo->getRecipeDirectories();
             foreach ($recipeFolders as $recipeFolder) {
                 $explodedPath = explode('/', $recipeFolder->getPathname());
-                [$author, $package, $version] = array_slice($explodedPath, -3);
+                [$author, $package, $version] = \array_slice($explodedPath, -3);
 
                 $recipe = new Recipe();
                 $recipe->setAuthor($author);
@@ -104,10 +107,10 @@ class LocalRecipeCompiler
 
                 $recipe->setPublicUrl($this->urlResolver->resolveUrl($recipe));
 
-                $manifestFile = $recipeFolder->getPathname() . '/manifest.json';
+                $manifestFile = $recipeFolder->getPathname().'/manifest.json';
                 if (file_exists($manifestFile)) {
                     $manifest = json_decode(file_get_contents($manifestFile), true);
-                    if (json_last_error() === JSON_ERROR_NONE) {
+                    if (JSON_ERROR_NONE === json_last_error()) {
                         $recipe->setManifest($manifest);
                         $recipe->setManifestValid(true);
                     } else {

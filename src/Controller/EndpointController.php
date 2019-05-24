@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EndpointController
- * @package App\Controller
+ * Class EndpointController.
+ *
  * @author moay <mv@moay.de>
  */
 class EndpointController extends AbstractController
@@ -33,6 +33,7 @@ class EndpointController extends AbstractController
      * @Route("/aliases.json", name="endpoint_aliases")
      *
      * @param AliasesProvider $provider
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function aliases(AliasesProvider $provider): JsonResponse
@@ -54,6 +55,7 @@ class EndpointController extends AbstractController
      * @Route("/ulid", name="endpoint_ulid")
      *
      * @param UlidProvider $provider
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ulid(UlidProvider $provider): JsonResponse
@@ -64,9 +66,11 @@ class EndpointController extends AbstractController
     /**
      * @Route("/p/{packages}", name="endpoint_packages")
      *
-     * @param string $packages
+     * @param string           $packages
      * @param PackagesProvider $provider
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
      * @throws \Http\Client\Exception
      */
     public function packages(string $packages, PackagesProvider $provider): JsonResponse

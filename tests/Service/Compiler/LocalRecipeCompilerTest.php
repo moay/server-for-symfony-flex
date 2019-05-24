@@ -9,8 +9,8 @@ use App\Service\RecipeRepoManager;
 use App\Tests\RepoAwareTestCase;
 
 /**
- * Class LocalRecipeCompilerTest
- * @package App\Tests\Service\Compiler
+ * Class LocalRecipeCompilerTest.
+ *
  * @author Manuel Voss <manuel.voss@i22.de>
  */
 class LocalRecipeCompilerTest extends RepoAwareTestCase
@@ -18,7 +18,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
     /** @var LocalRecipeCompiler */
     private $compiler;
 
-    function setUp()
+    public function setUp()
     {
         $repoStub = $this->createTestRepoStub();
         $repoStub->expects($this->once())->method('getRecipeDirectories');
@@ -36,7 +36,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
         $this->compiler = new LocalRecipeCompiler($repoManagerStub, $urlResolverStub);
     }
 
-    function testLocalRecipesAreLoadedProperly()
+    public function testLocalRecipesAreLoadedProperly()
     {
         foreach ($this->compiler->getLocalRecipes() as $recipe) {
             $this->assertInstanceOf(Recipe::class, $recipe);
@@ -44,18 +44,18 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
         $this->assertCount(5, $this->compiler->getLocalRecipes());
     }
 
-    function testManifestFilesAreCheckedForValidJson()
+    public function testManifestFilesAreCheckedForValidJson()
     {
         $countInvalid = 0;
         $countValid = 0;
         foreach ($this->compiler->getLocalRecipes() as $recipe) {
-            if ($recipe->getPackage() === 'invalidManifest') {
+            if ('invalidManifest' === $recipe->getPackage()) {
                 $this->assertFalse($recipe->isManifestValid());
-                $countInvalid++;
-            } elseif ($recipe->getPackage() === 'withManifest') {
+                ++$countInvalid;
+            } elseif ('withManifest' === $recipe->getPackage()) {
                 $this->assertTrue($recipe->isManifestValid());
-                $countValid++;
-            } elseif ($recipe->getPackage() === 'withoutManifest') {
+                ++$countValid;
+            } elseif ('withoutManifest' === $recipe->getPackage()) {
                 $this->assertNull($recipe->isManifestValid());
                 $this->assertNull($recipe->getManifest());
             }
@@ -67,7 +67,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
     /**
      * @dataProvider packageResolvingTestProvider
      */
-    function testPackageVersionsAreResolvedProperly($author, $package, $version, $expectedCount)
+    public function testPackageVersionsAreResolvedProperly($author, $package, $version, $expectedCount)
     {
         $recipes = $this->compiler->getLocalRecipesForPackageRequest($author, $package, $version);
         $this->assertCount($expectedCount, $recipes);
@@ -79,7 +79,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
         }
     }
 
-    function packageResolvingTestProvider()
+    public function packageResolvingTestProvider()
     {
         return [
             ['author1', 'withManifest', '1.0', 1],
@@ -94,8 +94,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
             ['author2', 'withoutManifest', '1.1', 0],
             ['author2', 'withManifest', '1', 0],
             ['author2', 'invalidManifest', '1', 1],
-            ['author3', 'noVersions', 'any', 0]
+            ['author3', 'noVersions', 'any', 0],
         ];
     }
-
 }

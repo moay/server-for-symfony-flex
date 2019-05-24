@@ -15,8 +15,8 @@ use App\Service\Decoder\JsonResponseDecoder;
 use Nyholm\Psr7\Request;
 
 /**
- * Class OfficialEndpointProxy
- * @package App\Proxy
+ * Class OfficialEndpointProxy.
+ *
  * @author moay <mv@moay.de>
  */
 class OfficialEndpointProxy
@@ -29,7 +29,8 @@ class OfficialEndpointProxy
 
     /**
      * OfficialEndpointProxy constructor.
-     * @param string $officialEndpoint
+     *
+     * @param string              $officialEndpoint
      * @param JsonResponseDecoder $decoder
      */
     public function __construct(
@@ -44,13 +45,15 @@ class OfficialEndpointProxy
      * Provides a proxy for the aliases.json call, which provides official Symfony aliases.
      *
      * @return array
+     *
      * @throws \Exception
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getAliases()
     {
-        $request = new Request('GET', $this->endpoint . 'aliases.json');
+        $request = new Request('GET', $this->endpoint.'aliases.json');
+
         return $this->decoder->getDecodedResponse($request);
     }
 
@@ -58,28 +61,33 @@ class OfficialEndpointProxy
      * Provides a proxy for the versions.json call, which provides version information for Symfony.
      *
      * @return array
+     *
      * @throws \Exception
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getVersions()
     {
-        $request = new Request('GET', $this->endpoint . 'versions.json');
+        $request = new Request('GET', $this->endpoint.'versions.json');
+
         return $this->decoder->getDecodedResponse($request);
     }
 
     /**
-     * Provides the official response for the packages call
+     * Provides the official response for the packages call.
      *
      * @param string $packagesRequestString
+     *
      * @return array|string
+     *
      * @throws \Exception
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getPackages(string $packagesRequestString)
     {
-        $request = new Request('GET', $this->endpoint . 'p/' . $packagesRequestString);
+        $request = new Request('GET', $this->endpoint.'p/'.$packagesRequestString);
+
         return $this->decoder->getDecodedResponse($request);
     }
 }

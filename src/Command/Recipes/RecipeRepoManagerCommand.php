@@ -21,8 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Class RecipeRepoManagerCommand
- * @package App\Command\Recipes
+ * Class RecipeRepoManagerCommand.
+ *
  * @author moay <mv@moay.de>
  */
 abstract class RecipeRepoManagerCommand extends Command
@@ -40,6 +40,7 @@ abstract class RecipeRepoManagerCommand extends Command
 
     /**
      * RecipesInitializeCommand constructor.
+     *
      * @param RecipeRepoManager $repoManager
      */
     public function __construct(RecipeRepoManager $repoManager)
@@ -48,11 +49,10 @@ abstract class RecipeRepoManagerCommand extends Command
         parent::__construct();
     }
 
-    /** */
     protected function configure()
     {
         $this
-            ->setName(self::ACTION_NAMESPACE . $this->action)
+            ->setName(self::ACTION_NAMESPACE.$this->action)
             ->setDescription($this->description);
 
         $description = sprintf(
@@ -65,9 +65,8 @@ abstract class RecipeRepoManagerCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -76,26 +75,26 @@ abstract class RecipeRepoManagerCommand extends Command
         $recipeRepos = [
             'private' => 'Private recipes repo',
             'official' => 'Official recipes repo',
-            'contrib' => 'Contrib recipes repo'
+            'contrib' => 'Contrib recipes repo',
         ];
 
-        $repos = count($input->getArgument('repo')) > 0
+        $repos = \count($input->getArgument('repo')) > 0
             ? $input->getArgument('repo')
             : array_keys($recipeRepos);
 
         foreach ($repos as $repo) {
             if (!isset($recipeRepos[$repo])) {
-                $io->error('Repo \'' . $repo . '\' does not exist. Use \'private\', \'official\' or \'contrib\'.');
+                $io->error('Repo \''.$repo.'\' does not exist. Use \'private\', \'official\' or \'contrib\'.');
             } else {
                 if ($this->repoManager->isConfiguredByDirName($repo)) {
                     try {
                         $this->repoManager->executeOnRepo($this->action, $repo);
-                        $actionPast = $this->action === 'reset' ? 'resetted' : $this->action . 'd';
+                        $actionPast = 'reset' === $this->action ? 'resetted' : $this->action.'d';
                         $io->success(sprintf('%s recipes repo %s.', ucfirst($repo), $actionPast));
                     } catch (RecipeRepoManagerException $e) {
                         $io->error($e->getMessage());
                     } catch (GitException $e) {
-                        $io->error('Git error: ' . $e->getMessage());
+                        $io->error('Git error: '.$e->getMessage());
                     }
                 }
             }

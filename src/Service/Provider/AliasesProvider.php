@@ -18,8 +18,8 @@ use App\Service\OfficialEndpointProxy;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
 /**
- * Class AliasesProvider
- * @package App\Service\Provider
+ * Class AliasesProvider.
+ *
  * @author moay <mv@moay.de>
  */
 class AliasesProvider
@@ -37,10 +37,11 @@ class AliasesProvider
 
     /**
      * AliasesProvider constructor.
-     * @param LocalRecipeCompiler $recipeCompiler
-     * @param bool $enableProxy
+     *
+     * @param LocalRecipeCompiler   $recipeCompiler
+     * @param bool                  $enableProxy
      * @param OfficialEndpointProxy $officialEndpointProxy
-     * @param Cache $cache
+     * @param Cache                 $cache
      */
     public function __construct(
         LocalRecipeCompiler $recipeCompiler,
@@ -56,7 +57,7 @@ class AliasesProvider
     }
 
     /**
-     * Provides all available aliases. Official aliases are merged if proxy is enabled
+     * Provides all available aliases. Official aliases are merged if proxy is enabled.
      *
      * @return array
      */
@@ -65,16 +66,17 @@ class AliasesProvider
         $aliases = $this->getLocalAliases();
         if ($this->officialEndpointProxy instanceof OfficialEndpointProxy) {
             $officialAliases = $this->officialEndpointProxy->getAliases();
-            if (is_array($officialAliases)) {
+            if (\is_array($officialAliases)) {
                 $aliases = array_merge($officialAliases, $aliases);
             }
         }
         ksort($aliases);
+
         return $aliases;
     }
 
     /**
-     * Returns an array of all locally available aliases
+     * Returns an array of all locally available aliases.
      *
      * @return array
      */
@@ -88,7 +90,7 @@ class AliasesProvider
         $recipes = $this->recipeCompiler->getLocalRecipes();
 
         foreach ($recipes as $recipe) {
-            if ($recipe->getManifest() !== null && isset($recipe->getManifest()['aliases'])) {
+            if (null !== $recipe->getManifest() && isset($recipe->getManifest()['aliases'])) {
                 foreach ($recipe->getManifest()['aliases'] as $alias) {
                     if (isset($aliases[$alias])) {
                         $recipe = $this->resolveAliasConflict($aliases[$alias], $recipe);
@@ -99,13 +101,13 @@ class AliasesProvider
             }
         }
 
-        $aliases =  array_map(function (Recipe $recipe) {
+        $aliases = array_map(function (Recipe $recipe) {
             return $recipe->getOfficialPackageName();
         }, $aliases);
 
         $this->cache->set(self::LOCAL_ALIASES_CACHE_KEY, $aliases);
-        return $aliases;
 
+        return $aliases;
     }
 
     /**
@@ -115,22 +117,25 @@ class AliasesProvider
      *
      * @param Recipe $recipe1
      * @param Recipe $recipe2
+     *
      * @return Recipe
      */
     private function resolveAliasConflict(Recipe $recipe1, Recipe $recipe2)
     {
         if ($recipe1->getRepoSlug() != $recipe2->getRepoSlug()) {
-            if ($recipe1->getRepoSlug() === 'private') {
+            if ('private' === $recipe1->getRepoSlug()) {
                 return $recipe1;
             }
-            if ($recipe2->getRepoSlug() === 'private') {
+            if ('private' === $recipe2->getRepoSlug()) {
                 return $recipe2;
             }
-            if ($recipe1->getRepoSlug() === 'official') {
+            if ('official' === $recipe1->getRepoSlug()) {
                 return $recipe1;
             }
+
             return $recipe2;
         }
+
         return $recipe1;
     }
 }

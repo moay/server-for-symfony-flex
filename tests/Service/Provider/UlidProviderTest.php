@@ -28,7 +28,7 @@ class UlidProviderTest extends KernelTestCase
      */
     public function testUlidLength(UlidProvider $ulidProvider)
     {
-        $this->assertSame(26, strlen((string) $ulidProvider->provideUlid()));
+        $this->assertSame(26, \strlen((string) $ulidProvider->provideUlid()));
     }
 
     /**

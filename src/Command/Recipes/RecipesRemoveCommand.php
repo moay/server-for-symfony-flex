@@ -12,8 +12,8 @@
 namespace App\Command\Recipes;
 
 /**
- * Class RecipesRemoveCommand
- * @package App\Command\Recipes
+ * Class RecipesRemoveCommand.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipesRemoveCommand extends RecipeRepoManagerCommand

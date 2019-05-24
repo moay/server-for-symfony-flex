@@ -15,6 +15,7 @@ use Cz\Git\GitRepository;
 
 /**
  * Class GitRepo.
+ * @author test
  *
  * @author moay <mv@moay.de>
  */

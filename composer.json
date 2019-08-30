@@ -7,11 +7,12 @@
         "ext-json": "*",
         "czproject/git-php": "^3.12",
         "php-http/httplug-pack": "^1.1",
+        "psr/simple-cache": "^1.0",
         "robinvdvleuten/ulid": "^1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^4.0",
-        "symfony/cache": "^4.0",
+        "symfony/cache": "^4.1",
         "symfony/console": "^4.0",
         "symfony/dotenv": "^4.0",
         "symfony/filesystem": "^4.0",
@@ -20,7 +21,7 @@
         "symfony/framework-bundle": "^4.1",
         "symfony/monolog-bundle": "^3.3",
         "symfony/twig-bundle": "^4.0",
-        "symfony/webpack-encore-pack": "^1.0",
+        "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "^4.0"
     },
     "require-dev": {

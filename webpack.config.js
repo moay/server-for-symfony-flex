@@ -7,7 +7,7 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .enableVueLoader()
-
+    .enableSingleRuntimeChunk()
     .addEntry('dashboard', './assets/js/dashboard.js')
 ;
 

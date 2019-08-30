@@ -9,6 +9,7 @@
         body { color:#fff }
         body a { color:#fff }
     </style>
+    {{ encore_entry_link_tags('dashboard') }}
 </head>
 <body>
 <div id="dashboard">
@@ -106,6 +107,6 @@
     </v-app>
 </div>
 
-<script src="{{ asset('build/dashboard.js') }}"></script>
+{{ encore_entry_script_tags('dashboard') }}
 </body>
 </html>

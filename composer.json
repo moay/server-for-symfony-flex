@@ -8,7 +8,7 @@
         "czproject/git-php": "^3.12",
         "php-http/httplug-pack": "^1.1",
         "psr/simple-cache": "^1.0",
-        "robinvdvleuten/ulid": "^1.1",
+        "robinvdvleuten/ulid": "^3.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^4.0",
@@ -25,6 +25,7 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "symfony/browser-kit": "^4.1",
         "symfony/debug-pack": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
         "symfony/web-server-bundle": "^4.0"
@@ -68,7 +69,6 @@
     },
     "extra": {
         "symfony": {
-            "id": "01C6C88WKQP047F412R9EYCFV0",
             "allow-contrib": false
         }
     }

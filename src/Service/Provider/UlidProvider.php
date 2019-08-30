@@ -27,6 +27,6 @@ class UlidProvider
      */
     public function provideUlid()
     {
-        return strtoupper(Ulid::generate());
+        return (string) Ulid::generate();
     }
 }

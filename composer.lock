@@ -747,55 +747,6 @@
             "time": "2019-08-22T18:22:08+00:00"
         },
         {
-            "name": "paragonie/random_compat",
-            "version": "v2.0.18",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
-                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
-            },
-            "suggest": {
-                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/random.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paragon Initiative Enterprises",
-                    "email": "security@paragonie.com",
-                    "homepage": "https://paragonie.com"
-                }
-            ],
-            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-            "keywords": [
-                "csprng",
-                "polyfill",
-                "pseudorandom",
-                "random"
-            ],
-            "time": "2019-01-03T20:59:08+00:00"
-        },
-        {
             "name": "php-http/client-common",
             "version": "2.0.0",
             "source": {
@@ -1814,29 +1765,29 @@
         },
         {
             "name": "robinvdvleuten/ulid",
-            "version": "v1.1.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robinvdvleuten/php-ulid.git",
-                "reference": "9cb26f8192ce04a1ab8c75775d9689be891805b5"
+                "reference": "84eb606534529d3804c7a515359a78952d135fcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robinvdvleuten/php-ulid/zipball/9cb26f8192ce04a1ab8c75775d9689be891805b5",
-                "reference": "9cb26f8192ce04a1ab8c75775d9689be891805b5",
+                "url": "https://api.github.com/repos/robinvdvleuten/php-ulid/zipball/84eb606534529d3804c7a515359a78952d135fcb",
+                "reference": "84eb606534529d3804c7a515359a78952d135fcb",
                 "shasum": ""
             },
             "require": {
-                "paragonie/random_compat": "^2.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpbench/phpbench": "1.0.*@dev",
-                "phpunit/phpunit": "^5.7"
+                "phpbench/phpbench": "^0.15",
+                "phpunit/phpunit": "^7.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -1856,7 +1807,7 @@
             ],
             "description": "Universally Unique Lexicographically Sortable Identifier (ULID) implementation for PHP.",
             "homepage": "https://github.com/robinvdvleuten/php-ulid",
-            "time": "2017-09-04T07:17:03+00:00"
+            "time": "2019-01-20T14:39:07+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -4264,6 +4215,63 @@
             "time": "2018-07-27T15:41:37+00:00"
         },
         {
+            "name": "symfony/browser-kit",
+            "version": "v4.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/browser-kit.git",
+                "reference": "c09c18cca96d7067152f78956faf55346c338283"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/c09c18cca96d7067152f78956faf55346c338283",
+                "reference": "c09c18cca96d7067152f78956faf55346c338283",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/dom-crawler": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/process": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\BrowserKit\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony BrowserKit Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-04-07T09:56:43+00:00"
+        },
+        {
             "name": "symfony/debug-bundle",
             "version": "v4.3.4",
             "source": {
@@ -4358,6 +4366,63 @@
             ],
             "description": "A debug pack for Symfony projects",
             "time": "2018-12-10T12:11:11+00:00"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "v4.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/53c97769814c80a84a8403efcf3ae7ae966d53bb",
+                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-02-23T15:17:42+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

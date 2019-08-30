@@ -16,8 +16,8 @@ use App\RecipeRepo\OfficialRecipeRepo;
 use App\RecipeRepo\PrivateRecipeRepo;
 
 /**
- * Class SystemStatusReportCompiler
- * @package App\Service\Generator
+ * Class SystemStatusReportCompiler.
+ *
  * @author moay <mv@moay.de>
  */
 class SystemStatusReportCompiler
@@ -35,14 +35,15 @@ class SystemStatusReportCompiler
 
     /**
      * SystemStatusReportCompiler constructor.
-     * @param string $projectDir
-     * @param PrivateRecipeRepo $privateRecipeRepo
+     *
+     * @param string             $projectDir
+     * @param PrivateRecipeRepo  $privateRecipeRepo
      * @param OfficialRecipeRepo $officialRecipeRepo
-     * @param ContribRecipeRepo $contribRecipeRepo
-     * @param bool $enableProxy
-     * @param bool $cacheEndpoint
-     * @param bool $mirrorOfficialRepo
-     * @param bool $mirrorContribRepo
+     * @param ContribRecipeRepo  $contribRecipeRepo
+     * @param bool               $enableProxy
+     * @param bool               $cacheEndpoint
+     * @param bool               $mirrorOfficialRepo
+     * @param bool               $mirrorContribRepo
      */
     public function __construct(
         string $projectDir,
@@ -54,19 +55,18 @@ class SystemStatusReportCompiler
         bool $mirrorOfficialRepo,
         bool $mirrorContribRepo
     ) {
-        $this->reportFilePath = $projectDir . self::HEALTH_REPORT_FILE;
+        $this->reportFilePath = $projectDir.self::HEALTH_REPORT_FILE;
         $this->repos = [
             'private' => $privateRecipeRepo,
             'official' => $officialRecipeRepo,
-            'contrib' => $contribRecipeRepo
+            'contrib' => $contribRecipeRepo,
         ];
         $this->config = [
             'enableProxy' => $enableProxy,
             'enableCache' => $cacheEndpoint,
             'mirrorOfficial' => $mirrorOfficialRepo,
-            'mirrorContrib' => $mirrorContribRepo
+            'mirrorContrib' => $mirrorContribRepo,
         ];
-
     }
 
     /**
@@ -79,16 +79,17 @@ class SystemStatusReportCompiler
         if (!file_exists($this->reportFilePath)) {
             $this->compileReport();
         }
+
         return json_decode(file_get_contents($this->reportFilePath), true);
     }
 
     /**
-     * Compiles system status report file
+     * Compiles system status report file.
      */
     public function compileReport()
     {
         $report = [
-            'config' => $this->config
+            'config' => $this->config,
         ];
 
         foreach ($this->repos as $key => $repo) {
@@ -99,7 +100,7 @@ class SystemStatusReportCompiler
     }
 
     /**
-     * Deletes the report file
+     * Deletes the report file.
      */
     public function removeReport()
     {

@@ -6,8 +6,8 @@ use App\RecipeRepo\RecipeRepo;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class RepoAwareTestCase
- * @package App\Tests
+ * Class RepoAwareTestCase.
+ *
  * @author Manuel Voss <manuel.voss@i22.de>
  */
 class RepoAwareTestCase extends TestCase
@@ -15,22 +15,22 @@ class RepoAwareTestCase extends TestCase
     const TEST_REPO_DIR = '/private';
 
     /**
-     * Sets up the testing folder structure
+     * Sets up the testing folder structure.
      */
     public static function setUpBeforeClass()
     {
-        $testRepoFolder = static::getTestsFolder() . static::TEST_REPO_DIR;
+        $testRepoFolder = static::getTestsFolder().static::TEST_REPO_DIR;
         if (!is_dir($testRepoFolder)) {
             mkdir($testRepoFolder);
         }
         foreach (static::getTestRepoFileStructure() as $author => $packages) {
-            mkdir($testRepoFolder . $author);
+            mkdir($testRepoFolder.$author);
             foreach ($packages as $package => $versions) {
-                mkdir($testRepoFolder . $author . $package);
+                mkdir($testRepoFolder.$author.$package);
                 foreach ($versions as $version => $files) {
-                    mkdir($testRepoFolder . $author . $package . $version);
+                    mkdir($testRepoFolder.$author.$package.$version);
                     foreach ($files as $name => $contents) {
-                        file_put_contents($testRepoFolder . $author . $package . $version . $name, $contents);
+                        file_put_contents($testRepoFolder.$author.$package.$version.$name, $contents);
                     }
                 }
             }
@@ -38,11 +38,11 @@ class RepoAwareTestCase extends TestCase
     }
 
     /**
-     * Removes the testing folder structure
+     * Removes the testing folder structure.
      */
     public static function tearDownAfterClass()
     {
-        exec('rm -rf ' . static::getTestsFolder() . static::TEST_REPO_DIR);
+        exec('rm -rf '.static::getTestsFolder().static::TEST_REPO_DIR);
     }
 
     /**
@@ -50,7 +50,7 @@ class RepoAwareTestCase extends TestCase
      */
     protected static function getTestsFolder()
     {
-        return __DIR__ . '/repo';
+        return __DIR__.'/repo';
     }
 
     /**
@@ -62,32 +62,32 @@ class RepoAwareTestCase extends TestCase
             '/author1' => [
                 '/withManifest' => [
                     '/1.0' => [
-                        '/manifest.json' => json_encode(['some' => 'thing'])
+                        '/manifest.json' => json_encode(['some' => 'thing']),
                     ],
                     '/1.1' => [
-                        '/manifest.json' => json_encode(['some' => 'thing'])
-                    ]
+                        '/manifest.json' => json_encode(['some' => 'thing']),
+                    ],
                 ],
                 '/withoutManifest' => [
                     '/1.0' => [
-                        '/post-install.txt' => 'test'
+                        '/post-install.txt' => 'test',
                     ],
                     '/1.1' => [
                         '/post-install.txt' => 'test',
-                        '/test.yml' => 'test'
-                    ]
-                ]
+                        '/test.yml' => 'test',
+                    ],
+                ],
             ],
             '/author2' => [
                 '/invalidManifest' => [
                     '/someversion' => [
-                        '/manifest.json' => '{[}'
-                    ]
-                ]
+                        '/manifest.json' => '{[}',
+                    ],
+                ],
             ],
             '/author3' => [
-                '/noVersions' => []
-            ]
+                '/noVersions' => [],
+            ],
         ];
     }
 
@@ -95,6 +95,7 @@ class RepoAwareTestCase extends TestCase
      * @param string $author
      * @param string $package
      * @param string $version
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\SplFileInfo
      */
     protected function createRecipeFolderStub(string $author, string $package, string $version)

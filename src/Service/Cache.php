@@ -14,8 +14,8 @@ namespace App\Service;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 
 /**
- * Class Cache
- * @package App\Service
+ * Class Cache.
+ *
  * @author moay <mv@moay.de>
  */
 class Cache
@@ -29,13 +29,14 @@ class Cache
 
     /**
      * Cache constructor.
+     *
      * @param string $projectDir
      */
     public function __construct(string $projectDir)
     {
-        $cachePath = $projectDir . self::CACHE_DIR;
+        $cachePath = $projectDir.self::CACHE_DIR;
 
-        if(!is_dir($cachePath)) {
+        if (!is_dir($cachePath)) {
             mkdir($cachePath);
         }
         $this->cache = new FilesystemCache('flex-server', 0, $cachePath);

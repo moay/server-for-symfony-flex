@@ -1,0 +1,42 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'method_argument_space' => ['ensure_fully_multiline' => true],
+        'array_syntax' => ['syntax' => 'short'],
+        'list_syntax' => ['syntax' => 'short'],
+        'no_null_property_initialization' => true,
+        'ternary_to_null_coalescing' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        // Risky Rules
+        'pow_to_exponentiation' => true,
+        'psr4' => true,
+        'random_api_migration' => true,
+        'self_accessor' => true,
+        'silenced_deprecation_error' => true,
+        'no_homoglyph_names' => true,
+        'no_alias_functions' => true,
+        'modernize_types_casting' => true,
+        'is_null' => true,
+        'dir_constant' => true,
+        'function_to_constant' => true,
+    ])
+    ->setRiskyAllowed(true)
+
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->in([
+                __DIR__.'/config',
+                __DIR__.'/bin',
+                __DIR__.'/src',
+                __DIR__.'/public',
+                __DIR__.'/tests',
+            ])
+            ->append([
+                __FILE__,
+                __DIR__.'/deploy.php',
+            ])
+            ->notPath('config.php')
+    );

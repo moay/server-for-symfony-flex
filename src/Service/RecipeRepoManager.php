@@ -20,8 +20,8 @@ use Cz\Git\GitException;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class RecipeRepoManager
- * @package App\Service
+ * Class RecipeRepoManager.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipeRepoManager
@@ -34,12 +34,13 @@ class RecipeRepoManager
 
     /**
      * RecipeRepoManager constructor.
-     * @param bool $mirrorOfficialRepo
-     * @param bool $mirrorContribRepo
-     * @param PrivateRecipeRepo $privateRecipeRepo
+     *
+     * @param bool               $mirrorOfficialRepo
+     * @param bool               $mirrorContribRepo
+     * @param PrivateRecipeRepo  $privateRecipeRepo
      * @param OfficialRecipeRepo $officialRecipeRepo
-     * @param ContribRecipeRepo $contribRecipeRepo
-     * @param LoggerInterface $logger
+     * @param ContribRecipeRepo  $contribRecipeRepo
+     * @param LoggerInterface    $logger
      */
     public function __construct(
         bool $mirrorOfficialRepo,
@@ -50,7 +51,7 @@ class RecipeRepoManager
         LoggerInterface $logger
     ) {
         $this->repos = [
-            'private' => $privateRecipeRepo
+            'private' => $privateRecipeRepo,
         ];
         if ($mirrorOfficialRepo) {
             $this->repos['official'] = $officialRecipeRepo;
@@ -71,6 +72,7 @@ class RecipeRepoManager
 
     /**
      * @param RecipeRepo $repo
+     *
      * @return bool
      */
     public function isConfigured(RecipeRepo $repo)
@@ -80,6 +82,7 @@ class RecipeRepoManager
 
     /**
      * @param string $repoDirName
+     *
      * @return bool
      */
     public function isConfiguredByDirName(string $repoDirName)
@@ -90,6 +93,7 @@ class RecipeRepoManager
     /**
      * @param string $action
      * @param string $repoDirName
+     *
      * @throws RecipeRepoManagerException
      * @throws GitException
      */
@@ -100,5 +104,4 @@ class RecipeRepoManager
         }
         $this->repos[$repoDirName]->{$action}();
     }
-
 }

@@ -223,9 +223,7 @@ class Recipe implements \JsonSerializable
             'manifest' => $this->getManifest(),
             'manifestValid' => $this->isManifestValid(),
             'repo' => $this->getRepo(),
-            'publicUrl' => $this->getPublicUrl()
+            'publicUrl' => $this->getPublicUrl(),
         ];
     }
-
-
 }

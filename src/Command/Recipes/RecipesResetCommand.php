@@ -12,8 +12,8 @@
 namespace App\Command\Recipes;
 
 /**
- * Class RecipesResetCommand
- * @package App\Command\Recipes
+ * Class RecipesResetCommand.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipesResetCommand extends RecipeRepoManagerCommand

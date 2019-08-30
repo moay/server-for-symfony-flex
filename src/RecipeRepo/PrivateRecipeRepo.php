@@ -16,8 +16,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class PrivateRecipeRepo
- * @package App\Service\RecipeRepo
+ * Class PrivateRecipeRepo.
+ *
  * @author moay <mv@moay.de>
  */
 class PrivateRecipeRepo extends RecipeRepo
@@ -27,9 +27,10 @@ class PrivateRecipeRepo extends RecipeRepo
 
     /**
      * PrivateRecipeRepo constructor.
-     * @param string $privateRepoUrl
-     * @param string $projectDir
-     * @param Cache $cache
+     *
+     * @param string          $privateRepoUrl
+     * @param string          $projectDir
+     * @param Cache           $cache
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -41,5 +42,4 @@ class PrivateRecipeRepo extends RecipeRepo
     ) {
         parent::__construct($privateRepoUrl, $projectDir, $cache, $logger, $eventDispatcher);
     }
-
 }

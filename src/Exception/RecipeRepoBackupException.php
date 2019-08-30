@@ -12,11 +12,10 @@
 namespace App\Exception;
 
 /**
- * Class RecipeRepoBackupException
- * @package App\Exception
+ * Class RecipeRepoBackupException.
+ *
  * @author moay <mv@moay.de>
  */
 class RecipeRepoBackupException extends \Exception
 {
-
 }

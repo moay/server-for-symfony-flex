@@ -23,8 +23,8 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Class RecipeRepo
- * @package App\Service\RecipeRepo
+ * Class RecipeRepo.
+ *
  * @author moay <mv@moay.de>
  */
 abstract class RecipeRepo implements \JsonSerializable
@@ -54,10 +54,11 @@ abstract class RecipeRepo implements \JsonSerializable
 
     /**
      * RecipeRepo constructor.
-     * @param string $repoUrl
-     * @param string $projectDir
-     * @param Cache $cache
-     * @param LoggerInterface $logger
+     *
+     * @param string                   $repoUrl
+     * @param string                   $projectDir
+     * @param Cache                    $cache
+     * @param LoggerInterface          $logger
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -68,14 +69,14 @@ abstract class RecipeRepo implements \JsonSerializable
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->repoUrl = $repoUrl;
-        $this->fullRepoPath = $projectDir . self::REPO_PATH . $this->repoDirName;
+        $this->fullRepoPath = $projectDir.self::REPO_PATH.$this->repoDirName;
         $this->cache = $cache();
         $this->logger = $logger;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * Deletes all repo contents and reclones it from remote
+     * Deletes all repo contents and reclones it from remote.
      *
      * @throws GitException
      */
@@ -102,30 +103,30 @@ abstract class RecipeRepo implements \JsonSerializable
             $this->repo->forceClean();
             $this->wipeBackup();
         } catch (GitException $e) {
-            $this->logger->error('Repo pull failed (' . $this->repoUrl . ')');
+            $this->logger->error('Repo pull failed ('.$this->repoUrl.')');
             $this->restore();
         }
 
-        $this->logger->info('Repo updated (' . $this->repoUrl . ')');
+        $this->logger->info('Repo updated ('.$this->repoUrl.')');
         $this->handleRepoStatusChange();
     }
 
     /**
-     * Loads the repo, clones if needed
+     * Loads the repo, clones if needed.
      *
      * @throws GitException
      */
     public function initialize()
     {
         if (!GitRepo::isRemoteUrlReadable($this->repoUrl)) {
-            throw new GitException('The repo url ' . $this->repoUrl . ' is not readable');
+            throw new GitException('The repo url '.$this->repoUrl.' is not readable');
         }
         if (!is_dir($this->fullRepoPath)) {
             try {
                 $this->repo = GitRepo::cloneRepository($this->repoUrl, $this->fullRepoPath);
-                $this->logger->info('Repo cloned (' . $this->repoUrl . ')');
+                $this->logger->info('Repo cloned ('.$this->repoUrl.')');
             } catch (GitException $e) {
-                $this->logger->error('Repo clone failed (' . $this->repoUrl . ')');
+                $this->logger->error('Repo clone failed ('.$this->repoUrl.')');
                 throw $e;
             }
         } else {
@@ -135,20 +136,20 @@ abstract class RecipeRepo implements \JsonSerializable
     }
 
     /**
-     * Removes the repo directory
+     * Removes the repo directory.
      */
     public function remove()
     {
         if (is_dir($this->fullRepoPath)) {
             $filesystem = new Filesystem();
             $filesystem->remove($this->fullRepoPath);
-            $this->logger->info('Repo deleted (' . $this->repoUrl . ')');
+            $this->logger->info('Repo deleted ('.$this->repoUrl.')');
             $this->handleRepoStatusChange();
         }
     }
 
     /**
-     * Diagnose method for the system health report
+     * Diagnose method for the system health report.
      *
      * @return array
      */
@@ -166,8 +167,8 @@ abstract class RecipeRepo implements \JsonSerializable
             'local_path' => $this->fullRepoPath,
             'remote_readable' => GitRepo::isRemoteUrlReadable($this->repoUrl),
             'downloaded' => $loaded,
-            'last_updated' => $this->cache->get('repo-updated-' . $this->repoDirName),
-            'slug' => $this->repoDirName
+            'last_updated' => $this->cache->get('repo-updated-'.$this->repoDirName),
+            'slug' => $this->repoDirName,
         ];
     }
 
@@ -183,7 +184,7 @@ abstract class RecipeRepo implements \JsonSerializable
         try {
             return (new Finder())
                 ->ignoreUnreadableDirs()
-                ->in($this->fullRepoPath . '/*/*')
+                ->in($this->fullRepoPath.'/*/*')
                 ->depth(0)
                 ->exclude('.git')
                 ->directories();
@@ -199,45 +200,45 @@ abstract class RecipeRepo implements \JsonSerializable
      */
     private function restore()
     {
-        if (is_dir($this->fullRepoPath . '_backup')) {
+        if (is_dir($this->fullRepoPath.'_backup')) {
             $filesystem = new Filesystem();
-            $filesystem->rename($this->fullRepoPath . '_backup', $this->fullRepoPath, true);
-            $this->logger->info('Repo backup restored (' . $this->repoUrl . ').');
+            $filesystem->rename($this->fullRepoPath.'_backup', $this->fullRepoPath, true);
+            $this->logger->info('Repo backup restored ('.$this->repoUrl.').');
         } else {
-            $this->logger->warning('Could not restore repo backup (' . $this->repoUrl . '). There was no backup.');
-        };
+            $this->logger->warning('Could not restore repo backup ('.$this->repoUrl.'). There was no backup.');
+        }
     }
 
     /**
-     * Creates a backup of the current repo state
+     * Creates a backup of the current repo state.
      */
     private function backup()
     {
         if (is_dir($this->fullRepoPath)) {
             $this->wipeBackup();
             $filesystem = new Filesystem();
-            $filesystem->mirror($this->fullRepoPath, $this->fullRepoPath . '_backup');
-            $this->logger->info('Repo backup created (' . $this->repoUrl . ').');
+            $filesystem->mirror($this->fullRepoPath, $this->fullRepoPath.'_backup');
+            $this->logger->info('Repo backup created ('.$this->repoUrl.').');
         }
     }
 
     /**
-     * Wipes an existing backup folder if it exists
+     * Wipes an existing backup folder if it exists.
      */
     private function wipeBackup()
     {
-        if (is_dir($this->fullRepoPath . '_backup')) {
+        if (is_dir($this->fullRepoPath.'_backup')) {
             $filesystem = new Filesystem();
-            $filesystem->remove($this->fullRepoPath . '_backup');
+            $filesystem->remove($this->fullRepoPath.'_backup');
         }
     }
 
     /**
-     * Triggers the status changed event
+     * Triggers the status changed event.
      */
     private function handleRepoStatusChange()
     {
-        $this->cache->set('repo-updated-' . $this->repoDirName, date('Y-m-d H:i:s'));
+        $this->cache->set('repo-updated-'.$this->repoDirName, date('Y-m-d H:i:s'));
 
         $statusChangedEvent = new RepoStatusChangedEvent($this);
         $this->eventDispatcher->dispatch(RepoStatusChangedEvent::NAME, $statusChangedEvent);
@@ -274,7 +275,7 @@ abstract class RecipeRepo implements \JsonSerializable
     {
         return [
             'slug' => $this->repoDirName,
-            'url' => $this->repoUrl
+            'url' => $this->repoUrl,
         ];
     }
 }

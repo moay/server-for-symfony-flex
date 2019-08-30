@@ -14,14 +14,15 @@ use Cz\Git\GitException;
 use Cz\Git\GitRepository;
 
 /**
- * Class GitRepo
- * @package App\RecipeRepo
+ * Class GitRepo.
+ *
  * @author moay <mv@moay.de>
  */
 class GitRepo extends GitRepository
 {
     /**
      * @return GitRepository
+     *
      * @throws GitException
      */
     public function forceClean()

@@ -15,19 +15,20 @@ use App\RecipeRepo\RecipeRepo;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class RepoStatusChangedEvent
- * @package App\Event
+ * Class RepoStatusChangedEvent.
+ *
  * @author moay <mv@moay.de>
  */
 class RepoStatusChangedEvent extends Event
 {
-    const NAME = "repo.statuschange";
+    const NAME = 'repo.statuschange';
 
     /** @var RecipeRepo */
     private $recipeRepo;
 
     /**
      * RepoStatusChangedEvent constructor.
+     *
      * @param RecipeRepo $recipeRepo
      */
     public function __construct(RecipeRepo $recipeRepo)

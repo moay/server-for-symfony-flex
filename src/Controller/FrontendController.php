@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class FrontendController
- * @package App\Controller
+ * Class FrontendController.
+ *
  * @author moay <mv@moay.de>
  */
 class FrontendController extends AbstractController
@@ -39,14 +39,15 @@ class FrontendController extends AbstractController
      * @Route("/ui/data", name="frontend_dashboard_data")
      *
      * @param SystemStatusReportCompiler $reportGenerator
-     * @param LocalRecipeCompiler $recipeCompiler
+     * @param LocalRecipeCompiler        $recipeCompiler
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function dashboardData(SystemStatusReportCompiler $reportGenerator, LocalRecipeCompiler $recipeCompiler): JsonResponse
     {
         return $this->json([
             'status' => $reportGenerator->getReport(),
-            'recipes' => $recipeCompiler->getLocalRecipes()
+            'recipes' => $recipeCompiler->getLocalRecipes(),
         ]);
     }
 }

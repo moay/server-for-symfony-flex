@@ -18,6 +18,7 @@ class RecipePublicUrlResolver
 
     /**
      * @param Recipe $recipe
+     *
      * @return string
      */
     public function resolveUrl(Recipe $recipe)
@@ -29,7 +30,7 @@ class RecipePublicUrlResolver
         $repoUrl = $recipe->getRepo()->getRepoUrl();
         $urlProtocol = parse_url($repoUrl, PHP_URL_SCHEME);
 
-        switch ($urlProtocol){
+        switch ($urlProtocol) {
             case 'http':
             case 'https':
                 return $this->resolveHttpUrl($repoUrl, $recipe->getOfficialPackageName());
@@ -52,7 +53,7 @@ class RecipePublicUrlResolver
      */
     private function resolveHttpUrl(string $repoUrl, string $packageName)
     {
-        if (preg_match('/^(?:https?(?:\:\/\/)?)?([a-zA-Z0-9-_\.]+\.[a-z]+)(?:\:([0-9]+))?\/([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)(?:\.git)?$/', $repoUrl,$urlParts)) {
+        if (preg_match('/^(?:https?(?:\:\/\/)?)?([a-zA-Z0-9-_\.]+\.[a-z]+)(?:\:([0-9]+))?\/([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)(?:\.git)?$/', $repoUrl, $urlParts)) {
             $host = $urlParts[1];
             $port = empty($urlParts[2]) ? null : $urlParts[2];
             $user = $urlParts[3];
@@ -72,7 +73,7 @@ class RecipePublicUrlResolver
      */
     private function resolveSshUrl(string $repoUrl, string $packageName)
     {
-        if (preg_match('/^(?:ssh(?:\:\/\/)?)?(?:git)?\@?([a-zA-Z0-9-_\.]+\.[a-z]+)[:\/](?:([0-9]+)(?:\/))?([a-zA-Z0-9-_\.]+)\/([a-zA-Z0-9-_]+)(?:\.git)?$/', $repoUrl,$urlParts)) {
+        if (preg_match('/^(?:ssh(?:\:\/\/)?)?(?:git)?\@?([a-zA-Z0-9-_\.]+\.[a-z]+)[:\/](?:([0-9]+)(?:\/))?([a-zA-Z0-9-_\.]+)\/([a-zA-Z0-9-_]+)(?:\.git)?$/', $repoUrl, $urlParts)) {
             $host = $urlParts[1];
             $port = empty($urlParts[2]) ? null : $urlParts[2];
             $user = $urlParts[3];
@@ -85,7 +86,7 @@ class RecipePublicUrlResolver
     }
 
     /**
-     * Returns a fallback URL based on best practices used by f.i. github or gitlab
+     * Returns a fallback URL based on best practices used by f.i. github or gitlab.
      *
      * @param string $repoUrl
      * @param string $packageName
@@ -102,17 +103,17 @@ class RecipePublicUrlResolver
     }
 
     /**
-     * @param string $host
-     * @param string $repo
-     * @param string $packageName
+     * @param string   $host
+     * @param string   $repo
+     * @param string   $packageName
      * @param int|null $port
-     * @param bool $secure
+     * @param bool     $secure
      *
      * @return string
      */
     private function buildUrl(string $host, string $repo, string $packageName, int $port = null, bool $secure = true)
     {
-        $url = 'http'.($secure?'s':'').'://';
+        $url = 'http'.($secure ? 's' : '').'://';
         $url .= rtrim($host, '/');
         if (null !== $port) {
             $url .= ':'.$port;

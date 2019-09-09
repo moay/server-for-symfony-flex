@@ -73,11 +73,16 @@ class RecipePublicUrlResolver
      */
     private function resolveSshUrl(string $repoUrl, string $packageName)
     {
-        if (preg_match('/^(?:ssh(?:\:\/\/)?)?(?:git)?\@?([a-zA-Z0-9-_\.]+\.[a-z]+)[:\/](?:([0-9]+)(?:\/))?([a-zA-Z0-9-_\.]+)\/([a-zA-Z0-9-_]+)(?:\.git)?$/', $repoUrl, $urlParts)) {
+        if (preg_match('/^(?:ssh(?::\/\/)?)?(?:git)?@?([a-zA-Z0-9-_\.]+\.[a-z]+)(:[0-9])?(?:[:\/]([a-zA-Z0-9-_\.]*))?\/([a-zA-Z0-9-_\.]+)\/([a-zA-Z0-9-_]+)(?:.git)?$/', $repoUrl, $urlParts)) {
             $host = $urlParts[1];
             $port = empty($urlParts[2]) ? null : $urlParts[2];
-            $user = $urlParts[3];
-            $repo = $urlParts[4];
+            $prefix = empty($urlParts[3]) ? null : $urlParts[3];
+            $user = $urlParts[4];
+            $repo = $urlParts[5];
+
+            if (null !== $prefix) {
+                return $this->buildUrl($host, implode('/', [$prefix, $user, $repo]), $packageName, $port);
+            }
 
             return $this->buildUrl($host, implode('/', [$user, $repo]), $packageName, $port);
         }

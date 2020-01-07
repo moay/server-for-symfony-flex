@@ -115,6 +115,7 @@ class PackagesCompiler
         $files = [];
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()
+            ->followLinks()
             ->in($recipe->getLocalPath())
             ->ignoreDotFiles(false);
 

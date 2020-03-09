@@ -29,29 +29,17 @@
             "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
         }
     },
-    "doctrine/cache": {
-        "version": "v1.7.1"
-    },
     "doctrine/collections": {
         "version": "v1.5.0"
     },
     "doctrine/common": {
         "version": "v2.8.1"
     },
-    "doctrine/event-manager": {
-        "version": "v1.0.0"
-    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
     "doctrine/lexer": {
         "version": "v1.0.1"
-    },
-    "doctrine/persistence": {
-        "version": "v1.0.1"
-    },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
     },
     "easycorp/easy-log-handler": {
         "version": "1.0",
@@ -244,6 +232,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.0.4"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.5"
     },
     "symfony/event-dispatcher": {
         "version": "v4.0.4"

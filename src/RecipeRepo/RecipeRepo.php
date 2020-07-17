@@ -184,8 +184,8 @@ abstract class RecipeRepo implements \JsonSerializable
         try {
             return (new Finder())
                 ->ignoreUnreadableDirs()
-                ->in($this->fullRepoPath.'/*/*')
                 ->depth(0)
+                ->in($this->fullRepoPath.'/*/*')
                 ->exclude('.git')
                 ->directories();
         } catch (InvalidArgumentException $e) {

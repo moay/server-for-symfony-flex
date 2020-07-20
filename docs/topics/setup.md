@@ -18,25 +18,19 @@ Installing a monitoring tool (like [Sentry](https://sentry.io)) is recommended.
 
 ### Using the server
 
-Using the server in your Symfony project is as easy as adding the proper endpoint to your `composer.json`:
+To enable recipes defined in your server, run the following command in your project:
 
-    {
-        ...
-        "symfony": {
-            "endpoint": "https://your.domain.com"
-        }
-    }
+```sh
+composer config extra.symfony.endpoint https://your.domain.com
+```
 
 #### Running the server locally
 
 Running the server locally is possible by using symfony's server command: `php bin/console server:start` (oder `server:run` for a temporary instance).
-Make sure to allow connections over http to composer (if using localhost) by adding this to the project's `composer.json`:
+Make sure to allow connections over http to composer (if using localhost) running the following command:
 
-    {
-        ...
-        "config": {
-            "secure-http": false
-        }
-    }
-    
+```sh
+composer config secure-http false
+```
+
 *It is not recommended to run the server locally. The best setup would be a private server behind a firewall.*

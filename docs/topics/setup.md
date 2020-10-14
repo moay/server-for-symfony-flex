@@ -33,4 +33,6 @@ Make sure to allow connections over http to composer (if using localhost) runnin
 composer config secure-http false
 ```
 
+Reminder: The built-in Symfony server is only available when `APP_ENV` is set to `dev`.
+
 *It is not recommended to run the server locally. The best setup would be a private server behind a firewall.*

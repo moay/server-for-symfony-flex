@@ -83,9 +83,7 @@ abstract class RecipeRepoManagerCommand extends Command
             : array_keys($recipeRepos);
 
         foreach ($repos as $repo) {
-            if (!isset($recipeRepos[$repo])) {
-                $io->error('Repo \''.$repo.'\' does not exist. Use \'private\', \'official\' or \'contrib\'.');
-            } else {
+            if (isset($recipeRepos[$repo])) {
                 if ($this->repoManager->isConfiguredByDirName($repo)) {
                     try {
                         $this->repoManager->executeOnRepo($this->action, $repo);
@@ -97,6 +95,8 @@ abstract class RecipeRepoManagerCommand extends Command
                         $io->error('Git error: '.$e->getMessage());
                     }
                 }
+            } else {
+                $io->error('Repo \''.$repo.'\' does not exist. Use \'private\', \'official\' or \'contrib\'.');
             }
         }
     }

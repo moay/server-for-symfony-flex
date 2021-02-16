@@ -22,7 +22,7 @@ class OfficialEndpointProxyTest extends TestCase
      */
     private $decoder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->decoder = $this->prophesize(JsonResponseDecoder::class);
 

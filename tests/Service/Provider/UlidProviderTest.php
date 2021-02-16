@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UlidProviderTest extends KernelTestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::bootKernel();

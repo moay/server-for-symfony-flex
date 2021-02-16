@@ -2,6 +2,9 @@ language: php
 php:
   - '7.2'
   - '7.3'
+  - '7.4'
+env:
+    - SYMFONY_PHPUNIT_VERSION: 8.5
 install:
   - composer install
 script: bin/phpunit

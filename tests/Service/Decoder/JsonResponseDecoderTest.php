@@ -30,7 +30,7 @@ class JsonResponseDecoderTest extends TestCase
      */
     private $simpleCache;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = $this->prophesize(HttpClient::class);
         $this->cache = $this->prophesize(Cache::class);
@@ -132,10 +132,10 @@ class JsonResponseDecoderTest extends TestCase
     /**
      * @throws \Http\Client\Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @expectedException \Http\Client\Exception\NetworkException
      */
     public function testGetDecodedResponseThrowsNetworkExceptionWhenClientFailsAndNoCachedVersion()
     {
+        $this->expectException(NetworkException::class);
         $decoder = new JsonResponseDecoder(true, $this->client->reveal(), $this->cache->reveal());
         $request = new Request('GET', 'endpoint/data.json');
 

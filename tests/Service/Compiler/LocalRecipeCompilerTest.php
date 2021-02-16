@@ -18,7 +18,7 @@ class LocalRecipeCompilerTest extends RepoAwareTestCase
     /** @var LocalRecipeCompiler */
     private $compiler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $repoStub = $this->createTestRepoStub();
         $repoStub->expects($this->once())->method('getRecipeDirectories');

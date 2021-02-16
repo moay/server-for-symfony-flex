@@ -17,7 +17,7 @@ class RepoAwareTestCase extends TestCase
     /**
      * Sets up the testing folder structure.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $testRepoFolder = static::getTestsFolder().static::TEST_REPO_DIR;
         if (!is_dir($testRepoFolder)) {
@@ -40,7 +40,7 @@ class RepoAwareTestCase extends TestCase
     /**
      * Removes the testing folder structure.
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         exec('rm -rf '.static::getTestsFolder().static::TEST_REPO_DIR);
     }

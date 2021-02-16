@@ -2,7 +2,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-iconv": "*",
         "ext-json": "*",
         "czproject/git-php": "^3.12",

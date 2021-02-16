@@ -2,7 +2,7 @@
 
 In order to run the server, you'll need a server which
 
-* is capable of running Symfony 4. This means: PHP 7.2
+* is capable of running Symfony 4. This means: PHP 7.3 (we are avoiding PHP 7.2 which is EOL).
 * has git installed
 * has Composer installed
 * is able to load the repos. That means: Access to the internet is needed, also some free disk space.

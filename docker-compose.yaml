@@ -1,0 +1,48 @@
+version: '3.4'
+
+x-restart-policy: &restart_policy
+    restart: unless-stopped
+
+services:
+    nginx:
+        <<: *restart_policy
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+            args:
+                PHP_FPM_BACKEND: app:9000
+                BUILD_SCRIPT: dev
+        ports:
+            - 443:443
+            - 8081:80
+        depends_on:
+            - app
+        volumes:
+            - app-public:/app/public
+
+    app:
+        <<: *restart_policy
+        build:
+            context: .
+            args:
+                BUILD_ENV: dev
+        sysctls:
+            net.core.somaxconn: 2048
+        command: |
+            bash -c 'bin/console cache:clear &&
+            bin/console cache:warmup &&
+            bin/console recipes:initialize &&
+            bin/console recipes:reset &&
+            bin/console system:status &&
+            bin/console assets:install &&
+            php-fpm'
+        volumes:
+            - .:/app:cached
+
+volumes:
+    app-public:
+        driver: local
+        driver_opts:
+            type: none
+            device: $PWD/public
+            o: bind

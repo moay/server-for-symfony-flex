@@ -1,7 +1,6 @@
 {
     "devDependencies": {
         "@symfony/webpack-encore": "^0.30.2",
-        "node-sass": "^4.14.1",
         "vue": "^2.6.11",
         "vue-loader": "^15.9.0",
         "vue-resource": "^1.5.1",
@@ -16,6 +15,7 @@
     },
     "dependencies": {
         "css-loader": "^2.1.1",
-        "moment": "^2.24.0"
+        "moment": "^2.24.0",
+        "node-sass": "^5.0.0"
     }
 }

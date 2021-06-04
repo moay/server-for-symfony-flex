@@ -8,13 +8,13 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $officialEndpoint: '%env(FLEX_OFFICIAL_ENDPOINT)%'
-            $enableProxy: '%proxy_official_endpoint%'
-            $cacheEndpoint: '%cache_official_endpoint%'
+            $enableProxy: '%env(bool:PROXY_OFFICIAL_ENDPOINT)%'
+            $cacheEndpoint: '%env(bool:CACHE_OFFICIAL_ENDPOINT)%'
             $privateRepoUrl: '%env(FLEX_RECIPE_REPO_PRIVATE)%'
             $officialRepoUrl: '%env(FLEX_RECIPE_REPO_OFFICIAL)%'
             $contribRepoUrl: '%env(FLEX_RECIPE_REPO_CONTRIB)%'
-            $mirrorOfficialRepo: '%mirror_official_recipes%'
-            $mirrorContribRepo: '%mirror_contrib_recipes%'
+            $mirrorOfficialRepo: '%env(bool:MIRROR_OFFICIAL_ENDPOINT)%'
+            $mirrorContribRepo: '%env(bool:MIRROR_CONTRIB_RECIPES)%'
             $projectDir: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services

@@ -71,7 +71,12 @@ RUN set -eux; \
 
 COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 
-COPY docker/php.ini /usr/local/etc/php/php.ini
+COPY docker/php/php.ini /usr/local/etc/php/php.ini
+
+ARG FPM_PORT=9000
+COPY docker/php/www.conf.template /usr/local/etc/php-fpm.d/www.conf.template
+RUN envsubst '${FPM_PORT}' < /usr/local/etc/php-fpm.d/www.conf.template > /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i s/9000/$FPM_PORT/g /usr/local/etc/php-fpm.d/zz-docker.conf
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -99,7 +104,7 @@ RUN set -eux; \
 	chmod +x bin/console; \
 	sync
 
-COPY docker/php-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY docker/php/php-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
@@ -146,8 +151,9 @@ WORKDIR /srv/server-for-symfony-flex
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
 ARG NGINX_PORT=8080
+ARG FPM_PORT=9000
 COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf.template
-RUN envsubst '${NGINX_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+RUN envsubst '${NGINX_PORT} ${FPM_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 COPY --from=server-for-symfony-flex-php /srv/server-for-symfony-flex/public public/
 COPY --from=server-for-symfony-flex-nodejs /srv/server-for-symfony-flex/public public/
@@ -157,4 +163,5 @@ RUN apk add --no-cache bash
 COPY docker/nginx/wait-for-it.sh /
 RUN chmod +x /wait-for-it.sh
 
-CMD /wait-for-it.sh -t 0 localhost:9000 -- nginx -g "daemon off;"
+ENV FPM_PORT=$FPM_PORT
+CMD /wait-for-it.sh -t 0 localhost:$FPM_PORT -- nginx -g "daemon off;"

@@ -128,7 +128,7 @@ RUN set -eux; \
 	npm install ; \
 	npm cache clean --force
 
-RUN npm build
+RUN npm run build
 
 COPY docker/nodejs/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
@@ -150,8 +150,7 @@ COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf.te
 RUN envsubst '${NGINX_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 COPY --from=server-for-symfony-flex-php /srv/server-for-symfony-flex/public public/
-# FIXME
-#COPY --from=server-for-symfony-flex-nodejs /srv/server-for-symfony-flex/public public/
+COPY --from=server-for-symfony-flex-nodejs /srv/server-for-symfony-flex/public public/
 
 RUN apk add --no-cache bash
 

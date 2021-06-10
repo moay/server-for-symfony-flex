@@ -1,3 +1,13 @@
+parameters:
+    env(PROXY_OFFICIAL_ENDPOINT): 'true'
+    proxy_official_endpoint: '%env(bool:PROXY_OFFICIAL_ENDPOINT)%'
+    env(CACHE_OFFICIAL_ENDPOINT): 'true'
+    cache_official_endpoint: '%env(bool:CACHE_OFFICIAL_ENDPOINT)%'
+    env(MIRROR_OFFICIAL_ENDPOINT): 'true'
+    mirror_official_recipes: '%env(bool:MIRROR_OFFICIAL_ENDPOINT)%'
+    env(MIRROR_CONTRIB_RECIPES): 'false'
+    mirror_contrib_recipes: '%env(bool:MIRROR_CONTRIB_RECIPES)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -8,13 +18,13 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $officialEndpoint: '%env(FLEX_OFFICIAL_ENDPOINT)%'
-            $enableProxy: '%env(bool:PROXY_OFFICIAL_ENDPOINT)%'
-            $cacheEndpoint: '%env(bool:CACHE_OFFICIAL_ENDPOINT)%'
+            $enableProxy: '%proxy_official_endpoint%'
+            $cacheEndpoint: '%cache_official_endpoint%'
             $privateRepoUrl: '%env(FLEX_RECIPE_REPO_PRIVATE)%'
             $officialRepoUrl: '%env(FLEX_RECIPE_REPO_OFFICIAL)%'
             $contribRepoUrl: '%env(FLEX_RECIPE_REPO_CONTRIB)%'
-            $mirrorOfficialRepo: '%env(bool:MIRROR_OFFICIAL_ENDPOINT)%'
-            $mirrorContribRepo: '%env(bool:MIRROR_CONTRIB_RECIPES)%'
+            $mirrorOfficialRepo: '%mirror_official_recipes%'
+            $mirrorContribRepo: '%mirror_contrib_recipes%'
             $projectDir: '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services

@@ -1,4 +1,28 @@
 {
+    "amphp/amp": {
+        "version": "v2.5.2"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.8.1"
+    },
+    "amphp/parallel": {
+        "version": "v1.4.0"
+    },
+    "amphp/parallel-functions": {
+        "version": "v1.0.0"
+    },
+    "amphp/parser": {
+        "version": "v1.0.0"
+    },
+    "amphp/process": {
+        "version": "v1.1.1"
+    },
+    "amphp/serialization": {
+        "version": "v1.0.0"
+    },
+    "amphp/sync": {
+        "version": "v1.4.0"
+    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
@@ -77,8 +101,14 @@
             "config/packages/nyholm_psr7.yaml"
         ]
     },
+    "ondram/ci-detector": {
+        "version": "3.5.1"
+    },
+    "opis/closure": {
+        "version": "3.6.2"
+    },
     "php": {
-        "version": "7.2"
+        "version": "7.4"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -260,6 +290,9 @@
             "ref": "09357a9c75f41be3bdbf7726453ad8399e8c4ee4"
         }
     },
+    "symfony/http-client-contracts": {
+        "version": "v2.4.0"
+    },
     "symfony/http-foundation": {
         "version": "v4.0.4"
     },
@@ -313,6 +346,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.18.0"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v4.0.4"

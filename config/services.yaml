@@ -1,3 +1,13 @@
+parameters:
+    env(PROXY_OFFICIAL_ENDPOINT): 'true'
+    proxy_official_endpoint: '%env(bool:PROXY_OFFICIAL_ENDPOINT)%'
+    env(CACHE_OFFICIAL_ENDPOINT): 'true'
+    cache_official_endpoint: '%env(bool:CACHE_OFFICIAL_ENDPOINT)%'
+    env(MIRROR_OFFICIAL_ENDPOINT): 'true'
+    mirror_official_recipes: '%env(bool:MIRROR_OFFICIAL_ENDPOINT)%'
+    env(MIRROR_CONTRIB_RECIPES): 'false'
+    mirror_contrib_recipes: '%env(bool:MIRROR_CONTRIB_RECIPES)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+    php:
+        build:
+            context: .
+            target: server-for-symfony-flex-php
+            args:
+                - FPM_PORT=${FPM_PORT:-9000}
+        env_file:
+            - .env.local
+        volumes:
+            - .:/srv/server-for-symfony-flex:rw,cached
+            - ./public:/srv/server-for-symfony-flex/public:rw,delegated
+        network_mode: host
+
+    nginx:
+        build:
+            context: .
+            target: server-for-symfony-flex-nginx
+            args:
+                - NGINX_PORT=${NGINX_PORT:-8080}
+                - FPM_PORT=${FPM_PORT:-9000}
+        depends_on:
+            - php
+        volumes:
+            - ./public:/srv/server-for-symfony-flex/public:ro
+        network_mode: host
+
+    nodejs:
+        build:
+            context: .
+            target: server-for-symfony-flex-nodejs
+        depends_on:
+            - php
+        volumes:
+            - .:/srv/server-for-symfony-flex:rw,cached
+            - ./public:/srv/server-for-symfony-flex/public:rw,delegated
+        network_mode: host

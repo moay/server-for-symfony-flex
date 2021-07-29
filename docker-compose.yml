@@ -7,6 +7,7 @@ services:
             target: server-for-symfony-flex-php
             args:
                 - FPM_PORT=${FPM_PORT:-9000}
+                - PHP_DATE_TIMEZONE=${PHP_DATE_TIMEZONE:-UTC}
         env_file:
             - .env.local
         volumes:
@@ -20,6 +21,7 @@ services:
             target: server-for-symfony-flex-nginx
             args:
                 - NGINX_PORT=${NGINX_PORT:-8080}
+                - FPM_HOSTNAME=${FPM_HOSTNAME:-localhost}
                 - FPM_PORT=${FPM_PORT:-9000}
         depends_on:
             - php

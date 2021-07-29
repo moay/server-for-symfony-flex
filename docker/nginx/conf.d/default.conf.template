@@ -9,7 +9,7 @@ server {
 
     location ~ ^/index\.php(/|$) {
         # Comment the next line and uncomment the next to enable dynamic resolution (incompatible with Kubernetes)
-        fastcgi_pass localhost:${FPM_PORT};
+        fastcgi_pass ${FPM_HOSTNAME}:${FPM_PORT};
         #resolver 127.0.0.11;
         #set $upstream_host php;
         #fastcgi_pass $upstream_host:9000;

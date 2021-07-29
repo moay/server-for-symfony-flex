@@ -8,6 +8,7 @@ fi
 
 if [ "$1" = 'php-fpm' ]; then
   bin/console recipes:initialize
+  bin/console system:status
 fi
 
 exec docker-php-entrypoint "$@"

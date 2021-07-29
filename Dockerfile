@@ -1,9 +1,47 @@
 #############################################################
+#                      GLOBAL ARGS                          #
+#############################################################
+
+ARG PHP_VERSION=7.4
+ARG NGINX_VERSION=1.21
+ARG NODE_VERSION=14
+
+#############################################################
+#                           NODEJS                          #
+#############################################################
+
+FROM node:${NODE_VERSION}-alpine AS server-for-symfony-flex-nodejs
+
+WORKDIR /srv/server-for-symfony-flex
+
+RUN set -eux; \
+	apk add --no-cache \
+		g++ \
+		gcc \
+		git \
+		make \
+		python2 \
+	;
+
+COPY package.json package-lock.json webpack.config.js ./
+COPY assets ./assets
+
+RUN set -eux; \
+	npm install ; \
+	npm cache clean --force
+
+RUN npm run build
+
+COPY docker/nodejs/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT ["docker-entrypoint"]
+CMD ["npm", "run", "watch"]
+
+#############################################################
 #                           PHP-FPM                         #
 #############################################################
-ARG PHP_VERSION=7.4
-ARG NODE_VERSION=14
-ARG NGINX_VERSION=1.21
+
 
 FROM php:${PHP_VERSION}-fpm-alpine AS server-for-symfony-flex-php
 
@@ -71,7 +109,9 @@ RUN set -eux; \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-COPY docker/php/php.ini /usr/local/etc/php/php.ini
+ARG PHP_DATE_TIMEZONE=UTC
+COPY docker/php/php.ini.template /usr/local/etc/php/php.ini.template
+RUN envsubst '${PHP_DATE_TIMEZONE}' < /usr/local/etc/php/php.ini.template > /usr/local/etc/php/php.ini
 
 ARG FPM_PORT=9000
 COPY docker/php/www.conf.template /usr/local/etc/php-fpm.d/www.conf.template
@@ -104,42 +144,13 @@ RUN set -eux; \
 	chmod +x bin/console; \
 	sync
 
+COPY --from=server-for-symfony-flex-nodejs /srv/server-for-symfony-flex/public public/
+
 COPY docker/php/php-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
-
-#############################################################
-#                           NODEJS                          #
-#############################################################
-FROM node:${NODE_VERSION}-alpine AS server-for-symfony-flex-nodejs
-
-WORKDIR /srv/server-for-symfony-flex
-
-RUN set -eux; \
-	apk add --no-cache \
-		g++ \
-		gcc \
-		git \
-		make \
-		python2 \
-	;
-
-COPY package.json package-lock.json webpack.config.js ./
-COPY assets ./assets
-
-RUN set -eux; \
-	npm install ; \
-	npm cache clean --force
-
-RUN npm run build
-
-COPY docker/nodejs/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
-CMD ["npm", "run", "watch"]
 
 #############################################################
 #                           NGINX                           #
@@ -151,12 +162,12 @@ WORKDIR /srv/server-for-symfony-flex
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
 ARG NGINX_PORT=8080
+ARG FPM_HOSTNAME=localhost
 ARG FPM_PORT=9000
 COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf.template
-RUN envsubst '${NGINX_PORT} ${FPM_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+RUN envsubst '${NGINX_PORT} ${FPM_HOSTNAME} ${FPM_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 COPY --from=server-for-symfony-flex-php /srv/server-for-symfony-flex/public public/
-COPY --from=server-for-symfony-flex-nodejs /srv/server-for-symfony-flex/public public/
 
 RUN apk add --no-cache bash
 
@@ -164,4 +175,5 @@ COPY docker/nginx/wait-for-it.sh /
 RUN chmod +x /wait-for-it.sh
 
 ENV FPM_PORT=$FPM_PORT
-CMD /wait-for-it.sh -t 0 localhost:$FPM_PORT -- nginx -g "daemon off;"
+ENV FPM_HOSTNAME=$FPM_HOSTNAME
+CMD /wait-for-it.sh -t 0 $FPM_HOSTNAME:$FPM_PORT -- nginx -g "daemon off;"

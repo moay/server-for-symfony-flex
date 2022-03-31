@@ -18,7 +18,7 @@ Once you have setup the server, it will follow some basic rules when resolving t
 
 3) **Private over official.** If there are more than one local recipe repos, same version recipes will be selected in the order `private` > `official` > `contrib`.
 
-There currently is now way to mix up recipes. If you want to have a customized or extended version of an official recipe, you'll have to provide a complete copy. We are planning on setting up a way to create recipe extension which will allow to extend official recipes and live until the next major version.
+There currently is no way to mix up recipes. If you want to have a customized or extended version of an official recipe, you'll have to provide a complete copy. We are planning on setting up a way to create recipe extension which will allow to extend official recipes and live until the next major version.
 
 ### Invalid manifest files
 

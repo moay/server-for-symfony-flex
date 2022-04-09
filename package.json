@@ -16,6 +16,6 @@
     },
     "dependencies": {
         "css-loader": "^2.1.1",
-        "moment": "^2.24.0"
+        "moment": "^2.29.2"
     }
 }

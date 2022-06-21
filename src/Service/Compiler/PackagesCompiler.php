@@ -125,7 +125,7 @@ class PackagesCompiler
             }
             $files[$file->getRelativePathName()] = [
                 'contents' => $file->getContents(),
-                'executable' => is_executable($recipe->getLocalPath().$file->getRelativePathName()),
+                'executable' => is_executable($file->getPathname()),
             ];
         }
 
